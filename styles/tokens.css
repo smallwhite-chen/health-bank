@@ -1,0 +1,103 @@
+/* Design tokens — 健康存摺 */
+:root {
+  /* Palette — teal primary + orange accent (restored brand palette) */
+  --bg-app:        #f6f8f8;
+  --bg-surface:    #ffffff;
+  --bg-soft:       #edf8f7;
+  --bg-raised:     #ffffff;
+  --bg-chip:       #e8f0f1;
+
+  /* Text */
+  --text-primary:   #2a2a2a;
+  --text-secondary: #4f5b5d;
+  --text-tertiary:  #8a9597;
+  --text-muted:     #b0b8b9;
+  --text-on-dark:   #ffffff;
+
+  /* Lines */
+  --border-soft:   #e3eaea;
+  --border-med:    #cdd7d8;
+
+  /* Brand / primary — teal */
+  --brand-900: #00695e;
+  --brand-800: #007a6d;
+  --brand-700: #00a08e;
+  --brand-600: #2a7d8b;
+  --brand-100: #d9ece9;
+  --brand-50:  #edf8f7;
+
+  /* Accent — orange */
+  --accent-orange: #f89808;
+  --accent-amber:  #f8b12b;
+  --accent-red:    #d9534f;
+  --accent-green:  #00a08e;
+  --accent-blue:   #3b6fb0;
+
+  /* Tag bg variants */
+  --tag-bg: #e8f0f1;
+  --tag-fg: #4f5b5d;
+  --tag-blue-bg:  #e6efff;
+  --tag-blue-fg:  #2d5599;
+  --tag-amber-bg: #fdf2dc;
+  --tag-amber-fg: #a87419;
+
+  /* Radii */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 20px;
+  --r-pill: 999px;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(17, 24, 39, 0.04);
+  --shadow-sm: 0 1px 3px rgba(17, 24, 39, 0.06), 0 1px 2px rgba(17, 24, 39, 0.04);
+  --shadow-md: 0 4px 12px rgba(17, 24, 39, 0.06), 0 2px 4px rgba(17, 24, 39, 0.04);
+
+  /* Spacing */
+  --gap-1: 4px;
+  --gap-2: 8px;
+  --gap-3: 12px;
+  --gap-4: 16px;
+  --gap-5: 20px;
+  --gap-6: 24px;
+
+  /* Type */
+  --font-sans: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, -apple-system, sans-serif;
+
+  /* Layout */
+  --screen-w: 390px;
+  --screen-h: 844px;
+  --header-h: 56px;
+  --tabbar-h: 68px;
+}
+
+/* ---------- Night mode (a11y theme switch) ---------- */
+body.night-mode {
+  --bg-app:        #181d1f;
+  --bg-surface:    #232a2d;
+  --bg-soft:       #2a3437;
+  --bg-raised:     #2b3336;
+  --bg-chip:       #303a3e;
+
+  --text-primary:   #f1f4f4;
+  --text-secondary: #cbd3d4;
+  --text-tertiary:  #8a9598;
+  --text-muted:     #6a7375;
+
+  --border-soft:   #38444a;
+  --border-med:    #4a575e;
+
+  --brand-900: #2eb5a2;
+  --brand-800: #28a596;
+  --brand-700: #1e8e80;
+  --brand-100: #20342f;
+  --brand-50:  #1c2b27;
+
+  --tag-bg:       #2f3a3e;
+  --tag-fg:       #c0c8c9;
+  --tag-blue-bg:  #1f2c44;
+  --tag-blue-fg:  #9ec0ff;
+  --tag-amber-bg: #3a2f1f;
+  --tag-amber-fg: #f1c47a;
+}
+body.night-mode { background: var(--bg-app); color: var(--text-primary); }

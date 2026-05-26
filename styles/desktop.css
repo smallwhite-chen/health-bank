@@ -1,0 +1,924 @@
+/* ============================================================
+   Desktop mode — horizontal top nav + card-based dashboard
+   Applies only when <body> has class `desktop-mode`.
+   Aesthetic: warm neutral, white cards with soft tan border.
+   ============================================================ */
+
+body.desktop-mode {
+  --dt-bg:           var(--bg-app);
+  --dt-card-bg:      var(--bg-surface);
+  --dt-card-border:  var(--border-soft);
+  --dt-card-border-strong: var(--border-med);
+  --dt-row-divider:  var(--border-soft);
+  --dt-text:         var(--text-primary);
+  --dt-text-2:       var(--text-secondary);
+  --dt-text-3:       var(--text-tertiary);
+  --dt-tag-bg:       var(--bg-chip);
+  --dt-tag-fg:       var(--text-secondary);
+  --dt-tile-bg:      var(--bg-surface);
+  --dt-tile-border:  var(--border-soft);
+  --dt-hover:        var(--bg-soft);
+  --dt-radius:       18px;
+  --dt-radius-sm:    12px;
+  background: var(--dt-bg);
+  font-family: var(--font-sans);
+  color: var(--dt-text);
+}
+
+/* Hide mobile phone shell entirely in desktop mode */
+body.desktop-mode .stage { display: none; }
+
+/* ============================================================
+   Stage + shell
+   ============================================================ */
+.desktop-stage {
+  min-height: 100vh;
+  background: var(--dt-bg);
+  display: flex;
+  justify-content: center;
+  padding: 24px 32px 64px;
+  box-sizing: border-box;
+}
+.desktop-shell {
+  width: 100%;
+  max-width: 1240px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ============================================================
+   Top nav (header card)
+   ============================================================ */
+.dt-topnav {
+  position: sticky;
+  top: 12px;
+  z-index: 40;
+  background: var(--dt-card-bg);
+  border: 1px solid var(--dt-card-border);
+  border-radius: var(--dt-radius);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-family: inherit;
+  box-shadow: 0 6px 20px -12px rgba(17, 24, 39, 0.18);
+}
+.dt-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: 0;
+  padding: 4px 6px;
+  font-family: inherit;
+  cursor: pointer;
+  color: var(--dt-text);
+}
+.dt-logo-mark {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: var(--brand-800);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+.dt-logo-text {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.dt-logo:hover .dt-logo-text {
+  color: var(--brand-900);
+}
+
+.dt-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-left: auto;
+}
+.dt-nav-item {
+  background: none;
+  border: 0;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--dt-text-2);
+  cursor: pointer;
+  padding: 6px 2px;
+  font-weight: 500;
+  position: relative;
+  letter-spacing: 0.02em;
+}
+.dt-nav-item:hover { color: var(--dt-text); }
+.dt-nav-item.active {
+  color: var(--dt-text);
+  font-weight: 600;
+}
+.dt-nav-item.active::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -10px;
+  height: 2px;
+  background: var(--dt-text);
+  border-radius: 2px;
+}
+
+.dt-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 8px;
+  border-left: 1px solid var(--dt-card-border);
+  margin-left: 4px;
+}
+.dt-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--dt-card-border-strong);
+  background: var(--dt-card-bg);
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--dt-text-2);
+  cursor: pointer;
+}
+.dt-pill:hover {
+  background: var(--dt-hover);
+  color: var(--dt-text);
+}
+
+/* ============================================================
+   Main + generic card
+   ============================================================ */
+.dt-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.dt-home {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.dt-card {
+  background: var(--dt-card-bg);
+  border: 1px solid var(--dt-card-border);
+  border-radius: var(--dt-radius);
+  padding: 24px 28px;
+  box-sizing: border-box;
+}
+.dt-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.dt-card-head h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--dt-text);
+  letter-spacing: 0.02em;
+}
+.dt-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: 0;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--dt-text-3);
+  cursor: pointer;
+  padding: 4px 2px;
+}
+.dt-more:hover { color: var(--dt-text-2); }
+
+/* ============================================================
+   User card
+   ============================================================ */
+.dt-user-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 24px;
+}
+.dt-user-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+.dt-user-avatar {
+  width: 40px; height: 40px;
+  border-radius: 999px;
+  background: var(--bg-chip);
+  display: grid; place-items: center;
+  color: var(--dt-text-2);
+  flex-shrink: 0;
+}
+.dt-user-hi {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--dt-text);
+  letter-spacing: 0.02em;
+}
+.dt-user-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+  padding: 4px 10px 4px 12px;
+  border: 1px solid var(--dt-card-border);
+  border-radius: 999px;
+  background: var(--bg-soft);
+  color: var(--dt-text-2);
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  line-height: 1.5;
+}
+.dt-user-chip:hover {
+  background: var(--brand-100);
+  border-color: var(--brand-700);
+  color: var(--brand-900);
+}
+.dt-user-chip svg { color: inherit; }
+.dt-switch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px dashed var(--dt-card-border-strong);
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--dt-text-2);
+  cursor: pointer;
+}
+.dt-switch-btn:hover {
+  background: var(--dt-hover);
+  border-color: var(--brand-700);
+  color: var(--brand-900);
+}
+
+/* ============================================================
+   Tabs card (貼心提醒 / 行事曆)
+   ============================================================ */
+.dt-tabs-card { padding-bottom: 22px; }
+.dt-tabs {
+  display: flex;
+  gap: 28px;
+  padding: 0 4px;
+}
+.dt-tab {
+  background: none;
+  border: 0;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--dt-text-3);
+  cursor: pointer;
+  padding: 4px 2px 14px;
+  position: relative;
+  font-weight: 500;
+}
+.dt-tab:hover { color: var(--dt-text-2); }
+.dt-tab.active {
+  color: var(--dt-text);
+  font-weight: 700;
+}
+.dt-tab.active::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 2px;
+  background: var(--dt-text);
+  border-radius: 2px;
+  z-index: 2;
+}
+.dt-tabs-divider {
+  height: 1px;
+  background: var(--dt-row-divider);
+  margin: 0 -28px 18px;
+}
+
+.dt-tips-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.dt-tip-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--dt-card-border);
+  background: var(--dt-card-bg);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  color: inherit;
+}
+.dt-tip-row:hover {
+  background: var(--dt-hover);
+  border-color: var(--dt-card-border-strong);
+}
+.dt-tip-ico {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--bg-chip);
+  display: grid; place-items: center;
+  color: var(--dt-text-2);
+  flex-shrink: 0;
+}
+.dt-tip-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+.dt-tip-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dt-text);
+}
+.dt-tip-sub {
+  font-size: 12px;
+  color: var(--dt-text-3);
+  line-height: 1.5;
+}
+.dt-tip-row > svg {
+  color: var(--dt-text-3);
+  flex-shrink: 0;
+}
+
+.dt-calendar-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 32px 16px 16px;
+  color: var(--dt-text-3);
+  font-size: 13px;
+}
+
+.dt-view-calendar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 12px;
+  padding: 14px;
+  background: var(--bg-soft);
+  border: 1px solid var(--dt-card-border);
+  border-radius: var(--dt-radius-sm);
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--dt-text-2);
+  cursor: pointer;
+}
+.dt-view-calendar:hover {
+  background: var(--brand-100);
+  color: var(--brand-900);
+  border-color: var(--brand-700);
+}
+
+/* ============================================================
+   Two-column row (visits | quick+family)
+   ============================================================ */
+.dt-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+.dt-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Left visits card stretches to match right column */
+.dt-row > .dt-visits-card {
+  display: flex;
+  flex-direction: column;
+}
+.dt-row > .dt-visits-card .dt-visit-list {
+  flex: 1;
+}
+.dt-row > .dt-visits-card .dt-visit-row {
+  flex: 1;
+  min-height: 64px;
+}
+
+/* ---------- Visits card ---------- */
+.dt-visits-card { padding: 24px 28px 12px; }
+.dt-visit-list {
+  display: flex;
+  flex-direction: column;
+}
+.dt-visit-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 4px;
+  border: 0;
+  background: none;
+  border-bottom: 1px solid var(--dt-row-divider);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  width: 100%;
+}
+.dt-visit-row:last-child { border-bottom: 0; }
+.dt-visit-row:hover .dt-visit-body .kv-row:nth-child(2) .v {
+  color: var(--brand-900);
+}
+.dt-visit-body {
+  flex: 1;
+  min-width: 0;
+}
+.dt-visit-chev {
+  color: var(--dt-text-3);
+  flex-shrink: 0;
+}
+
+/* ---------- Quick (常用查詢) ---------- */
+.dt-quick-card { padding: 24px 28px 26px; }
+.dt-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.dt-quick-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 22px 8px;
+  border-radius: var(--dt-radius-sm);
+  border: 1px solid var(--dt-tile-border);
+  background: var(--dt-tile-bg);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--dt-text);
+  cursor: pointer;
+  text-align: center;
+}
+.dt-quick-tile:hover {
+  background: var(--dt-hover);
+  border-color: var(--dt-card-border-strong);
+}
+.dt-quick-ico {
+  display: inline-grid;
+  place-items: center;
+  width: 36px; height: 36px;
+  color: var(--dt-text-2);
+}
+.dt-quick-label {
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Family doctor ---------- */
+.dt-family-card-d { padding: 24px 28px 24px; }
+.dt-family-desc {
+  font-size: 13px;
+  color: var(--dt-text-2);
+  line-height: 1.7;
+  margin: 0 0 18px;
+}
+.dt-family-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.dt-family-avatar {
+  width: 50px; height: 50px;
+  border-radius: 999px;
+  background: var(--bg-chip);
+  display: grid; place-items: center;
+  color: var(--dt-text-2);
+  flex-shrink: 0;
+}
+.dt-family-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.dt-family-tag {
+  font-size: 12px;
+  color: var(--dt-text-3);
+}
+.dt-family-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--dt-text);
+}
+.dt-family-org {
+  font-size: 12px;
+  color: var(--dt-text-3);
+}
+.dt-family-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--dt-text-2);
+  padding-top: 4px;
+}
+.dt-family-phone svg {
+  color: var(--dt-text-2);
+}
+
+/* ---------- Care plans (照護計畫) ---------- */
+.dt-care-card { padding: 24px 28px 20px; }
+.dt-care-list {
+  display: flex;
+  flex-direction: column;
+}
+.dt-care-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  column-gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--dt-row-divider);
+}
+.dt-care-row:first-child { padding-top: 4px; }
+.dt-care-row:last-child  { border-bottom: 0; padding-bottom: 4px; }
+
+.dt-care-icon {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  display: grid; place-items: center;
+  background: var(--brand-50);
+  color: var(--brand-700);
+  flex-shrink: 0;
+}
+.dt-care-row.tone-amber .dt-care-icon { background: #fdf1d8; color: #b87711; }
+.dt-care-row.tone-blue  .dt-care-icon { background: #e3edf8; color: #2c5d97; }
+.dt-care-row.tone-green .dt-care-icon { background: #def0e3; color: #2f7a4a; }
+
+.dt-care-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding-right: 78px; /* room for "看更多" */
+}
+.dt-care-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--dt-text);
+  line-height: 1.3;
+  margin-bottom: 2px;
+}
+.dt-care-kv {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  column-gap: 12px;
+  font-size: 13px;
+  align-items: baseline;
+}
+.dt-care-kv .k {
+  color: var(--dt-text-3);
+  font-size: 12px;
+}
+.dt-care-kv .v {
+  color: var(--dt-text);
+  font-variant-numeric: tabular-nums;
+}
+.dt-care-more {
+  position: absolute;
+  top: 16px;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 5px 10px 5px 12px;
+  border: 1px solid var(--dt-card-border-strong);
+  border-radius: 999px;
+  background: var(--dt-card-bg);
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--dt-text-2);
+  cursor: pointer;
+}
+.dt-care-more:hover {
+  background: var(--dt-hover, var(--bg-soft));
+  color: var(--dt-text);
+}
+
+/* ============================================================
+   Other screens — wrap mobile-screen output in card chrome
+   so they sit consistently inside the desktop shell.
+   ============================================================ */
+
+/* Hide mobile chrome that screens still render */
+body.desktop-mode .topbar,
+body.desktop-mode .phone-statusbar,
+body.desktop-mode .notch {
+  display: none !important;
+}
+
+/* The dt-main directly contains a screen body (e.g. <VisitsScreen/>),
+   which renders <TopBar/> (hidden above) + .app-scroll. We turn the
+   .app-scroll into a single content card. */
+body.desktop-mode .dt-main > .app-scroll {
+  background: var(--dt-card-bg);
+  border: 1px solid var(--dt-card-border);
+  border-radius: var(--dt-radius);
+  padding: 28px 32px 36px;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  height: auto;
+}
+
+/* Strip horizontal padding from inline-padded children */
+body.desktop-mode .dt-main .app-scroll > div[style*="padding"] {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Page titles */
+body.desktop-mode .page-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 18px;
+  letter-spacing: 0.01em;
+}
+
+/* Section headings */
+body.desktop-mode .section-title {
+  padding: 0;
+  margin: 24px 0 12px;
+}
+body.desktop-mode .section-title h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--dt-text);
+}
+
+/* Detail header (back button) */
+body.desktop-mode .detail-header {
+  background: transparent;
+  height: auto;
+  padding: 0 0 16px 0;
+  gap: 12px;
+}
+body.desktop-mode .detail-header .back {
+  padding: 8px 14px 8px 10px;
+  border: 1px solid var(--dt-card-border-strong);
+  border-radius: 999px;
+  background: var(--dt-card-bg);
+  font-size: 13px;
+  color: var(--dt-text-2);
+}
+body.desktop-mode .detail-header .back:hover {
+  background: var(--dt-hover);
+}
+body.desktop-mode .detail-header .title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  margin-left: 6px;
+}
+
+/* Strip horizontal margins from full-bleed cards */
+body.desktop-mode .user-card,
+body.desktop-mode .family-card,
+body.desktop-mode .info-banner,
+body.desktop-mode .chart-wrap,
+body.desktop-mode .detail-section,
+body.desktop-mode .service-list {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+body.desktop-mode .pill-tabs,
+body.desktop-mode .search-wrap,
+body.desktop-mode .range-pills,
+body.desktop-mode .count-bar,
+body.desktop-mode .quick-grid,
+body.desktop-mode .fav-grid,
+body.desktop-mode .cat-group-title,
+body.desktop-mode .page-pad {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Pill tabs */
+body.desktop-mode .pill-tabs {
+  gap: 8px;
+  padding-bottom: 14px;
+}
+body.desktop-mode .pill-tab {
+  padding: 8px 18px;
+  font-size: 14px;
+}
+
+/* Search */
+body.desktop-mode .search-input {
+  padding: 12px 16px 12px 42px;
+  font-size: 14px;
+}
+
+/* Favorites + grids */
+body.desktop-mode .fav-grid {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+body.desktop-mode .quick-grid {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+/* Service list */
+body.desktop-mode .service-list {
+  margin: 0 0 18px 0;
+}
+body.desktop-mode .service-item {
+  padding: 14px 18px;
+  font-size: 14px;
+}
+body.desktop-mode .cat-group-title {
+  padding: 12px 0 8px;
+  font-size: 16px;
+}
+
+/* Multi-column list cards on visits/reports lists */
+body.desktop-mode .app-scroll > div:has(> .list-card) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+body.desktop-mode .app-scroll > div:has(> .list-card) > .list-card {
+  margin-bottom: 0;
+}
+
+/* Visit/Report Detail: side-by-side */
+body.desktop-mode [data-screen-label="visitDetail"] .app-scroll,
+body.desktop-mode [data-screen-label="reportDetail"] .app-scroll {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: 20px;
+  row-gap: 14px;
+  align-items: start;
+}
+body.desktop-mode [data-screen-label="visitDetail"] .detail-header,
+body.desktop-mode [data-screen-label="reportDetail"] .detail-header {
+  grid-column: 1 / -1;
+}
+body.desktop-mode [data-screen-label="visitDetail"] .h-16,
+body.desktop-mode [data-screen-label="reportDetail"] .h-16 {
+  grid-column: 1 / -1;
+}
+/* The longer meds/notes section spans both columns */
+body.desktop-mode [data-screen-label="visitDetail"] .detail-section:nth-of-type(4),
+body.desktop-mode [data-screen-label="visitDetail"] .detail-section:nth-of-type(5) {
+  grid-column: 1 / -1;
+}
+body.desktop-mode .detail-section {
+  margin: 0 !important;
+}
+
+/* Reminders / Edit Favorites — narrow readable column */
+body.desktop-mode [data-screen-label="reminders"] .app-scroll,
+body.desktop-mode [data-screen-label="editFavorites"] .app-scroll {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* Sheets center-modal */
+body.desktop-mode .sheet-backdrop {
+  align-items: center !important;
+  justify-content: center !important;
+}
+body.desktop-mode .sheet {
+  max-width: 480px;
+  border-radius: 16px !important;
+  margin: auto !important;
+  max-height: 80vh;
+}
+
+/* Toast */
+body.desktop-mode .toast {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%);
+  z-index: 9999;
+}
+
+/* Coach marks — disable in desktop */
+body.desktop-mode .coach-overlay,
+body.desktop-mode .coach-callout {
+  display: none !important;
+}
+
+/* ============================================================
+   Footer (desktop only)
+   ============================================================ */
+.dt-footer {
+  margin-top: 16px;
+  background: var(--brand-900);
+  color: #ffffff;
+  border-radius: 14px;
+  padding: 22px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
+.dt-footer-links {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.dt-footer-links a {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.dt-footer-links a:hover {
+  color: var(--brand-100);
+}
+.dt-footer-sep {
+  color: rgba(255, 255, 255, 0.5);
+  user-select: none;
+}
+.dt-footer-stat {
+  color: #ffffff;
+  font-size: 14px;
+}
+
+@media (max-width: 720px) {
+  .dt-footer {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    padding: 18px 20px;
+  }
+  .dt-footer > .dt-footer-sep {
+    display: none;
+  }
+  .dt-footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+}
+
+/* ============================================================
+   Narrow-viewport responsive fallback
+   ============================================================ */
+@media (max-width: 1024px) {
+  .desktop-stage { padding: 18px 18px 48px; }
+  .dt-topnav { padding: 12px 18px; gap: 14px; }
+  .dt-nav { gap: 18px; }
+  .dt-nav-item { font-size: 14px; }
+  .dt-pill span { display: none; }
+  .dt-pill { padding: 8px; }
+  .dt-actions { gap: 6px; padding-left: 6px; }
+  .dt-card { padding: 20px; }
+  .dt-tabs-divider { margin-left: -20px; margin-right: -20px; }
+  .dt-row { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); }
+}
+
+@media (max-width: 820px) {
+  .dt-row { grid-template-columns: 1fr; }
+  .dt-tips-grid { grid-template-columns: 1fr; }
+  .dt-user-card { flex-wrap: wrap; }
+  .dt-switch-btn { width: 100%; justify-content: center; }
+  .dt-nav { display: none; }
+  body.desktop-mode .quick-grid { grid-template-columns: repeat(3, 1fr); }
+  body.desktop-mode .fav-grid { grid-template-columns: repeat(2, 1fr); }
+  body.desktop-mode [data-screen-label="visitDetail"] .app-scroll,
+  body.desktop-mode [data-screen-label="reportDetail"] .app-scroll {
+    grid-template-columns: 1fr;
+  }
+  body.desktop-mode .app-scroll > div:has(> .list-card) {
+    grid-template-columns: 1fr;
+  }
+}

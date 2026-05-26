@@ -1,0 +1,91 @@
+/* ========== Mobile-mode shell ==========
+   The display mode is now controlled by the Tweaks panel
+   ("手機版" vs "桌機版"), not by viewport width. This file
+   only carries cosmetic enhancements for the phone shell
+   when the viewport is wide enough to give it breathing room.
+   The auto-tablet/desktop transformations that used to live
+   here have been removed — wide-screen desktop layout is
+   handled exclusively by styles/desktop.css via the
+   `body.desktop-mode` class.
+*/
+
+/* ---------- sm (≥576px): mobile expanded ---------- */
+@media (min-width: 576px) {
+  body:not(.desktop-mode):not(.fluid-mobile) .stage {
+    padding: 24px;
+    background:
+      radial-gradient(900px 500px at 50% 0%, #eef5f4 0%, transparent 60%),
+      var(--bg-app);
+  }
+  body:not(.desktop-mode):not(.fluid-mobile) .phone {
+    border-radius: 28px;
+    box-shadow:
+      0 24px 60px -20px rgba(17, 24, 39, 0.18),
+      0 8px 20px -6px rgba(17, 24, 39, 0.08);
+    overflow: hidden;
+  }
+}
+
+/* ========== Fluid mobile (RWD auto mode on narrow viewports) ==========
+   Turns the simulated phone shell into a real responsive page —
+   fills viewport width, no bezel chrome, no notch, no status bar.
+*/
+body.fluid-mobile {
+  background: var(--bg-app);
+}
+body.fluid-mobile .stage {
+  padding: 0 !important;
+  background: var(--bg-app) !important;
+  align-items: stretch !important;
+  min-height: 100vh;
+}
+body.fluid-mobile .phone {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 100vh;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: var(--bg-app);
+}
+body.fluid-mobile .phone .notch,
+body.fluid-mobile .phone-statusbar {
+  display: none !important;
+}
+body.fluid-mobile .app-shell {
+  height: auto !important;
+  min-height: 100vh;
+}
+body.fluid-mobile .app-scroll {
+  overflow: visible !important;
+  height: auto !important;
+  padding-bottom: calc(var(--tabbar-h) + 40px) !important;
+}
+/* 底部導覽列固定浮動於視窗底部 — 必須以更高的特定度覆蓋
+   `.phone[data-tabbar="floating"] .tabbar`（0,3,0）*/
+body.fluid-mobile .phone[data-tabbar="floating"] .tabbar,
+body.fluid-mobile .phone .tabbar {
+  position: fixed !important;
+  left: 16px !important;
+  right: 16px !important;
+  bottom: 16px !important;
+  top: auto !important;
+  z-index: 200 !important;
+}
+/* Center the column on slightly wider phones / small tablets */
+@media (min-width: 560px) {
+  body.fluid-mobile .app-shell > .topbar,
+  body.fluid-mobile .app-scroll {
+    max-width: 560px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  body.fluid-mobile .phone[data-tabbar="floating"] .tabbar,
+  body.fluid-mobile .phone .tabbar {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    max-width: 528px;
+    width: calc(100% - 32px) !important;
+  }
+}
