@@ -184,7 +184,21 @@ function App() {
     }
     if (target === -1) {
       // back
-      setStack(s => s.length > 1 ? s.slice(0, -1) : s);
+      setStack(s => {
+        if (s.length > 1) return s.slice(0, -1);
+        // Edit screens always have a parent; fall back to it so the
+        // back action is never a no-op (e.g. after a direct deep link).
+        const fallbackMap = {
+          editFavorites: "favorites",
+          visitDetail: "visits",
+          reportDetail: "reports",
+          reminders: "home",
+          calendar: "home",
+        };
+        const curr = s[s.length - 1]?.screen;
+        const fallback = fallbackMap[curr] || "home";
+        return [{ screen: fallback, params: {} }];
+      });
       return;
     }
     // tab switch: clear stack
@@ -228,7 +242,9 @@ function App() {
     case "calendar":      body = isDesktop
                             ? <CalendarScreenDesktop navigate={navigate}/>
                             : <CalendarScreen navigate={navigate}/>; break;
-    case "editFavorites": body = <EditFavoritesScreen navigate={navigate}/>; break;
+    case "editFavorites": body = isDesktop
+                            ? <EditFavoritesScreenDesktop navigate={navigate}/>
+                            : <EditFavoritesScreen navigate={navigate}/>; break;
     default:              body = <HomeScreen navigate={navigate} openSheet={openSheet}/>;
   }
 
@@ -253,6 +269,7 @@ function App() {
       {body}
       {sheets}
       {toast && <div className="toast">{toast}</div>}
+      <BackToTop/>
     </DesktopShell>
   ) : (
     <div className="stage">
@@ -268,6 +285,7 @@ function App() {
 
         {toast && <div className="toast">{toast}</div>}
         {coach && current.screen === "home" && <CoachMarks onClose={closeCoach}/>}
+        <BackToTop/>
       </div>
     </div>
   );

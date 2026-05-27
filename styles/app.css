@@ -278,6 +278,68 @@ button { font-family: inherit; cursor: pointer; }
   font-weight: 600;
 }
 
+/* ============================================================
+   Back to Top button
+   ============================================================ */
+.back-to-top {
+  /* Mobile bezel: absolute inside .phone so it stays within the frame */
+  position: absolute;
+  bottom: 116px;
+  right: 16px;
+  z-index: 8000;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-med);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 4px 16px -6px rgba(17,24,39,0.22);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+.back-to-top.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.back-to-top:hover {
+  background: var(--brand-900);
+  color: #fff;
+  border-color: var(--brand-900);
+}
+/* Fluid mobile: fixed to viewport */
+body.fluid-mobile .back-to-top {
+  position: fixed;
+  bottom: 116px;
+  right: 16px;
+}
+/* Desktop: fixed to viewport, different placement */
+body.desktop-mode .back-to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+}
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  background: var(--bg-app);
+  padding-top: 8px;
+  margin-top: -8px;
+}
+.services-sticky-top .pill-tabs-row {
+  padding-bottom: 12px;
+}
+
 /* 更多分類按鈕（手機版） + 展開面板 */
 .pill-tabs-row {
   display: flex;
@@ -342,10 +404,17 @@ button { font-family: inherit; cursor: pointer; }
   flex: 0 0 auto;
 }
 
-/* 桌機版不需要更多按鈕：寬度足以一字排開 */
+/* 桌機版全部服務頁面保留更多按鈕；其他頁面不需要 */
 body.desktop-mode .pill-more-btn,
 body.desktop-mode .pill-more-panel {
   display: none !important;
+}
+body.desktop-mode .services-sticky-top .pill-more-btn {
+  display: inline-flex !important;
+}
+/* pill-more-panel renders outside services-sticky-top, target via screen label */
+body.desktop-mode .desktop-stage[data-screen-label="services"] .pill-more-panel {
+  display: block !important;
 }
 
 /* inline tag */

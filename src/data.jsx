@@ -172,46 +172,108 @@ const Data = {
     null, null, null, null, // empty slots
   ],
 
-  serviceCategories: ["個人紀錄", "就醫及用藥紀錄", "檢驗檢查結果", "疾病照護"],
+  serviceCategories: [
+    "個人紀錄",
+    "就醫及用藥紀錄",
+    "檢驗檢查結果",
+    "疾病照護與防治",
+    "健康資訊分享｜眷屬管理",
+    "其他加值服務",
+    "下載專區",
+    "衛教資訊",
+    "關於健康存摺服務",
+  ],
 
   services: {
     "個人紀錄": [
-      { icon: "syringe",  label: "預防接種資料" },
-      { icon: "shield",   label: "COVID-19 疫苗接種/病毒檢測結果" },
+      { icon: "shield",   label: "我參與的照護計劃" },
       { icon: "shield",   label: "過敏資料" },
+      { icon: "syringe",  label: "預防接種資料" },
+      { icon: "heart",    label: "器捐或安寧緩和醫療意願" },
+      { icon: "pulse",    label: "生理量測" },
+      { icon: "report",   label: "行為指標－飲食" },
+      { icon: "pulse",    label: "行為指標－運動" },
+      { icon: "calendar", label: "生理期紀錄" },
       { icon: "report",   label: "重大傷病證明" },
       { icon: "pulse",    label: "人工電子耳" },
-      { icon: "pulse",    label: "生理量測" },
-      { icon: "report",   label: "行為指標-飲食" },
-      { icon: "pulse",    label: "行為指標-運動" },
-      { icon: "calendar", label: "生理期紀錄" },
+      { icon: "report",   label: "資料提供紀錄" },
+    ],
+    "就醫及用藥紀錄": [
+      { icon: "stetho",   label: "就醫總覽" },
+      { icon: "stetho",   label: "最近就醫紀錄（西醫／中醫／牙醫）" },
+      { icon: "pill",     label: "用藥紀錄" },
+      { icon: "calendar", label: "慢連箋用藥資料" },
+      { icon: "scissors", label: "手術紀錄" },
+      { icon: "bed",      label: "住院紀錄" },
       { icon: "pill",     label: "自費藥品" },
       { icon: "box",      label: "自費醫材" },
     ],
-    "就醫及用藥紀錄": [
-      { icon: "stetho",   label: "西醫門診" },
-      { icon: "stetho",   label: "中醫門診" },
-      { icon: "stetho",   label: "牙醫門診" },
-      { icon: "bed",      label: "住院紀錄" },
-      { icon: "pill",     label: "目前用藥" },
-      { icon: "calendar", label: "慢性處方箋" },
-      { icon: "scissors", label: "手術紀錄" },
-    ],
     "檢驗檢查結果": [
-      { icon: "shield",   label: "成人健檢" },
-      { icon: "tube",     label: "血液檢查" },
-      { icon: "flask",    label: "尿液檢查" },
-      { icon: "report",   label: "病理切片" },
-      { icon: "report",   label: "影像報告" },
+      { icon: "shield",   label: "成人預防保健結果" },
+      { icon: "report",   label: "自費健檢資料登錄" },
+      { icon: "flask",    label: "癌症篩檢結果" },
+      { icon: "star",     label: "健康金存摺" },
+      { icon: "tube",     label: "血糖檢驗報告" },
+      { icon: "flask",    label: "血脂檢驗報告" },
+      { icon: "image",    label: "影像或病理檢查報告" },
       { icon: "report",   label: "其他檢驗資料" },
+      { icon: "shield",   label: "COVID-19疫苗接種/病毒檢測結果" },
+      { icon: "tube",     label: "骨質疏鬆檢驗報告" },
     ],
-    "疾病照護": [
-      { icon: "shield",   label: "慢性病管理" },
-      { icon: "shield",   label: "癌症照護" },
-      { icon: "pulse",    label: "心血管追蹤" },
-      { icon: "report",   label: "復健紀錄" },
+    "疾病照護與防治": [
+      { icon: "pulse",    label: "代謝症候群專區" },
+      { icon: "user",     label: "大家醫會員健康管理" },
+      { icon: "home",     label: "居家醫療照護服務" },
+      { icon: "pulse",    label: "慢性阻塞性肺病" },
+      { icon: "shield",   label: "肝炎照護" },
+      { icon: "pulse",    label: "動脈粥狀硬化心血管疾病(ASCVD)" },
+      { icon: "flask",    label: "肝癌風險評估" },
+      { icon: "pulse",    label: "末期腎病評估" },
+      { icon: "pulse",    label: "心血管疾病風險評估" },
+      { icon: "pulse",    label: "糖尿病追蹤" },
+      { icon: "pulse",    label: "初期慢性腎病追蹤" },
+      { icon: "shield",   label: "BC肝炎追蹤" },
+    ],
+    "健康資訊分享｜眷屬管理": [
+      { icon: "user",     label: "眷屬管理－我可查看" },
+      { icon: "switch",   label: "眷屬管理－同意他人查看" },
+    ],
+    "其他加值服務": [
+      { icon: "syringe",  label: "兒童預防接種試算" },
+      { icon: "sliders",  label: "生活型態評估量表" },
+      { icon: "shield",   label: "健保協同商保" },
+    ],
+    "下載專區": [
+      { icon: "save",     label: "HTML下載" },
+      { icon: "save",     label: "PDF下載" },
+      { icon: "save",     label: "XML下載" },
+      { icon: "save",     label: "JSON下載" },
+    ],
+    "衛教資訊": [
+      { icon: "info",     label: "健康時事" },
+      { icon: "external", label: "衛教連結" },
+    ],
+    "關於健康存摺服務": [
+      { icon: "image",    label: "觀看影音短片" },
+      { icon: "info",     label: "健康存摺簡介" },
+      { icon: "star",     label: "使用小技巧" },
+      { icon: "phone",    label: "聯絡窗口" },
     ],
   },
 };
 
 window.Data = Data;
+
+// Preserve a snapshot of the default favorites for the "reset" action
+Data.defaultFavorites = Data.favorites.slice();
+
+// Hydrate persisted favorites (saved by EditFavoritesScreen) if any
+try {
+  const saved = localStorage.getItem("hb_favorites");
+  if (saved) {
+    const parsed = JSON.parse(saved);
+    if (Array.isArray(parsed)) {
+      Data.favorites = parsed;
+    }
+  }
+} catch (e) {}

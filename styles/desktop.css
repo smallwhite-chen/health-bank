@@ -799,10 +799,42 @@ body.desktop-mode .detail-section {
 }
 
 /* Reminders / Edit Favorites — narrow readable column */
-body.desktop-mode [data-screen-label="reminders"] .app-scroll,
-body.desktop-mode [data-screen-label="editFavorites"] .app-scroll {
+body.desktop-mode [data-screen-label="reminders"] .app-scroll {
   max-width: 720px;
   margin: 0 auto;
+}
+
+/* All Services — sticky search + tabs clear the desktop top nav */
+body.desktop-mode .services-sticky-top {
+  top: 84px;
+  background: var(--dt-card-bg);
+  margin-left: -32px;
+  margin-right: -32px;
+  margin-top: 0;
+  padding: 12px 32px 0;
+  border-radius: 0;
+}
+body.desktop-mode .services-sticky-top .search-wrap,
+body.desktop-mode .services-sticky-top .pill-tabs-row {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Force pill-tabs-row to grid so scroll container gets exactly 1fr
+   and the 更多 button always stays visible on the right */
+body.desktop-mode .services-sticky-top .pill-tabs-row {
+  display: grid !important;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+body.desktop-mode .services-sticky-top .pill-tabs-scroll {
+  min-width: 0;
+  overflow-x: auto;
+  width: 100%;
+}
+body.desktop-mode .services-sticky-top .pill-more-btn {
+  flex-shrink: 0;
 }
 
 /* Sheets center-modal */

@@ -69,7 +69,7 @@ function PageTitle({ children, right, favoriteKey, isFav, onToggleFav }) {
     <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"0 16px" }}>
       <h1 className="page-title">
         {children}
-        {favoriteKey ? (
+        {favoriteKey && (
           <button
             className="info"
             onClick={onToggleFav}
@@ -78,8 +78,6 @@ function PageTitle({ children, right, favoriteKey, isFav, onToggleFav }) {
           >
             <Icon name={isFav ? "heart-fill" : "heart"} size={18}/>
           </button>
-        ) : (
-          <span className="info"><Icon name="info" size={16}/></span>
         )}
       </h1>
       {right}
@@ -101,3 +99,108 @@ function VisitRow({ v, onClick }) {
 }
 
 Object.assign(window, { StatusBar, TopBar, DetailHeader, BottomTabBar, PageTitle, VisitRow });
+
+// ============================================================
+// Back to Top button
+// Shows after scrolling > 1 viewport height, auto-hides in 5s,
+// reappears on next scroll. Works on both mobile (.app-scroll)
+// and desktop (window scroll).
+// ============================================================
+function BackToTop() {
+  const [visible, setVisible] = React.useState(false);
+  const timerRef = React.useRef(null);
+  const lastAppScrollRef = React.useRef(null);
+
+  React.useEffect(() => {
+    const resetTimer = (show) => {
+      clearTimeout(timerRef.current);
+      if (show) {
+        setVisible(true);
+        timerRef.current = setTimeout(() => setVisible(false), 5000);
+      } else {
+        setVisible(false);
+      }
+    };
+
+    const onScroll = (e) => {
+      const el = e.target;
+      let scrollTop = 0, viewH = 0;
+
+      if (!el || el === document || el === document.documentElement || el === document.body) {
+        scrollTop = window.scrollY;
+        viewH = window.innerHeight;
+      } else if (el.scrollTop !== undefined) {
+        scrollTop = el.scrollTop;
+        viewH = el.clientHeight;
+      } else {
+        scrollTop = window.scrollY;
+        viewH = window.innerHeight;
+      }
+
+      if (scrollTop > viewH) {
+        resetTimer(true);
+      } else {
+        resetTimer(false);
+      }
+    };
+
+    // Window scroll (desktop)
+    window.addEventListener("scroll", onScroll, { passive: true });
+    // Document capture (catches non-bubbling element scroll events)
+    document.addEventListener("scroll", onScroll, { capture: true, passive: true });
+
+    // Directly attach to .app-scroll (most reliable for mobile container)
+    const attachToAppScroll = () => {
+      const el = document.querySelector(".app-scroll");
+      if (el && el !== lastAppScrollRef.current) {
+        if (lastAppScrollRef.current) {
+          lastAppScrollRef.current.removeEventListener("scroll", onScroll);
+        }
+        el.addEventListener("scroll", onScroll, { passive: true });
+        lastAppScrollRef.current = el;
+      }
+    };
+    attachToAppScroll();
+
+    // Re-attach when navigation swaps the .app-scroll element
+    const mo = new MutationObserver(attachToAppScroll);
+    mo.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      clearTimeout(timerRef.current);
+      window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("scroll", onScroll, { capture: true });
+      if (lastAppScrollRef.current) {
+        lastAppScrollRef.current.removeEventListener("scroll", onScroll);
+      }
+      mo.disconnect();
+    };
+  }, []);
+
+  const handleClick = () => {
+    setVisible(false);
+    clearTimeout(timerRef.current);
+    const appScroll = document.querySelector(".app-scroll");
+    // Mobile: scroll the container; Desktop: scroll window
+    if (appScroll && appScroll.scrollTop > 0) {
+      appScroll.scrollTop = 0;
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  return (
+    <button
+      className={`back-to-top${visible ? " is-visible" : ""}`}
+      onClick={handleClick}
+      aria-label="回到頂端">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M12 19V5"/>
+        <path d="m5 12 7-7 7 7"/>
+      </svg>
+      <span>Top</span>
+    </button>
+  );
+}
+
+Object.assign(window, { StatusBar, TopBar, DetailHeader, BottomTabBar, PageTitle, VisitRow, BackToTop });
