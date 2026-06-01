@@ -3,6 +3,11 @@ function VisitsScreen({ navigate, openSheet, isFav, onToggleFav }) {
   const [filter, setFilter] = React.useState("全部");
   const tabs = ["全部", "西醫", "中醫", "牙醫"];
   const rows = filter === "全部" ? visits : visits.filter(v => v.category === filter);
+  const PAGE = 4;
+  const [visible, setVisible] = React.useState(PAGE);
+  React.useEffect(() => { setVisible(PAGE); }, [filter]);
+  const shown = rows.slice(0, visible);
+  const remaining = rows.length - shown.length;
 
   return (
     <>
@@ -27,13 +32,18 @@ function VisitsScreen({ navigate, openSheet, isFav, onToggleFav }) {
         </div>
 
         <div style={{ padding:"0 16px" }}>
-          {rows.map(v => (
+          {shown.map(v => (
             <VisitRow key={v.id} v={v} onClick={() => navigate("visitDetail", { id: v.id })}/>
           ))}
           {rows.length === 0 && (
             <div style={{ textAlign:"center", padding: 40, color:"var(--text-muted)", fontSize:14 }}>
               沒有符合條件的紀錄
             </div>
+          )}
+          {remaining > 0 && (
+            <button className="load-more" onClick={() => setVisible(v => v + PAGE)}>
+              載入更多
+            </button>
           )}
         </div>
 

@@ -122,13 +122,13 @@ function VisitFilterSheet({ onClose, value, onApply }) {
   const [v, setV] = React.useState({ keyword: "", customStart: "", customEnd: "", ...value });
   const times = ["近 1 個月", "近 3 個月", "近 6 個月", "近 1 年", "全部", "自訂"];
   const cats  = ["西醫", "中醫", "牙醫"];
-  const meds  = ["藥品", "非藥品"];
+  const meds  = ["藥品", "非藥品", "檢驗(查)"];
   const toggle = (arr, x) => arr.includes(x) ? arr.filter(y => y !== x) : [...arr, x];
   return (
     <Sheet title="進階篩選" onClose={onClose} footer={
       <>
         <button onClick={() => setV({ keyword: "", time: "全部", customStart: "", customEnd: "", cats: [], meds: [] })}>重置條件</button>
-        <button className="primary" onClick={() => { onApply(v); onClose(); }}>篩選設定（40 筆）</button>
+        <button className="primary" onClick={() => { onApply(v); onClose(); }}>查看篩選結果(40筆)</button>
       </>
     }>
       <div className="chip-group-label" style={{ marginTop: 4 }}>關鍵字搜尋</div>
@@ -189,7 +189,7 @@ function ReportFilterSheet({ onClose, value, onApply }) {
     <Sheet title="進階篩選" onClose={onClose} footer={
       <>
         <button onClick={() => setV({ time: "全部", cats: [] })}>重置條件</button>
-        <button className="primary" onClick={() => { onApply(v); onClose(); }}>篩選設定（40 筆）</button>
+        <button className="primary" onClick={() => { onApply(v); onClose(); }}>查看篩選結果(40筆)</button>
       </>
     }>
       <div className="chip-group-label" style={{ marginTop: 4 }}>時間區間</div>

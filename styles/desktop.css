@@ -771,6 +771,20 @@ body.desktop-mode .app-scroll > div:has(> .list-card) {
 body.desktop-mode .app-scroll > div:has(> .list-card) > .list-card {
   margin-bottom: 0;
 }
+/* Visits list: single column */
+body.desktop-mode [data-screen-label="visits"] .app-scroll > div:has(> .list-card) {
+  grid-template-columns: 1fr;
+}
+/* "詳細記錄 >" affordance on desktop list cards */
+body.desktop-mode .list-card-more {
+  display: inline;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brand-900);
+  flex-shrink: 0;
+  margin-left: 4px;
+}
+body.desktop-mode .list-card .chev { color: var(--brand-900); }
 
 /* Visit/Report Detail: side-by-side */
 body.desktop-mode [data-screen-label="visitDetail"] .app-scroll,

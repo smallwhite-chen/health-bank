@@ -548,6 +548,29 @@ body.desktop-mode .desktop-stage[data-screen-label="services"] .pill-more-panel 
   margin-bottom: 10px;
 }
 .list-card .chev { color: var(--text-tertiary); flex-shrink: 0; }
+/* "詳細記錄" label — desktop only (hidden on mobile) */
+.list-card-more { display: none; }
+/* Load more button */
+.load-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: 4px;
+  padding: 13px;
+  border-radius: 12px;
+  border: 1px solid var(--border-med);
+  background: var(--bg-surface);
+  color: var(--brand-900);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.load-more:hover { background: var(--bg-soft); border-color: var(--brand-900); }
+.load-more:active { opacity: .7; }
 
 /* Tip card with icon */
 .tip-card {

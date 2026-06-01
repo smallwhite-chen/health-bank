@@ -93,6 +93,7 @@ function VisitRow({ v, onClick }) {
         <div className="kv-row"><span className="k">疾病分類</span><span className="v">{v.diagnosis}</span></div>
         <div className="kv-row"><span className="k">醫事機構</span><span className="v">{v.org}</span></div>
       </div>
+      <span className="list-card-more">詳細記錄</span>
       <Icon name="chev-right" size={16} className="chev"/>
     </div>
   );
