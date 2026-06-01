@@ -44,6 +44,10 @@ function HomeScreen({ navigate, openSheet, currentMember }) {
                 <Icon name="chev-right" size={16} className="chev"/>
               </div>
             ))}
+            <button className="view-calendar-btn" onClick={() => navigate("reminders")}>
+              <Icon name="bell" size={16}/>
+              <span>檢視完整提醒項目</span>
+            </button>
           </div>
         ) : (
           <div style={{ padding: "0 16px" }}>
