@@ -312,7 +312,7 @@ body.desktop-mode .stage { display: none; }
 
 .dt-tips-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 12px;
 }
 .dt-tip-row {

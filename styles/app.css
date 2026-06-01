@@ -338,6 +338,7 @@ body.desktop-mode .back-to-top {
   bottom: 24px;
   right: 24px;
 }
+.services-sticky-top {
   position: sticky;
   top: 0;
   z-index: 6;

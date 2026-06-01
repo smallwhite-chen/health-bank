@@ -54,11 +54,9 @@ function A11ySheet({ onClose, state, setState }) {
   const reset = () => setState({ theme: "day", size: "中", lineHeight: "預設", letterSpacing: "預設" });
   const themes  = [{ k: "day", label: "日間模式" }, { k: "night", label: "夜間模式" }];
   const sizes   = [
-    { k: "最小", a: 12 },
-    { k: "小",   a: 14 },
-    { k: "中",   a: 17 },
-    { k: "大",   a: 20 },
-    { k: "最大", a: 23 },
+    { k: "小",   a: 15 },
+    { k: "中",   a: 18 },
+    { k: "大",   a: 22 },
   ];
   const heights  = ["預設", "1.5倍", "2倍"];
   const spacings = ["預設", "0.14倍", "0.12倍"];
@@ -80,7 +78,7 @@ function A11ySheet({ onClose, state, setState }) {
       </div>
 
       <div className="chip-group-label">字體大小</div>
-      <div className="a11y-group a11y-group-5">
+      <div className="a11y-group a11y-group-3">
         {sizes.map(s => (
           <button
             key={s.k}

@@ -42,22 +42,31 @@ function HomeScreenDesktop({ navigate, openSheet, currentMember }) {
         <div className="dt-tabs-divider"/>
 
         {tab === "tips" ? (
-          <div className="dt-tips-grid">
-            {tips.map(t => (
-              <button
-                key={t.id}
-                className="dt-tip-row"
-                onClick={() => t.screen && navigate(t.screen, t.params)}
-              >
-                <span className="dt-tip-ico"><Icon name={t.icon} size={18}/></span>
-                <span className="dt-tip-text">
-                  <span className="dt-tip-title">{t.title}</span>
-                  <span className="dt-tip-sub">{t.sub}</span>
-                </span>
-                <Icon name="chev-right" size={14}/>
-              </button>
-            ))}
-          </div>
+          <>
+            <div className="dt-tips-grid">
+              {tips.map(t => (
+                <button
+                  key={t.id}
+                  className="dt-tip-row"
+                  onClick={() => t.screen && navigate(t.screen, t.params)}
+                >
+                  <span className="dt-tip-ico"><Icon name={t.icon} size={18}/></span>
+                  <span className="dt-tip-text">
+                    <span className="dt-tip-title">{t.title}</span>
+                    <span className="dt-tip-sub">{t.sub}</span>
+                  </span>
+                  <Icon name="chev-right" size={14}/>
+                </button>
+              ))}
+            </div>
+            <button
+              className="dt-view-calendar"
+              onClick={() => navigate("reminders")}
+            >
+              <Icon name="bell" size={16}/>
+              <span>檢視完整提醒項目</span>
+            </button>
+          </>
         ) : (
           <>
             <div className="dt-tips-grid">
