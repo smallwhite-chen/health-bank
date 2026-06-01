@@ -790,13 +790,30 @@ body.desktop-mode [data-screen-label="reportDetail"] .h-16 {
   grid-column: 1 / -1;
 }
 /* The longer meds/notes section spans both columns */
+body.desktop-mode [data-screen-label="visitDetail"] .detail-section:nth-of-type(3),
 body.desktop-mode [data-screen-label="visitDetail"] .detail-section:nth-of-type(4),
-body.desktop-mode [data-screen-label="visitDetail"] .detail-section:nth-of-type(5) {
+body.desktop-mode [data-screen-label="visitDetail"] .detail-section:nth-of-type(5),
+body.desktop-mode [data-screen-label="visitDetail"] .detail-section:nth-of-type(6) {
   grid-column: 1 / -1;
 }
 body.desktop-mode .detail-section {
   margin: 0 !important;
 }
+/* First-row cards stretch to equal height */
+body.desktop-mode [data-screen-label="visitDetail"] .detail-section:nth-of-type(1),
+body.desktop-mode [data-screen-label="visitDetail"] .detail-section:nth-of-type(2) {
+  align-self: stretch;
+}
+/* Desktop drug card: image | name+days | 查詢藥品 in one row */
+body.desktop-mode .drug-top {
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas: "img main btn";
+  column-gap: 12px;
+  row-gap: 0;
+}
+body.desktop-mode .drug-top .drug-query { grid-area: btn; justify-self: end; align-self: center; }
+body.desktop-mode .drug-days-colon { display: none; }
+body.desktop-mode .drug-days { display: flex; align-items: baseline; gap: 6px; margin-top: 0; }
 
 /* Reminders / Edit Favorites — narrow readable column */
 body.desktop-mode [data-screen-label="reminders"] .app-scroll {

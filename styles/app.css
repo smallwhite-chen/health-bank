@@ -659,6 +659,32 @@ body.desktop-mode .desktop-stage[data-screen-label="services"] .pill-more-panel 
 .detail-section.kpoints .detail-row .k { white-space: nowrap; }
 .detail-section.kpoints .kpoint-toggle { cursor: pointer; }
 .detail-section.kpoints .kpoint-toggle:active { opacity: .6; }
+/* Drug card — mobile 4-row layout */
+.drug-top {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "img btn"
+    "main main";
+  align-items: center;
+  column-gap: 12px;
+  row-gap: 10px;
+}
+.drug-top .drug-img { grid-area: img; }
+.drug-top .drug-query { grid-area: btn; justify-self: end; }
+.drug-top .drug-main { grid-area: main; min-width: 0; }
+.drug-name-line { line-height: 1.7; }
+.drug-name-line .drug-label { font-size: 12px; color: var(--text-tertiary); }
+.drug-name-line .drug-sep { margin: 0 3px; color: var(--text-tertiary); }
+.drug-days { margin-top: 2px; }
+.drug-days .drug-days-colon { color: var(--text-tertiary); }
+.detail-section.kpoints .kpoint-note {
+  margin: 12px 2px 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-tertiary, #8a8f99);
+  text-align: justify;
+}
 
 /* Segmented */
 .segmented {

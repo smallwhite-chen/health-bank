@@ -73,8 +73,10 @@ function VisitDetailScreen({ navigate, params }) {
           {d.subdx.map((s, i) => (
             <div key={i}>
               <div style={{ fontSize: 12, color:"var(--text-tertiary)", padding:"4px 0" }}>項目：{s.idx}</div>
-              <div style={{ fontSize: 12, color:"var(--text-tertiary)", padding:"4px 0" }}>疾病分類：</div>
-              <div style={{ fontSize: 14, color:"var(--text-primary)", fontWeight: 500, paddingBottom:8 }}>{s.label}</div>
+              <div style={{ display:"flex", alignItems:"baseline", gap: 6, paddingBottom: 8 }}>
+                <span style={{ fontSize: 12, color:"var(--text-tertiary)", flexShrink: 0 }}>疾病分類：</span>
+                <span style={{ fontSize: 14, color:"var(--text-primary)", fontWeight: 500 }}>{s.label}</span>
+              </div>
             </div>
           ))}
         </div>
@@ -88,21 +90,28 @@ function VisitDetailScreen({ navigate, params }) {
           </div>
           {medTab === "drug" && list.map((m, i) => (
             <div key={i} style={{ padding:"12px 0", borderBottom: i < list.length - 1 ? "1px solid var(--border-soft)" : 0 }}>
-              <div style={{ display:"flex", gap:12, alignItems:"center" }}>
+              <div className="drug-top">
                 {m.img && window.DrugImages?.[m.img] ? (
-                  <img src={window.DrugImages[m.img]} alt={m.name} style={{ width:48, height:48, borderRadius:8, objectFit:"cover", flexShrink:0, border:"1px solid var(--border-soft)" }}/>
+                  <img className="drug-img" src={window.DrugImages[m.img]} alt={m.name} style={{ width:48, height:48, borderRadius:8, objectFit:"cover", border:"1px solid var(--border-soft)" }}/>
                 ) : (
-                  <div className="placeholder-img" style={{ flexShrink:0 }}><Icon name="image" size={18}/></div>
+                  <div className="placeholder-img drug-img"><Icon name="image" size={18}/></div>
                 )}
-                <div style={{ flex:1, minWidth:0 }}>
-                  <div style={{ fontSize: 14, fontWeight: 600 }}>{m.name}</div>
-                  <div style={{ fontSize: 12, color:"var(--text-tertiary)" }}>{m.en}</div>
-                  {m.days != null && <div style={{ display:"flex", alignItems:"baseline", gap: 6 }}>
-                    <span style={{ fontSize: 12, color:"var(--text-tertiary)" }}>給藥日數</span>
-                    <span style={{ fontSize: 13, color:"var(--text-primary)", lineHeight: 1.7 }}>{m.days} 天</span>
-                  </div>}
+                <button className="filter-btn drug-query">查詢藥品 <Icon name="external" size={12}/></button>
+                <div className="drug-main">
+                  <div className="drug-name-line">
+                    <span className="drug-label">藥品名稱：</span>
+                    <span className="drug-cn" style={{ fontSize: 14, fontWeight: 600 }}>{m.name}</span>
+                    <span className="drug-sep">/</span>
+                    <span className="drug-en" style={{ fontSize: 12, color:"var(--text-tertiary)" }}>{m.en}</span>
+                  </div>
+                  {m.days != null && (
+                    <div className="drug-days">
+                      <span className="drug-days-label" style={{ fontSize: 12, color:"var(--text-tertiary)" }}>給藥日數</span>
+                      <span className="drug-days-colon">：</span>
+                      <span className="drug-days-val" style={{ fontSize: 13, color:"var(--text-primary)", lineHeight: 1.7 }}>{m.days} 天</span>
+                    </div>
+                  )}
                 </div>
-                <button className="filter-btn" style={{ flexShrink:0 }}>查詢藥品 <Icon name="external" size={12}/></button>
               </div>
               {m.indication && (
                 <div style={{ marginTop: 10, background:"var(--bg-soft)", padding:"10px 12px", borderRadius: 8 }}>
@@ -181,6 +190,7 @@ function VisitDetailScreen({ navigate, params }) {
           {openRows.med && <Breakdown items={medItems}/>}
           <div className="detail-row right"><span className="k">健保卡就醫序號</span><span className="v">0003</span></div>
           <div className="detail-row right"><span className="k">資料來源</span><span className="v">IC卡資料</span></div>
+          <p className="kpoint-note">註：醫療點數是各分項費用之合計，含部分負擔，因部分案件採論件計酬、Tw-DRGs定額支付及分項論量之申報而與「申請點數＋部分負擔」有所差異。</p>
         </div>
 
         <div className="h-16"/>
