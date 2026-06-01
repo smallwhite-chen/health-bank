@@ -59,25 +59,29 @@ const Data = {
     summary: {
       date: "115年2月18日",
       type: "西醫",
-      diagnosis: "過敏性鼻炎",
-      procedure: "一般門診診察",
+      diagnosis: "H4010X0/隅角開放性青光眼，未明示期別",
+      procedure: "-",
     },
     org: {
-      name: "台大醫院",
+      name: "燦明大學眼",
       doctor: "陳怡安",
     },
     subdx: [
-      { idx: "次診斷1", label: "疾病分類：眼結膜炎" },
+      { idx: "次診斷1", label: "H04129/未明示側性之淚腺乾眼症" },
+      { idx: "次診斷2", label: "H35413/雙側視網膜格子狀退化" },
+      { idx: "次診斷3", label: "H53143/雙側視覺不適" },
     ],
     meds: {
       drug: [
-        { name: "安莫西林膠囊 500毫克", en: "Amoxicillin 500mg", days: 7, indication: "用於敏感菌引起之呼吸道感染，包括肺炎、支氣管炎、咽喉炎及扁桃腺炎等" },
-        { name: "普拿疼錠 500毫克", en: "Acetaminophen 500mg", days: 5, indication: "用於緩解輕度至中度疼痛及退燒，適用於頭痛、牙痛、關節痛及感冒引起的發燒" },
-        { name: "右旋美乙乙嗎南錠 15毫克", en: "Dextromethorphan 15mg", days: 5, indication: "用於抑制非生產性（乾性）咳嗽，適用於感冒、流感及過敏所引起的咳嗽症狀" },
+        { name: "適眼眼藥水2%", en: "CATOL EYE DROPS 2%", days: 28, img: "catol", indication: "青光眼、高眼壓。" },
+        { name: "舒而坦　眼藥水", en: "XALATAN 50µg/ml (0.005%)", days: 28, img: "xalatan", indication: "六歲以上兒童與成人之青光眼、高眼壓。" },
       ],
       nondrug: [
-        { code: "09040C", name: "尿液常規檢驗", qty: 1, reportId: "urine" },
-        { code: "09044C", name: "尿蛋白定量",   qty: 1, reportId: "protein" },
+        { code: "05211C", name: "門診藥事服務費一慢性病處方給藥二十八天以上（山地離島地區每人每日一百件內）", qty: 1, reportId: "urine" },
+      ],
+      lab: [
+        { code: "23305C", name: "氣壓式眼壓測定", qty: 1, reportId: "vision", noReport: true },
+        { code: "23506C", name: "微細超音波檢查", qty: 1, reportId: "iop" },
       ],
     },
   },
