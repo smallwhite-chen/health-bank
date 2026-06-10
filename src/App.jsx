@@ -90,6 +90,7 @@ function App() {
   })();
   const [stack, setStack] = useSt(initial);
   const [sheet, setSheet] = useSt(null); // 'family' | 'a11y' | 'visitFilter' | 'reportFilter'
+  const [sheetData, setSheetData] = useSt(null);
   const [toast, setToast] = useSt(null);
   const [visitFilter, setVisitFilter] = useSt({ time: "全部", cats: [], meds: [] });
   const [reportFilter, setReportFilter] = useSt({ time: "全部", cats: [] });
@@ -165,6 +166,8 @@ function App() {
           const parentMap = {
             visitDetail: "visits.html",
             reportDetail: "reports.html",
+            imageReportDetail: "reports.html",
+            otherReportDetail: "reports.html",
             editFavorites: "favorites.html",
             reminders: "index.html",
             calendar: "index.html",
@@ -192,6 +195,8 @@ function App() {
           editFavorites: "favorites",
           visitDetail: "visits",
           reportDetail: "reports",
+          imageReportDetail: "reports",
+          otherReportDetail: "reports",
           reminders: "home",
           calendar: "home",
         };
@@ -214,6 +219,8 @@ function App() {
   const tabFor = (screen) => {
     if (screen === "visitDetail") return "visits";
     if (screen === "reportDetail") return "reports";
+    if (screen === "imageReportDetail") return "reports";
+    if (screen === "otherReportDetail") return "reports";
     if (screen === "editFavorites") return "favorites";
     if (screen === "reminders") return null;
     return screen;
@@ -221,8 +228,8 @@ function App() {
   const activeTab = tabFor(current.screen);
   const hideTabBar = current.screen === "reminders" || current.screen === "editFavorites" || current.screen === "calendar";
 
-  const openSheet = (name) => setSheet(name);
-  const closeSheet = () => setSheet(null);
+  const openSheet = (name, data) => { setSheet(name); setSheetData(data || null); };
+  const closeSheet = () => { setSheet(null); setSheetData(null); };
 
   const isDesktop = effectiveViewport === "desktop";
   let body;
@@ -236,6 +243,8 @@ function App() {
     case "visitDetail":   body = <VisitDetailScreen navigate={navigate} params={current.params}/>; break;
     case "reports":       body = <ReportsScreen navigate={navigate} openSheet={openSheet} filter={reportFilter} isFav={favScreens.includes("reports")} onToggleFav={() => toggleFavScreen("reports","檢驗報告")}/>; break;
     case "reportDetail":  body = <ReportDetailScreen navigate={navigate} params={current.params}/>; break;
+    case "imageReportDetail": body = <ImageReportDetailScreen navigate={navigate} params={current.params}/>; break;
+    case "otherReportDetail": body = <OtherReportDetailScreen navigate={navigate} params={current.params}/>; break;
     case "favorites":     body = <FavoritesScreen navigate={navigate} openSheet={openSheet}/>; break;
     case "services":      body = <AllServicesScreen navigate={navigate} openSheet={openSheet}/>; break;
     case "reminders":     body = <RemindersScreen navigate={navigate}/>; break;
@@ -253,7 +262,7 @@ function App() {
       {sheet === "family" && <FamilySwitchSheet onClose={closeSheet} onPick={(m) => { setCurrentMember(m); closeSheet(); showToast(`已切換至 ${m}`); }}/>}
       {sheet === "a11y"   && <A11ySheet onClose={closeSheet} state={a11y} setState={setA11y}/>}
       {sheet === "visitFilter"  && <VisitFilterSheet  onClose={closeSheet} value={visitFilter}  onApply={setVisitFilter}/>}
-      {sheet === "reportFilter" && <ReportFilterSheet onClose={closeSheet} value={reportFilter} onApply={setReportFilter}/>}
+      {sheet === "reportFilter" && <ReportFilterSheet onClose={closeSheet} value={reportFilter} onApply={setReportFilter} scope={sheetData && sheetData.scope}/>}
     </>
   );
 
@@ -313,7 +322,7 @@ function App() {
                 </svg>
               </button>
             </div>
-            <div className="ptw-version">W3就醫紀錄 v2.4</div>
+            <div className="ptw-version">w4檢驗報告 v3.0</div>
 
             <div className="ptw-section-label">裝置版型</div>
             <div className="ptw-grid ptw-grid-3">
@@ -356,7 +365,7 @@ function App() {
               <path d="M4 17h4"/><circle cx="11" cy="17" r="2"/><path d="M13 17h7"/>
             </svg>
             <span>原型設定</span>
-            <span className="ptw-fab-version">W3就醫紀錄 v2.4</span>
+            <span className="ptw-fab-version">w4檢驗報告 v3.0</span>
           </button>
         )}
 

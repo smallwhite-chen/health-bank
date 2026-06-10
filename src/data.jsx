@@ -128,21 +128,230 @@ const Data = {
 
   // 子分類：選定主分類時，下方再顯示一列子分類 pill
   reportSubCategories: {
-    "癌症篩檢結果": ["全部", "大腸癌篩檢", "口腔癌篩檢", "肺癌篩檢"],
+    "癌症篩檢結果": ["全部", "大腸癌篩檢", "口腔癌篩檢", "肺癌篩檢", "乳癌篩檢", "子宮頸癌篩檢"],
+  },
+
+  // 子分類說明：選定特定子分類時，於報告列表上方顯示
+  reportSubCatNotes: {
+    "大腸癌篩檢": {
+      item: "定量免疫法糞潛血檢查，系統顯示最近三次報告",
+      advice: [
+        "建議每 3 年 1 次定期接受大腸癌篩檢。",
+        "任何檢查都會有偽陰性個案發生，即使檢查結果正常，有任何異狀，均應儘速就醫。",
+      ],
+    },
+    "口腔癌篩檢": {
+      item: "口腔黏膜目視及觸診檢查，系統顯示最近三次報告",
+      advice: [
+        "建議 30 歲以上有嚼檳榔（含已戒）或吸菸習慣者，每 2 年 1 次口腔黏膜檢查。",
+        "任何檢查都會有偽陰性個案發生，即使檢查結果正常，口腔有任何異狀，均應儘速就醫。",
+      ],
+    },
+    "肺癌篩檢": {
+      item: "低劑量電腦斷層（LDCT）檢查，系統顯示最近三次報告",
+      advice: [
+        "建議具肺癌家族史或重度吸菸史之高風險族群，每 2 年 1 次低劑量電腦斷層檢查。",
+        "任何檢查都會有偽陰性個案發生，即使檢查結果正常，有任何異狀，均應儘速就醫。",
+      ],
+    },
+    "乳癌篩檢": {
+      item: "乳房 X 光攝影檢查，系統顯示最近三次報告",
+      advice: [
+        "建議 45-69 歲女性（或 40-44 歲具乳癌家族史者），每 2 年 1 次乳房 X 光攝影檢查。",
+        "任何檢查都會有偽陰性個案發生，即使檢查結果正常，有任何異狀，均應儘速就醫。",
+      ],
+    },
+    "子宮頸癌篩檢": {
+      item: "子宮頸抹片檢查，系統顯示最近三次報告",
+      advice: [
+        "建議 30 歲以上女性，每 3 年至少 1 次子宮頸抹片檢查。",
+        "任何檢查都會有偽陰性個案發生，即使檢查結果正常，有任何異狀，均應儘速就醫。",
+      ],
+    },
   },
 
   reports: [
-    { id: "r1",    date: "115年3月5日",  type: "其他檢驗資料",       item: "成人預防保健",       org: "台大醫院", summary: "BMI 23.5, 血壓 125/82, 各項指標正常" },
-    { id: "r2",    date: "115年1月20日", type: "其他檢驗資料",       item: "勞工一般體檢",       org: "亞東醫院", summary: "聽力、視力正常，胸部X光無異常" },
+    { id: "r1",    date: "115年4月30日", type: "其他檢驗資料", examName: "血中尿素氮", item: "BUN", org: "台大醫院", result: "13.5 mg/dL", refVal: "4.7 - 23", judge: "正常", summary: "腎功能指標於參考範圍內" },
+    { id: "r2",    date: "115年1月20日", type: "其他檢驗資料", examName: "肌酸酐", item: "Creatinine", org: "亞東醫院", result: "0.5 mg/dL", refVal: "0.6 - 1.3", judge: "異常", summary: "腎功能指標於參考範圍內" },
     { id: "r_img", date: "114年12月20日",type: "影像或病理檢查報告", item: "胸部 X 光攝影",       org: "馬偕醫院", summary: "雙肺野清晰，心影大小正常" },
-    { id: "r3",    date: "114年12月10日",type: "其他檢驗資料",       item: "40 歲以上成人健檢",   org: "馬偕醫院", summary: "血液常規正常，肝腎功能正常" },
-    { id: "r_oral",date: "114年11月18日",type: "癌症篩檢結果", subcat:"口腔癌篩檢", item: "口腔黏膜檢查",     org: "亞東醫院", summary: "未見可疑病灶，建議每兩年再追蹤" },
-    { id: "r_lung",date: "114年9月10日", type: "癌症篩檢結果", subcat:"肺癌篩檢",   item: "低劑量電腦斷層 (LDCT)", org: "台大醫院", summary: "未發現結節，建議定期追蹤" },
+    { id: "r3",    date: "114年12月10日",type: "其他檢驗資料", examName: "丙胺酸轉胺酶", item: "ALT (GPT)", org: "馬偕醫院", result: "22 U/L", refVal: "0 - 40", judge: "正常", summary: "肝功能指標於參考範圍內" },
+    { id: "r_oral",date: "114年11月18日",type: "癌症篩檢結果", subcat:"口腔癌篩檢", item: "口腔黏膜檢查",     org: "亞東醫院", summary: "未見可疑病灶，建議每兩年再追蹤", result: "無異常", readings: ["未見可疑病灶", "口腔黏膜未發現病變，建議每 2 年 1 次定期檢查。"] },
+    { id: "r_oral2",date: "112年10月08日",type: "癌症篩檢結果", subcat:"口腔癌篩檢", item: "口腔黏膜檢查",     org: "亞東醫院", summary: "未見可疑病灶", result: "無異常", readings: ["未見可疑病灶", "口腔黏膜未發現病變，建議每 2 年 1 次定期檢查。"] },
+    { id: "r_oral3",date: "110年9月22日",type: "癌症篩檢結果", subcat:"口腔癌篩檢", item: "口腔黏膜檢查",     org: "台大醫院", summary: "未見可疑病灶", result: "無異常", readings: ["未見可疑病灶", "口腔黏膜未發現病變，建議每 2 年 1 次定期檢查。"] },
+    { id: "r_lung",date: "114年9月10日", type: "癌症篩檢結果", subcat:"肺癌篩檢",   item: "低劑量電腦斷層 (LDCT)", org: "台大醫院", summary: "未發現結節，建議定期追蹤", result: "無異常", readings: ["未發現肺部結節", "未發現任何病灶變化，建議每 2 年 1 次定期檢查。"] },
+    { id: "r_lung2",date: "112年8月14日", type: "癌症篩檢結果", subcat:"肺癌篩檢",   item: "低劑量電腦斷層 (LDCT)", org: "台大醫院", summary: "未發現結節", result: "無異常", readings: ["未發現肺部結節", "未發現任何病灶變化，建議每 2 年 1 次定期檢查。"] },
+    { id: "r_lung3",date: "110年7月30日", type: "癌症篩檢結果", subcat:"肺癌篩檢",   item: "低劑量電腦斷層 (LDCT)", org: "馬偕醫院", summary: "未發現結節", result: "無異常", readings: ["未發現肺部結節", "未發現任何病灶變化，建議每 2 年 1 次定期檢查。"] },
     { id: "r_glu", date: "114年5月23日", type: "血糖檢驗報告",       item: "糖化血色素 HbA1c",   org: "亞東醫院", summary: "HbA1c 5.5 %，參考區間內" },
-    { id: "r4",    date: "114年4月2日",  type: "癌症篩檢結果", subcat:"大腸癌篩檢", item: "大腸癌篩檢（糞便潛血）", org: "台大醫院", summary: "糞便潛血陰性" },
+    { id: "r4",    date: "114年4月2日",  type: "癌症篩檢結果", subcat:"大腸癌篩檢", item: "大腸癌篩檢（糞便潛血）", org: "台大醫院", summary: "糞便潛血陰性", result: "陰性", readings: ["糞便潛血反應陰性", "未發現異常，建議每 3 年 1 次定期篩檢。"] },
+    { id: "r4b",   date: "112年3月15日", type: "癌症篩檢結果", subcat:"大腸癌篩檢", item: "大腸癌篩檢（糞便潛血）", org: "台大醫院", summary: "糞便潛血陰性", result: "陰性", readings: ["糞便潛血反應陰性", "未發現異常，建議每 3 年 1 次定期篩檢。"] },
+    { id: "r4c",   date: "110年6月20日", type: "癌症篩檢結果", subcat:"大腸癌篩檢", item: "大腸癌篩檢（糞便潛血）", org: "亞東醫院", summary: "糞便潛血陰性", result: "陰性", readings: ["糞便潛血反應陰性", "未發現異常，建議每 3 年 1 次定期篩檢。"] },
+    { id: "r_breast",date: "114年7月15日", type: "癌症篩檢結果", subcat:"乳癌篩檢", item: "乳房 X 光攝影（乳房攝影）", org: "馬偕醫院", summary: "乳房組織正常", result: "無異常", readings: ["乳房組織未見異常鈣化點", "未發現可疑腫塊，建議每 2 年 1 次定期篩檢。"] },
+    { id: "r_breast2",date: "112年6月10日", type: "癌症篩檢結果", subcat:"乳癌篩檢", item: "乳房 X 光攝影（乳房攝影）", org: "馬偕醫院", summary: "乳房組織正常", result: "無異常", readings: ["乳房組織未見異常鈣化點", "未發現可疑腫塊，建議每 2 年 1 次定期篩檢。"] },
+    { id: "r_breast3",date: "110年5月18日", type: "癌症篩檢結果", subcat:"乳癌篩檢", item: "乳房 X 光攝影（乳房攝影）", org: "台大醫院", summary: "乳房組織正常", result: "無異常", readings: ["乳房組織未見異常鈣化點", "未發現可疑腫塊，建議每 2 年 1 次定期篩檢。"] },
+    { id: "r_cervix",date: "114年6月05日", type: "癌症篩檢結果", subcat:"子宮頸癌篩檢", item: "子宮頸抹片檢查", org: "亞東醫院", summary: "抹片結果正常", result: "無異常", readings: ["子宮頸細胞未見異常", "抹片結果正常，建議每 3 年 1 次定期篩檢。"] },
+    { id: "r_cervix2",date: "111年5月20日", type: "癌症篩檢結果", subcat:"子宮頸癌篩檢", item: "子宮頸抹片檢查", org: "亞東醫院", summary: "抹片結果正常", result: "無異常", readings: ["子宮頸細胞未見異常", "抹片結果正常，建議每 3 年 1 次定期篩檢。"] },
+    { id: "r_cervix3",date: "108年4月12日", type: "癌症篩檢結果", subcat:"子宮頸癌篩檢", item: "子宮頸抹片檢查", org: "台大醫院", summary: "抹片結果正常", result: "無異常", readings: ["子宮頸細胞未見異常", "抹片結果正常，建議每 3 年 1 次定期篩檢。"] },
     { id: "r_pa",  date: "114年3月12日", type: "影像或病理檢查報告", item: "腹部超音波",         org: "亞東醫院", summary: "肝、膽、胰、脾、腎未見異常" },
     { id: "r5",    date: "114年2月8日",  type: "血脂檢驗報告",       item: "血脂檢查",           org: "馬偕醫院", summary: "總膽固醇 185 mg/dL，三酸甘油脂 120 mg/dL" },
   ],
+
+  // 血糖檢驗報告：醣化血紅素 (HbA1c) 時間序列，供圖表＋近三次表格使用
+  // today 用於計算「近 N 年」區間；參考值上限 5.6%
+  glucoseMeta: {
+    metric: "醣化血紅素",
+    unit: "%",
+    refLow: 4.0,
+    refHigh: 5.6,
+    refText: "4.0 – 5.6 %",
+    today: { y: 115, m: 6, d: 10 },
+  },
+  glucoseReadings: [
+    { date: "115年5月15日", value: 5.4, org: "亞東醫院" },
+    { date: "115年1月22日", value: 5.9, org: "亞東醫院" },
+    { date: "114年8月8日",  value: 5.5, org: "台大醫院" },
+    { date: "114年5月23日", value: 5.5, org: "亞東醫院" },
+    { date: "113年11月8日", value: 5.6, org: "台大醫院" },
+    { date: "113年5月2日",  value: 5.6, org: "馬偕醫院" },
+    { date: "112年9月2日",  value: 5.7, org: "亞東醫院" },
+  ],
+
+  // 血脂檢驗報告：四項各自獨立的檢驗項目卡片
+  lipidMeta: {
+    title: "血脂檢驗報告",
+    sub: "系統顯示最近一次檢查結果",
+    noteRange: "111/12/01 至 114/12/17",
+  },
+  lipidItems: [
+    {
+      id: "tc",
+      name: "總膽固醇",
+      unit: "mg/dL",
+      date: "114/05/23",
+      value: 180,
+      source: "A",
+      refText: "<200 mg/dL",
+      refType: "max",
+      ref: 200,
+      history: [
+        { date: "111/11/02", value: 212 },
+        { date: "112/05/18", value: 205 },
+        { date: "112/12/06", value: 196 },
+        { date: "113/06/21", value: 188 },
+        { date: "114/05/23", value: 180 },
+      ],
+      education: {
+        ref: "<200 mg/dl",
+        body: "總膽固醇值過高可能有動脈硬化風險，通常要再檢查高密度脂蛋白「好」膽固醇與低密度脂蛋白「壞」膽固醇的濃度。如果總膽固醇值高，建議應至院所就醫，與您的醫師討論。",
+        resources: ["台灣血脂衛教協會", "中華民國血脂及動脈硬化學會", "心肌梗塞學會｜TAMIS"],
+      },
+    },
+    {
+      id: "tg",
+      name: "三酸甘油脂",
+      unit: "mg/dL",
+      date: "114/05/23",
+      value: 210,
+      source: "B",
+      refText: "<150 mg/dL",
+      refType: "max",
+      ref: 150,
+      history: [
+        { date: "111/11/02", value: 158 },
+        { date: "112/05/18", value: 164 },
+        { date: "112/12/06", value: 131 },
+        { date: "113/06/21", value: 188 },
+        { date: "114/05/23", value: 210 },
+      ],
+      education: {
+        ref: "<150 mg/dl",
+        body: "三酸甘油酯是血脂肪的一種，又稱「中性脂肪」。三酸甘油酯過高者常伴隨膽固醇過高，或有較高風險罹患急性胰臟炎，建議應至院所就醫，與您的醫師討論。",
+        resources: ["台灣血脂衛教協會", "中華民國血脂及動脈硬化學會", "心肌梗塞學會｜TAMIS"],
+      },
+    },
+    {
+      id: "hdl",
+      name: "高密度脂蛋白膽固醇（HDL）",
+      unit: "mg/dL",
+      date: "114/05/23",
+      value: 67,
+      source: "B",
+      refText: ">50 mg/dL",
+      refType: "min",
+      ref: 50,
+      history: [
+        { date: "111/11/02", value: 46 },
+        { date: "112/05/18", value: 49 },
+        { date: "112/12/06", value: 54 },
+        { date: "113/06/21", value: 61 },
+        { date: "114/05/23", value: 67 },
+      ],
+      education: {
+        ref: ">50 mg/dl",
+        body: "高密度脂蛋白就是俗稱「好」膽固醇，本項數值若偏低，血管動脈粥狀硬化風險提高，建議應至院所就醫，與您的醫師討論。",
+        resources: ["台灣血脂衛教協會", "中華民國血脂及動脈硬化學會", "心肌梗塞學會｜TAMIS"],
+      },
+    },
+    {
+      id: "ldl",
+      name: "低密度脂蛋白膽固醇（LDL）",
+      unit: "mg/dL",
+      date: "114/05/23",
+      value: 95,
+      source: "B",
+      refText: "<130 mg/dL",
+      refType: "max",
+      ref: 130,
+      history: [
+        { date: "111/11/02", value: 142 },
+        { date: "112/05/18", value: 131 },
+        { date: "112/12/06", value: 121 },
+        { date: "113/06/21", value: 108 },
+        { date: "114/05/23", value: 95 },
+      ],
+      education: {
+        ref: "<130 mg/dl",
+        body: "低密度脂蛋白就是俗稱「壞」膽固醇，本項數值若偏高，血管動脈粥狀硬化風險提高，建議應至院所就醫，與您的醫師討論。",
+        resources: ["台灣血脂衛教協會", "中華民國血脂及動脈硬化學會", "心肌梗塞學會｜TAMIS"],
+      },
+    },
+  ],
+
+  // 其他檢驗資料 — 詳細資料內頁（依報告 id）
+  otherReportDetail: {
+    r1: { date: "115/04/30", examName: "血中尿素氮", item: "BUN", result: "13.5 mg/dL", refVal: "4.7 - 23", judge: "正常", org: "台大醫院", code: "09014C", visitDate: "115/04/30", source: "A - 特約醫事機構不定期上傳" },
+    r2: { date: "115/01/20", examName: "肌酸酐", item: "Creatinine", result: "0.5 mg/dL", refVal: "0.6 - 1.3", judge: "異常", org: "亞東醫院", code: "09015C", visitDate: "115/01/20", source: "B - 特約醫事機構定期上傳" },
+    r3: { date: "114/12/10", examName: "丙胺酸轉胺酶", item: "ALT (GPT)", result: "22 U/L", refVal: "0 - 40", judge: "正常", org: "馬偕醫院", code: "09025C", visitDate: "114/12/10", source: "A - 特約醫事機構不定期上傳" },
+  },
+
+  // 影像或病理檢查報告 — 詳細資料（依報告 id）
+  imageReportDetail: {
+    r_img: {
+      date: "114/12/20",
+      org: "馬偕醫院",
+      orderName: "胸部 X 光攝影（單向）",
+      code: "32001C",
+      visitDate: "",
+      uploadTime: "114/12/21 09:42",
+      radiation: "0.1 mSv",
+      source: "E-特約醫事機構影像上傳",
+      reportText: "肝臟腫瘤，疑似血管瘤，膽囊息肉",
+      jpg: true,
+      dcmSize: "3.34 MB",
+    },
+    r_pa: {
+      date: "114/03/12",
+      org: "亞東醫院",
+      orderName: "腹部超音波檢查",
+      code: "19009C",
+      visitDate: "",
+      uploadTime: "114/03/12 16:10",
+      radiation: "-",
+      source: "E-特約醫事機構影像上傳",
+      reportText: "",
+      jpg: true,
+      dcmSize: "5.18 MB",
+    },
+  },
 
   reportDetail: {
     title: "血糖檢驗報告",

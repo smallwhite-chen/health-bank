@@ -139,11 +139,11 @@ function VisitDetailScreen({ navigate, params }) {
         </div>
 
         <div className="detail-section">
-          <div className="sec-head"><Icon name="edit" size={16} className="ico"/> 就醫備注</div>
+          <div className="sec-head"><Icon name="edit" size={16} className="ico"/> 就醫備註</div>
           <textarea
             value={note}
             onChange={e => setNote(e.target.value)}
-            placeholder="輸入就醫備注，例如：醫師建議兩週後回診、需追蹤血壓變化…"
+            placeholder="輸入就醫備註，例如：醫師建議兩週後回診、需追蹤血壓變化…"
             style={{
               width:"100%", minHeight: 140, resize:"vertical",
               border:"1px solid var(--border-soft)", borderRadius: 10,

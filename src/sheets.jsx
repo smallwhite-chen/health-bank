@@ -180,26 +180,52 @@ function VisitFilterSheet({ onClose, value, onApply }) {
 }
 
 // Reports filter
-function ReportFilterSheet({ onClose, value, onApply }) {
+function ReportFilterSheet({ onClose, value, onApply, scope }) {
   const [v, setV] = React.useState(value);
   const times = ["近 1 個月", "近 3 個月", "近 6 個月", "近 1 年", "全部"];
   const cats = ["癌症篩檢結果", "血糖檢驗報告", "血脂檢驗報告", "影像或病理檢查報告", "其他檢驗資料"];
+  const otherCats = ["全部", "尿液檢查", "糞便檢查", "血液學檢查", "一般生化學檢查", "輸血前檢查", "免疫學檢查", "細菌學與黴菌檢查", "病毒學檢查", "過敏免疫檢查 / 其他檢查"];
   const toggle = (arr, x) => arr.includes(x) ? arr.filter(y => y !== x) : [...arr, x];
+  // 範圍 = 當前分類；「全部」才提供「檢驗類別」多選
+  const isAll = !scope || scope === "全部";
+  const isOther = scope === "其他檢驗資料";
   return (
     <Sheet title="進階篩選" onClose={onClose} footer={
       <>
-        <button onClick={() => setV({ time: "全部", cats: [] })}>重置條件</button>
-        <button className="primary" onClick={() => { onApply(v); onClose(); }}>查看篩選結果(40筆)</button>
+        <button onClick={() => setV({ time: "全部", cats: [], examCat: "全部" })}>重置條件</button>
+        <button className="primary" onClick={() => { onApply(v); onClose(); }}>查看篩選結果</button>
       </>
     }>
+      {!isAll && (
+        <div className="filter-scope-hint">篩選範圍：<b>{scope}</b></div>
+      )}
       <div className="chip-group-label" style={{ marginTop: 4 }}>時間區間</div>
       <div className="chip-group">
         {times.map(t => <button key={t} className={`chip-btn ${v.time === t ? "active" : ""}`} onClick={() => setV({ ...v, time: t })}>{t}</button>)}
       </div>
-      <div className="chip-group-label">檢驗類別</div>
-      <div className="chip-group" style={{ marginBottom: 10 }}>
-        {cats.map(c => <button key={c} className={`chip-btn ${v.cats.includes(c) ? "active" : ""}`} onClick={() => setV({ ...v, cats: toggle(v.cats, c) })}>{c}</button>)}
-      </div>
+      {isAll && (
+        <>
+          <div className="chip-group-label">檢驗類別</div>
+          <div className="chip-group" style={{ marginBottom: 10 }}>
+            {cats.map(c => <button key={c} className={`chip-btn ${v.cats.includes(c) ? "active" : ""}`} onClick={() => setV({ ...v, cats: toggle(v.cats, c) })}>{c}</button>)}
+          </div>
+        </>
+      )}
+      {isOther && (
+        <>
+          <div className="chip-group-label">檢查類別</div>
+          <div className="filter-select-wrap">
+            <select
+              className="filter-select"
+              value={v.examCat || "全部"}
+              onChange={(e) => setV({ ...v, examCat: e.target.value })}
+            >
+              {otherCats.map(c => <option key={c} value={c}>{c}</option>)}
+            </select>
+            <svg className="filter-select-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+        </>
+      )}
     </Sheet>
   );
 }

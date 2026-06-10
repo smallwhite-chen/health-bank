@@ -775,6 +775,50 @@ body.desktop-mode .app-scroll > div:has(> .list-card) > .list-card {
 body.desktop-mode [data-screen-label="visits"] .app-scroll > div:has(> .list-card) {
   grid-template-columns: 1fr;
 }
+/* Reports list: single column (一列一張卡片) */
+body.desktop-mode [data-screen-label="reports"] .app-scroll > div:has(> .list-card) {
+  grid-template-columns: 1fr;
+}
+/* 癌症篩檢結果卡片：桌機版左右兩欄 */
+body.desktop-mode .cancer-card-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 32px;
+  align-items: start;
+}
+/* 血糖檢驗報告：桌機版趨勢左欄、檢驗結果右欄 */
+body.desktop-mode .glu-cols {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+body.desktop-mode .glu-col-table .glu-table-head { margin-top: 0; }
+/* 血脂明細卡片：桌機版左右兩欄
+   第一欄：檢查日期、資料來源；第二欄：檢查結果、參考值、判讀 */
+body.desktop-mode .lipid-kv-card .lipid-kv-rows {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 36px;
+  row-gap: 11px;
+  align-items: start;
+}
+body.desktop-mode .lipid-kv-card .kv2:nth-child(1) { grid-column: 1; grid-row: 1; } /* 檢查日期 */
+body.desktop-mode .lipid-kv-card .kv2:nth-child(5) { grid-column: 1; grid-row: 2; } /* 資料來源 */
+body.desktop-mode .lipid-kv-card .kv2:nth-child(2) { grid-column: 2; grid-row: 1; } /* 檢查結果 */
+body.desktop-mode .lipid-kv-card .kv2:nth-child(3) { grid-column: 2; grid-row: 2; } /* 參考值 */
+body.desktop-mode .lipid-kv-card .kv2:nth-child(4) { grid-column: 2; grid-row: 3; } /* 判讀 */
+/* 其他檢驗資料清單卡片：桌機版左右兩欄
+   第一欄：檢驗日期、檢驗名稱、檢驗項目；第二欄：檢查結果、參考值、判讀 */
+body.desktop-mode .lab-card > div:first-child {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(3, auto);
+  grid-auto-flow: column;
+  column-gap: 36px;
+  row-gap: 8px;
+  align-items: start;
+}
 /* "詳細記錄 >" affordance on desktop list cards */
 body.desktop-mode .list-card-more {
   display: inline;
@@ -812,6 +856,11 @@ body.desktop-mode [data-screen-label="visitDetail"] .detail-section:nth-of-type(
 }
 body.desktop-mode .detail-section {
   margin: 0 !important;
+}
+/* 其他檢驗報告 / 影像詳細資料：堆疊卡片之間的間距 */
+body.desktop-mode [data-screen-label="其他檢驗報告"] .detail-section,
+body.desktop-mode [data-screen-label="影像或病理檢查報告詳細資料"] .detail-section {
+  margin-bottom: 16px !important;
 }
 /* First-row cards stretch to equal height */
 body.desktop-mode [data-screen-label="visitDetail"] .detail-section:nth-of-type(1),
