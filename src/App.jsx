@@ -322,7 +322,7 @@ function App() {
                 </svg>
               </button>
             </div>
-            <div className="ptw-version">w4檢驗報告 v3.0</div>
+            <div className="ptw-version">w4檢驗報告 v3.1</div>
 
             <div className="ptw-section-label">裝置版型</div>
             <div className="ptw-grid ptw-grid-3">
@@ -365,7 +365,7 @@ function App() {
               <path d="M4 17h4"/><circle cx="11" cy="17" r="2"/><path d="M13 17h7"/>
             </svg>
             <span>原型設定</span>
-            <span className="ptw-fab-version">w4檢驗報告 v3.0</span>
+            <span className="ptw-fab-version">w4檢驗報告 v3.1</span>
           </button>
         )}
 

@@ -26,7 +26,12 @@ function ReportSectionHead({ filter, openSheet, hasFilter, isFav, onToggleFav })
             </button>
           )}
         </h2>
-        <p className="report-sec-sub">顯示最近檢查檢驗報告</p>
+        {filter === "血脂檢驗報告" && (
+          <p className="report-sec-sub">顯示最近一次檢查結果</p>
+        )}
+        {filter === "影像或病理檢查報告" && (
+          <p className="report-sec-sub">顯示112/06/01起的紀錄</p>
+        )}
       </div>
       {hasFilter && (
         <button className="filter-btn" onClick={() => openSheet("reportFilter", { scope: filter })}>
@@ -50,17 +55,16 @@ function GlucoseSummaryCard({ onClick }) {
     <div className="list-card overview-card" onClick={onClick} style={{ cursor: "pointer" }}>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div className="overview-card-title">血糖檢驗報告</div>
-        <div className="glu-table-head" style={{ marginTop: 0 }}>近三次檢驗結果</div>
+        <div className="glu-table-head" style={{ marginTop: 0 }}>最近三次檢驗結果</div>
         <div className="glu-table">
           <div className="glu-trow glu-thead">
-            <span>檢驗日期</span><span>來源</span><span>{glucoseMeta.metric}</span><span>判讀</span>
+            <span>檢驗日期</span><span>{glucoseMeta.metric}</span><span>判讀</span>
           </div>
           {recent3.map((r, i) => {
             const high = r.value > glucoseMeta.refHigh;
             return (
               <div className="glu-trow" key={i}>
                 <span className="glu-td-date">{fmt(r.o)}</span>
-                <span className="glu-td-src">B</span>
                 <span className="glu-td-val">{r.value.toFixed(1)} <em>{glucoseMeta.unit}</em></span>
                 <span className={`glu-badge ${high ? "high" : "ok"}`}>{high ? "異常" : "正常"}</span>
               </div>
@@ -85,6 +89,7 @@ function LipidSummaryCard({ onClick }) {
     <div className="list-card overview-card" onClick={onClick} style={{ cursor: "pointer" }}>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div className="overview-card-title">血脂檢驗報告</div>
+        <div className="overview-card-sub">最近一次檢驗結果</div>
         <div className="lipid-ov-table">
           <div className="lipid-ov-row lipid-ov-head">
             <span>檢查項目</span><span className="num">檢查結果</span><span className="num">參考值</span><span className="res">結果</span>
@@ -119,7 +124,11 @@ function ReportsScreen({ navigate, openSheet, isFav, onToggleFav }) {
   const pillDrag = React.useRef({ down: false, moved: false, startX: 0, startScroll: 0 });
   const subPillScrollRef = React.useRef(null);
   const subPillDrag = React.useRef({ down: false, moved: false, startX: 0, startScroll: 0 });
-  React.useEffect(() => { setSubFilter("全部"); setSubShowAll(false); }, [filter]);
+  React.useEffect(() => {
+    const sc = (reportSubCategories && reportSubCategories[filter]) || null;
+    setSubFilter(sc ? sc[0] : "全部");
+    setSubShowAll(false);
+  }, [filter]);
   React.useEffect(() => {
     const sc = pillScrollRef.current;
     if (!sc) return;
@@ -164,7 +173,7 @@ function ReportsScreen({ navigate, openSheet, isFav, onToggleFav }) {
 
   const rows = (() => {
     let r = filter === "全部" ? reports : reports.filter(r => r.type === filter);
-    if (subCats && subFilter !== "全部") r = r.filter(x => x.subcat === subFilter);
+    if (subCats) r = r.filter(x => x.subcat === subFilter);
     r = [...r].sort((a, b) => {
       const av = parseRocDate(a.date), bv = parseRocDate(b.date);
       return sortDesc ? bv - av : av - bv;
@@ -177,7 +186,7 @@ function ReportsScreen({ navigate, openSheet, isFav, onToggleFav }) {
       <TopBar onA11y={() => openSheet("a11y")} onReminders={() => navigate("reminders")} onLogo={() => navigate("home")}/>
       <div className="app-scroll">
         <div className="info-banner">
-          提供最近三年檢查檢驗報告，包含癌症篩檢、血糖血脂追蹤、影像與病理等各類檢查結果。
+          提供最近檢查檢驗報告，包含癌症篩檢、血糖血脂追蹤、影像與病理等各類檢查結果。
         </div>
 
         <PageTitle isFav={isFav} onToggleFav={onToggleFav}>
@@ -221,7 +230,7 @@ function ReportsScreen({ navigate, openSheet, isFav, onToggleFav }) {
           </div>
         )}
 
-        <ReportSectionHead filter={filter} openSheet={openSheet} hasFilter={filter !== "血糖檢驗報告" && filter !== "血脂檢驗報告"} isFav={isFav} onToggleFav={onToggleFav} />
+        <ReportSectionHead filter={filter} openSheet={openSheet} hasFilter={filter !== "血糖檢驗報告" && filter !== "血脂檢驗報告" && filter !== "癌症篩檢結果"} isFav={isFav} onToggleFav={onToggleFav} />
 
         {subCats && (
           <div className="pill-tabs-row sub-pill-tabs-row">

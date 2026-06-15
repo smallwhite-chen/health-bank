@@ -181,18 +181,20 @@ function VisitFilterSheet({ onClose, value, onApply }) {
 
 // Reports filter
 function ReportFilterSheet({ onClose, value, onApply, scope }) {
-  const [v, setV] = React.useState(value);
-  const times = ["近 1 個月", "近 3 個月", "近 6 個月", "近 1 年", "全部"];
+  const [v, setV] = React.useState({ customStart: "", customEnd: "", ...value });
+  const times = ["全部", "近 1 個月", "近 3 個月", "近 6 個月", "近 1 年", "自訂"];
   const cats = ["癌症篩檢結果", "血糖檢驗報告", "血脂檢驗報告", "影像或病理檢查報告", "其他檢驗資料"];
   const otherCats = ["全部", "尿液檢查", "糞便檢查", "血液學檢查", "一般生化學檢查", "輸血前檢查", "免疫學檢查", "細菌學與黴菌檢查", "病毒學檢查", "過敏免疫檢查 / 其他檢查"];
   const toggle = (arr, x) => arr.includes(x) ? arr.filter(y => y !== x) : [...arr, x];
   // 範圍 = 當前分類；「全部」才提供「檢驗類別」多選
   const isAll = !scope || scope === "全部";
   const isOther = scope === "其他檢驗資料";
+  const isImage = scope === "影像或病理檢查報告";
+  const imageCats = ["全部", "細胞學檢查", "呼吸機能檢查", "循環機能檢查", "超音波檢查", "神經系統檢查", "耳鼻喉系統檢查", "眼部檢查", "負荷試驗", "核子醫學檢查 (造影 Scanning)", "內視鏡檢查", "放射線診療 (X光) 普通檢查", "特殊造影檢查"];
   return (
     <Sheet title="進階篩選" onClose={onClose} footer={
       <>
-        <button onClick={() => setV({ time: "全部", cats: [], examCat: "全部" })}>重置條件</button>
+        <button onClick={() => setV({ time: "全部", cats: [], examCat: "全部", imageCat: "全部", customStart: "", customEnd: "" })}>重置條件</button>
         <button className="primary" onClick={() => { onApply(v); onClose(); }}>查看篩選結果</button>
       </>
     }>
@@ -203,6 +205,15 @@ function ReportFilterSheet({ onClose, value, onApply, scope }) {
       <div className="chip-group">
         {times.map(t => <button key={t} className={`chip-btn ${v.time === t ? "active" : ""}`} onClick={() => setV({ ...v, time: t })}>{t}</button>)}
       </div>
+      {v.time === "自訂" && (
+        <div style={{ display:"flex", gap:8, alignItems:"center", marginTop:10 }}>
+          <input type="date" value={v.customStart} onChange={e => setV({ ...v, customStart: e.target.value })}
+            style={{ flex:1, padding:"10px 12px", border:"1px solid var(--border-soft)", borderRadius:"var(--r-md)", fontSize:13, fontFamily:"inherit", background:"var(--bg-surface)", color:"var(--text-primary)" }}/>
+          <span style={{ color:"var(--text-tertiary)", fontSize:13 }}>至</span>
+          <input type="date" value={v.customEnd} onChange={e => setV({ ...v, customEnd: e.target.value })}
+            style={{ flex:1, padding:"10px 12px", border:"1px solid var(--border-soft)", borderRadius:"var(--r-md)", fontSize:13, fontFamily:"inherit", background:"var(--bg-surface)", color:"var(--text-primary)" }}/>
+        </div>
+      )}
       {isAll && (
         <>
           <div className="chip-group-label">檢驗類別</div>
@@ -221,6 +232,21 @@ function ReportFilterSheet({ onClose, value, onApply, scope }) {
               onChange={(e) => setV({ ...v, examCat: e.target.value })}
             >
               {otherCats.map(c => <option key={c} value={c}>{c}</option>)}
+            </select>
+            <svg className="filter-select-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+        </>
+      )}
+      {isImage && (
+        <>
+          <div className="chip-group-label">檢查類別</div>
+          <div className="filter-select-wrap">
+            <select
+              className="filter-select"
+              value={v.imageCat || "全部"}
+              onChange={(e) => setV({ ...v, imageCat: e.target.value })}
+            >
+              {imageCats.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
             <svg className="filter-select-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </div>

@@ -65,6 +65,7 @@ function GlucoseReport() {
       <div className="glu-cols">
       <div className="glu-col-trend">
       {/* 時間段選擇 */}
+      <div className="glu-trend-title">近年檢驗結果趨勢</div>
       <div className="glu-range-row">
         {PERIODS.map((p) => (
           <button
