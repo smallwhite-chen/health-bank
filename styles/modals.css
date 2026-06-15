@@ -77,6 +77,11 @@
   border-color: var(--brand-900);
   flex: 2;
 }
+.sheet-foot button.danger {
+  color: #C0392B;
+  border-color: #E3B7B1;
+  background: var(--bg-surface);
+}
 
 /* Segmented button group (time range / category) */
 .chip-group {

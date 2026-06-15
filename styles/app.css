@@ -1950,3 +1950,272 @@ body.desktop-mode .desktop-stage[data-screen-label="services"] .pill-more-panel 
   min-width: 48px;
   text-align: center;
 }
+
+/* ============================================================
+   個人量測紀錄 (Health Records)
+   ============================================================ */
+.hm-tabs-row { padding-top: 10px; }
+.hm-section { padding: 0 16px; }
+
+/* 圖示底圓 */
+.hm-ico {
+  display: inline-grid; place-items: center;
+  width: 28px; height: 28px; border-radius: 999px;
+  background: var(--brand-50); color: var(--brand-700);
+  flex-shrink: 0;
+}
+.hm-ico-lg { width: 38px; height: 38px; }
+
+/* 總覽：已釘選 */
+.hm-overview-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin: 4px 0 12px;
+}
+.hm-overview-head h2 { font-size: 17px; font-weight: 700; color: var(--text-primary); margin: 0; }
+.hm-overview-hint {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: 12px; color: var(--text-tertiary);
+}
+.hm-edit-link {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 13px; font-weight: 600; color: var(--brand-900);
+  background: none; border: 0; padding: 4px 2px; cursor: pointer; font-family: inherit;
+}
+
+/* 編輯常用紀錄 */
+.hm-edit-empty {
+  font-size: 13px; color: var(--text-tertiary); line-height: 1.6;
+  padding: 16px; text-align: center;
+  border: 1px dashed var(--border-med); border-radius: var(--r-md);
+}
+.hm-edit-pin-list { display: flex; flex-direction: column; gap: 8px; }
+.hm-edit-pin-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg-surface); border: 1px solid var(--border-soft);
+  border-radius: var(--r-md); cursor: grab;
+}
+.hm-edit-pin-row.is-dragging { opacity: 0.5; }
+.hm-edit-pin-row.is-over { border-color: var(--brand-700); box-shadow: 0 0 0 2px var(--brand-100); }
+.hm-edit-handle { color: var(--text-tertiary); display: inline-grid; place-items: center; cursor: grab; flex-shrink: 0; }
+.hm-edit-pin-name { flex: 1; min-width: 0; font-size: 14.5px; font-weight: 600; color: var(--text-primary); }
+.hm-edit-pin-val { font-size: 14px; font-weight: 700; color: var(--text-secondary); white-space: nowrap; }
+.hm-edit-pin-rm { border: 0; background: none; padding: 4px; cursor: pointer; color: var(--brand-700); display: inline-grid; place-items: center; flex-shrink: 0; }
+.hm-edit-reset {
+  width: 100%; padding: 12px;
+  border: 1px dashed var(--border-med); border-radius: 10px;
+  background: transparent; color: var(--text-secondary);
+  font-family: inherit; font-size: 14px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;
+}
+.hm-edit-reset:hover { border-color: var(--brand-700); color: var(--brand-900); }
+.hm-pin-grid {
+  display: grid; grid-template-columns: 1fr; gap: 10px;
+}
+.hm-pin-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--r-lg);
+  padding: 14px 16px;
+  cursor: pointer;
+  display: flex; flex-direction: row; align-items: stretch; justify-content: space-between; gap: 12px;
+  box-shadow: var(--shadow-xs);
+  transition: border-color .15s;
+}
+.hm-pin-card:active { border-color: var(--brand-700); }
+.hm-pin-left { display: flex; flex-direction: column; min-width: 0; }
+.hm-pin-right { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; flex-shrink: 0; }
+.hm-pin-top { display: flex; align-items: center; gap: 8px; }
+.hm-pin-name { font-size: 13.5px; font-weight: 600; color: var(--text-secondary); min-width: 0; }
+.hm-pin-btn {
+  border: 0; background: none; padding: 2px; cursor: pointer;
+  color: var(--text-tertiary); display: inline-grid; place-items: center; border-radius: 6px;
+}
+.hm-pin-btn.is-on { color: var(--brand-700); }
+.hm-pin-val { font-size: 26px; font-weight: 800; color: var(--text-primary); margin-top: 10px; line-height: 1.1; }
+.hm-pin-val em, .hm-row-val em, .hm-avg-val em, .hm-entry-val em, .hm-nutri-val em, .hm-stat-val em {
+  font-size: 12px; font-weight: 600; font-style: normal; color: var(--text-tertiary); margin-left: 3px;
+}
+.hm-pin-time { font-size: 11.5px; color: var(--text-tertiary); margin-top: 3px; }
+.hm-pin-sub { font-size: 14px; font-weight: 700; color: var(--text-secondary); margin-top: 4px; }
+.hm-pin-sub em { font-size: 11px; font-weight: 600; font-style: normal; color: var(--text-tertiary); margin-left: 3px; }
+.spark { display: block; }
+
+/* 空狀態 */
+.hm-empty {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  gap: 6px; padding: 36px 24px;
+  color: var(--text-tertiary);
+  background: var(--bg-surface);
+  border: 1px dashed var(--border-med);
+  border-radius: var(--r-lg);
+}
+.hm-empty p { margin: 4px 0 0; font-size: 15px; font-weight: 600; color: var(--text-secondary); }
+.hm-empty span { font-size: 12.5px; line-height: 1.6; max-width: 240px; }
+
+/* 生理量測 list row（卡片樣式，排版同總覽卡片） */
+.hm-row {
+  display: flex; align-items: stretch; justify-content: space-between; gap: 12px;
+  padding: 14px 16px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--r-lg);
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-xs);
+  cursor: pointer;
+  transition: border-color .15s;
+}
+.hm-row:active { border-color: var(--brand-700); }
+.hm-row-go {
+  align-self: center; flex-shrink: 0;
+  border: 0; background: none; padding: 2px; cursor: pointer;
+  color: var(--text-tertiary); display: inline-grid; place-items: center;
+}
+.hm-row-pin { align-self: center; flex-shrink: 0; }
+.hm-row-spark { display: flex; align-items: center; flex-shrink: 0; }
+.hm-row-main { flex: 1; min-width: 0; }
+.hm-row-name { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+.hm-row-time { font-size: 12px; color: var(--text-tertiary); margin-top: 2px; }
+.hm-row-val { font-size: 16px; font-weight: 700; color: var(--text-primary); white-space: nowrap; }
+.hm-row .chev { color: var(--text-tertiary); }
+
+/* 飲食：營養素摘要 */
+.hm-nutri-row { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 4px 0 6px; }
+.hm-nutri-row::-webkit-scrollbar { display: none; }
+.hm-nutri {
+  flex: 0 0 auto; min-width: 84px;
+  background: var(--bg-surface); border: 1px solid var(--border-soft);
+  border-radius: var(--r-md); padding: 12px;
+}
+.hm-nutri.is-primary { background: var(--brand-50); border-color: var(--brand-100); }
+.hm-nutri-val { font-size: 19px; font-weight: 800; color: var(--text-primary); }
+.hm-nutri-label { font-size: 12.5px; color: var(--text-secondary); margin-top: 2px; font-weight: 600; }
+.hm-nutri-goal { font-size: 11px; color: var(--text-tertiary); margin-top: 2px; }
+
+.hm-list-head { font-size: 14px; font-weight: 700; color: var(--text-primary); margin: 16px 0 4px; }
+
+/* 飲食 / 運動 entry */
+.hm-entry { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-soft); }
+.hm-entry:last-of-type { border-bottom: none; }
+.hm-entry-main { flex: 1; min-width: 0; }
+.hm-entry-name { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+.hm-entry-sub { font-size: 12.5px; color: var(--text-tertiary); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hm-entry-right { text-align: right; flex-shrink: 0; }
+.hm-entry-val { font-size: 15px; font-weight: 700; color: var(--text-primary); }
+.hm-entry-time { font-size: 11.5px; color: var(--text-tertiary); margin-top: 2px; }
+.hm-tag {
+  font-size: 11px; font-weight: 600; color: var(--brand-900);
+  background: var(--brand-50); border-radius: 999px; padding: 1px 8px; margin-left: 4px;
+}
+
+/* 運動 summary stats */
+.hm-stat-row { display: flex; gap: 10px; margin: 4px 0 2px; }
+.hm-stat {
+  flex: 1; background: var(--bg-surface); border: 1px solid var(--border-soft);
+  border-radius: var(--r-md); padding: 14px 10px; text-align: center;
+}
+.hm-stat-ico { display: inline-grid; place-items: center; color: var(--brand-700); margin-bottom: 4px; }
+.hm-stat-val { font-size: 18px; font-weight: 800; color: var(--text-primary); }
+.hm-stat-val.hm-stat-sm { font-size: 14px; }
+.hm-stat-label { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+/* 生理期月曆 */
+.hm-cal-card {
+  background: var(--bg-surface); border: 1px solid var(--border-soft);
+  border-radius: var(--r-lg); padding: 16px; margin-top: 6px;
+}
+.hm-cal-title { font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; text-align: center; }
+.hm-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.hm-cal-head span { text-align: center; font-size: 12px; color: var(--text-tertiary); padding-bottom: 4px; }
+.hm-cal-cell {
+  aspect-ratio: 1; display: grid; place-items: center;
+  font-size: 13px; color: var(--text-primary); border-radius: 999px;
+}
+.hm-cal-cell.is-empty { visibility: hidden; }
+.hm-cal-cell.is-period { background: #F6D9DC; color: #B23A48; font-weight: 700; }
+.hm-cal-legend { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; font-size: 12px; color: var(--text-secondary); }
+.hm-cal-legend .dot { display: inline-block; width: 10px; height: 10px; border-radius: 999px; margin-right: 4px; vertical-align: -1px; }
+.hm-cal-legend .dot.period { background: #E68A95; }
+.hm-cal-predict { color: var(--text-tertiary); }
+
+/* hint */
+.hm-hint {
+  display: flex; align-items: flex-start; gap: 6px;
+  font-size: 12.5px; line-height: 1.6; color: var(--text-tertiary);
+  background: var(--bg-soft); border-radius: var(--r-md);
+  padding: 10px 12px; margin-top: 16px;
+}
+.hm-hint svg { flex-shrink: 0; margin-top: 1px; }
+
+/* 詳細頁 */
+.hm-detail-pad { padding: 12px 16px 0; }
+.hm-range-row { margin-bottom: 14px; }
+.hm-avg-card {
+  background: var(--bg-surface); border: 1px solid var(--border-soft);
+  border-radius: var(--r-lg); padding: 16px; text-align: center; margin-bottom: 12px;
+}
+.hm-avg-label { font-size: 13px; color: var(--text-secondary); }
+.hm-avg-val { font-size: 34px; font-weight: 800; color: var(--text-primary); line-height: 1.15; margin-top: 4px; }
+.hm-avg-val .hm-avg-hr { display: inline-flex; align-items: center; }
+.hm-avg-divider { display: inline-block; width: 1px; height: 26px; background: var(--border-med); margin: 0 16px; vertical-align: middle; }
+.hm-avg-ref { font-size: 12.5px; color: var(--text-tertiary); margin-top: 6px; }
+.hm-avg-legend { display: flex; justify-content: center; gap: 16px; margin-top: 8px; font-size: 12.5px; color: var(--text-secondary); }
+.hm-avg-legend .dot, .hm-chart-legend .dot { display: inline-block; width: 9px; height: 9px; border-radius: 999px; margin-right: 4px; vertical-align: 0px; }
+.dot.sys { background: var(--brand-700); }
+.dot.dia { background: #7FB5AE; }
+.dot.ref { background: #E0A94B; }
+.dot.hr { background: #8A6FE8; }
+
+.hm-chart-card {
+  background: var(--bg-surface); border: 1px solid var(--border-soft);
+  border-radius: var(--r-lg); padding: 16px 12px 12px; margin-bottom: 12px;
+}
+.hm-chart-title { font-size: 14px; font-weight: 700; color: var(--text-primary); padding: 0 4px 6px; }
+.hm-chart-svg { width: 100%; height: auto; display: block; }
+.hm-chart-legend { display: flex; gap: 16px; justify-content: center; margin-top: 8px; font-size: 12px; color: var(--text-secondary); }
+
+.hm-edu-card {
+  background: var(--brand-50); border: 1px solid var(--brand-100);
+  border-radius: var(--r-lg); padding: 16px;
+}
+.hm-edu-title { display: flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 700; color: var(--brand-900); margin-bottom: 10px; }
+.hm-edu-list { margin: 0; padding-left: 20px; }
+.hm-edu-list li { font-size: 13.5px; line-height: 1.7; color: var(--text-secondary); }
+.hm-edu-note { font-size: 12.5px; line-height: 1.6; color: var(--text-tertiary); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--brand-100); }
+
+/* 詳細紀錄列表 */
+.hm-rec-head { display: flex; align-items: center; justify-content: space-between; margin: 22px 0 10px; }
+.hm-rec-head h3 { font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 0; }
+.hm-rec-head .filter-btn { flex-shrink: 0; }
+.hm-rec-list { display: flex; flex-direction: column; }
+.hm-rec-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 4px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.hm-rec-row:last-child { border-bottom: none; }
+.hm-rec-val { font-size: 16px; font-weight: 700; color: var(--text-primary); white-space: nowrap; min-width: 0; }
+.hm-rec-val em { font-size: 11.5px; font-weight: 600; font-style: normal; color: var(--text-primary); margin-left: 4px; }
+.hm-rec-hr { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-left: 12px; }
+.hm-rec-date { flex: 1; font-size: 12.5px; color: var(--text-primary); text-align: right; }
+.hm-rec-edit { border: 0; background: none; padding: 4px; cursor: pointer; color: var(--text-secondary); display: inline-grid; place-items: center; flex-shrink: 0; }
+.hm-rec-edit:active { color: var(--brand-900); }
+
+/* FAB 新增紀錄 */
+.hm-fab {
+  position: absolute; right: 16px; bottom: 108px; z-index: 40;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 12px 18px; border: 0; border-radius: 999px;
+  background: var(--brand-900); color: #fff;
+  font-size: 15px; font-weight: 700; font-family: inherit;
+  box-shadow: 0 8px 20px rgba(0, 105, 94, 0.35);
+  cursor: pointer;
+}
+.hm-fab:active { transform: translateY(1px); }
+body.fluid-mobile .hm-fab, body.desktop-mode .hm-fab { position: fixed; }
+/* 避免與回到頂端按鈕重疊 */
+.phone[data-screen-label="health"] .back-to-top,
+.phone[data-screen-label="healthDetail"] .back-to-top { bottom: 152px; }
+
+/* 新增紀錄 sheet 數值欄位說明 */
+.hm-input-unit { font-size: 11.5px; color: var(--text-tertiary); margin-top: 4px; padding-left: 2px; }

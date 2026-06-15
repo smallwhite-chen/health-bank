@@ -775,6 +775,20 @@ body.desktop-mode .app-scroll > div:has(> .list-card) > .list-card {
 body.desktop-mode [data-screen-label="visits"] .app-scroll > div:has(> .list-card) {
   grid-template-columns: 1fr;
 }
+/* 個人量測紀錄：生理量測列表桌機版兩欄 */
+body.desktop-mode [data-screen-label="health"] .app-scroll .hm-section:has(> .hm-row) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+body.desktop-mode [data-screen-label="health"] .app-scroll .hm-section:has(> .hm-row) > .hm-row {
+  margin-bottom: 0;
+}
+/* 個人量測紀錄：總覽釘選卡片桌機版兩欄 */
+body.desktop-mode [data-screen-label="health"] .app-scroll .hm-pin-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
 /* Reports list: single column (一列一張卡片) */
 body.desktop-mode [data-screen-label="reports"] .app-scroll > div:has(> .list-card) {
   grid-template-columns: 1fr;

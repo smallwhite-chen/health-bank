@@ -257,3 +257,110 @@ function ReportFilterSheet({ onClose, value, onApply, scope }) {
 }
 
 Object.assign(window, { Sheet, FamilySwitchSheet, A11ySheet, VisitFilterSheet, ReportFilterSheet });
+
+// 新增量測紀錄（視覺示意，不實際存資料）
+function AddRecordSheet({ onClose, onSave, preset }) {
+  const physio = (window.Data.health && window.Data.health.physio) || [];
+  const initId = (preset && preset.id) || (physio[0] && physio[0].id) || "bp";
+  const [mid, setMid] = React.useState(initId);
+  const [sys, setSys] = React.useState("");
+  const [dia, setDia] = React.useState("");
+  const [val, setVal] = React.useState("");
+  const [hr, setHr] = React.useState("");
+  const today = "2026-06-15";
+  const [date, setDate] = React.useState(today);
+  const [time, setTime] = React.useState("08:00");
+  const metric = window.Data.healthById[mid] || physio[0];
+  const isBp = metric && metric.kind === "bp";
+  const isEdit = preset && preset.mode === "edit";
+  const inputStyle = {
+    width: "100%", padding: "12px 14px", border: "1px solid var(--border-soft)",
+    borderRadius: "var(--r-md)", fontSize: 15, fontFamily: "inherit",
+    background: "var(--bg-surface)", color: "var(--text-primary)", boxSizing: "border-box",
+  };
+  return (
+    <Sheet title={isEdit ? "編輯量測紀錄" : "新增量測紀錄"} onClose={onClose} footer={
+      <>
+        {isEdit
+          ? <button className="danger" onClick={() => onSave("已刪除紀錄（示意）")}>刪除</button>
+          : <button onClick={onClose}>取消</button>}
+        <button className="primary" onClick={() => onSave(isEdit ? "已更新紀錄（示意）" : "已新增紀錄（示意）")}>儲存</button>
+      </>
+    }>
+      <div className="chip-group-label" style={{ marginTop: 4 }}>量測項目</div>
+      <div className="filter-select-wrap">
+        <select className="filter-select" value={mid} onChange={(e) => setMid(e.target.value)}>
+          {physio.map((m) => <option key={m.id} value={m.id}>{m.id === "bp" ? "血壓 / 心率" : m.name}</option>)}
+        </select>
+        <svg className="filter-select-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </div>
+
+      <div className="chip-group-label">量測數值</div>
+      {isBp ? (
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          <div style={{ flex: 1 }}>
+            <input type="number" inputMode="numeric" placeholder="收縮壓" value={sys} onChange={(e) => setSys(e.target.value)} style={inputStyle} />
+            <div className="hm-input-unit">收縮壓 mmHg</div>
+          </div>
+          <span style={{ color: "var(--text-tertiary)", fontSize: 20, marginTop: -16 }}>/</span>
+          <div style={{ flex: 1 }}>
+            <input type="number" inputMode="numeric" placeholder="舒張壓" value={dia} onChange={(e) => setDia(e.target.value)} style={inputStyle} />
+            <div className="hm-input-unit">舒張壓 mmHg</div>
+          </div>
+        </div>
+      ) : (
+        <div>
+          <input type="number" inputMode="decimal" placeholder={`輸入數值`} value={val} onChange={(e) => setVal(e.target.value)} style={inputStyle} />
+          <div className="hm-input-unit">{metric ? `單位：${metric.unit || "—"}` : ""}</div>
+        </div>
+      )}
+
+      <div className="chip-group-label">心率</div>
+      <div>
+        <input type="number" inputMode="numeric" placeholder="輸入心率" value={hr} onChange={(e) => setHr(e.target.value)} style={inputStyle} />
+        <div className="hm-input-unit">単位：bpm</div>
+      </div>
+
+      <div className="chip-group-label">量測時間</div>
+      <div style={{ display: "flex", gap: 8 }}>
+        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} style={{ ...inputStyle, flex: 1.4 }} />
+        <input type="time" value={time} onChange={(e) => setTime(e.target.value)} style={{ ...inputStyle, flex: 1 }} />
+      </div>
+    </Sheet>
+  );
+}
+
+Object.assign(window, { AddRecordSheet });
+
+// 量測紀錄 — 進階篩選（時間區間）
+function HealthFilterSheet({ onClose, value, onApply }) {
+  const [v, setV] = React.useState({ time: "全部", customStart: "", customEnd: "", ...value });
+  const times = ["全部", "近 1 個月", "近 3 個月", "近 6 個月", "近 1 年", "自訂"];
+  const dateInput = {
+    flex: 1, padding: "10px 12px", border: "1px solid var(--border-soft)",
+    borderRadius: "var(--r-md)", fontSize: 13, fontFamily: "inherit",
+    background: "var(--bg-surface)", color: "var(--text-primary)",
+  };
+  return (
+    <Sheet title="進階篩選" onClose={onClose} footer={
+      <>
+        <button onClick={() => setV({ time: "全部", customStart: "", customEnd: "" })}>重置條件</button>
+        <button className="primary" onClick={() => { onApply(v); onClose(); }}>查看篩選結果</button>
+      </>
+    }>
+      <div className="chip-group-label" style={{ marginTop: 4 }}>時間區間</div>
+      <div className="chip-group">
+        {times.map(t => <button key={t} className={`chip-btn ${v.time === t ? "active" : ""}`} onClick={() => setV({ ...v, time: t })}>{t}</button>)}
+      </div>
+      {v.time === "自訂" && (
+        <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 10 }}>
+          <input type="date" value={v.customStart} onChange={e => setV({ ...v, customStart: e.target.value })} style={dateInput} />
+          <span style={{ color: "var(--text-tertiary)", fontSize: 13 }}>至</span>
+          <input type="date" value={v.customEnd} onChange={e => setV({ ...v, customEnd: e.target.value })} style={dateInput} />
+        </div>
+      )}
+    </Sheet>
+  );
+}
+
+Object.assign(window, { HealthFilterSheet });

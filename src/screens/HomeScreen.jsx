@@ -10,7 +10,7 @@ function HomeScreen({ navigate, openSheet, currentMember }) {
         <div className="user-card">
           <div className="info">
             <div className="hi">HI~{name}</div>
-            <span className="chip">個人紀錄 <Icon name="chev-right" size={12}/></span>
+            <span className="chip" onClick={() => navigate("health")} style={{ cursor: "pointer" }}>個人量測紀錄 <Icon name="chev-right" size={12}/></span>
           </div>
           <button className="switch" onClick={() => openSheet("family")}>
             <span style={{ display:"inline-flex", alignItems:"center", gap:4 }}>

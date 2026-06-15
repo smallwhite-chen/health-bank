@@ -83,6 +83,36 @@ const Icon = ({ name, size = 20, strokeWidth = 1.6, ...rest }) => {
       return <svg {...common}><path d="M7 4v16"/><path d="m4 7 3-3 3 3"/><path d="M17 20V4"/><path d="m20 17-3 3-3-3"/></svg>;
     case "compass":
       return <svg {...common}><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="currentColor" stroke="none"/></svg>;
+    case "scale":
+      return <svg {...common}><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 8.5a4 4 0 0 1 8 0"/><path d="m12 8.5-1.6 2.2"/></svg>;
+    case "ruler":
+      return <svg {...common}><rect x="2.5" y="7.5" width="19" height="9" rx="1.5" transform="rotate(0 12 12)"/><path d="M6.5 7.5v3M10 7.5v4M13.5 7.5v3M17 7.5v4"/></svg>;
+    case "drop":
+      return <svg {...common}><path d="M12 3s6 6.5 6 10.5a6 6 0 0 1-12 0C6 9.5 12 3 12 3z"/></svg>;
+    case "lungs":
+      return <svg {...common}><path d="M12 4v8"/><path d="M9 8c0 4-1 5-1 8a2 2 0 0 1-4 0c0-3 1-6 3-8 1-1 2-1 2 0z"/><path d="M15 8c0 4 1 5 1 8a2 2 0 0 0 4 0c0-3-1-6-3-8-1-1-2-1-2 0z"/></svg>;
+    case "thermometer":
+      return <svg {...common}><path d="M12 4a2 2 0 0 1 2 2v8.5a3.5 3.5 0 1 1-4 0V6a2 2 0 0 1 2-2z"/><path d="M12 11v4"/></svg>;
+    case "moon":
+      return <svg {...common}><path d="M20 14a8 8 0 0 1-10-10 8 8 0 1 0 10 10z"/></svg>;
+    case "flame":
+      return <svg {...common}><path d="M12 3c1 3 4 4 4 8a4 4 0 0 1-8 0c0-1.5.5-2.5 1-3 .5 1 1.5 1.5 2 1.5C11 8 11 5 12 3z"/></svg>;
+    case "footprints":
+      return <svg {...common}><path d="M5 13c-1 0-2-1-2-3s1-4 2-4 2 1 2 3-1 4-2 4z"/><path d="M5 13v3a2 2 0 0 0 4 0v-1"/><path d="M17 9c1 0 2 1 2 3s-1 4-2 4-2-1-2-3 1-4 2-4z"/><path d="M17 9V6a2 2 0 0 0-4 0v1"/></svg>;
+    case "utensils":
+      return <svg {...common}><path d="M7 3v8"/><path d="M5 3v4a2 2 0 0 0 4 0V3"/><path d="M7 11v10"/><path d="M16 3c-1.5 0-3 2-3 5s1 4 2 4h1v9"/></svg>;
+    case "activity":
+      return <svg {...common}><path d="M3 12h4l2-6 4 12 2-6h6"/></svg>;
+    case "dumbbell":
+      return <svg {...common}><path d="M3 9v6M6 7v10M18 7v10M21 9v6M6 12h12"/></svg>;
+    case "pin":
+      return <svg {...common}><path d="M12 17v5"/><path d="M9 3h6l-1 6 3 3v1H7v-1l3-3-1-6z"/></svg>;
+    case "pin-fill":
+      return <svg {...common} fill="currentColor" stroke="currentColor" strokeWidth="1.2"><path d="M9 3h6l-1 6 3 3v1H7v-1l3-3-1-6z"/><path d="M12 17v5" stroke="currentColor" strokeWidth="1.6"/></svg>;
+    case "info-circle":
+      return <svg {...common}><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="8" r="0.8" fill="currentColor"/></svg>;
+    case "grip":
+      return <svg {...common}><circle cx="9" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="9" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="9" cy="18" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="18" r="1.3" fill="currentColor" stroke="none"/></svg>;
     default:
       return <svg {...common}><rect x="4" y="4" width="16" height="16" rx="2"/></svg>;
   }

@@ -16,6 +16,9 @@ const MP_PAGES = {
   reminders: "reminders.html",
   calendar: "calendar.html",
   editFavorites: "edit-favorites.html",
+  health: "health.html",
+  healthDetail: "health-detail.html",
+  healthEditPins: "health-edit-pins.html",
 };
 
 function readLS(key, fallback) {
@@ -94,6 +97,7 @@ function App() {
   const [toast, setToast] = useSt(null);
   const [visitFilter, setVisitFilter] = useSt({ time: "全部", cats: [], meds: [] });
   const [reportFilter, setReportFilter] = useSt({ time: "全部", cats: [] });
+  const [healthFilter, setHealthFilter] = useSt({ time: "全部", customStart: "", customEnd: "" });
   const [a11y, setA11y] = useSt(() => readLS("hb_a11y", { theme: "day", size: "中", lineHeight: "預設", letterSpacing: "預設" }));
   const [currentMember, setCurrentMember] = useSt(() => readLS("hb_member", "陳小白"));
   useEf(() => { writeLS("hb_a11y", a11y); }, [a11y]);
@@ -171,6 +175,9 @@ function App() {
             editFavorites: "favorites.html",
             reminders: "index.html",
             calendar: "index.html",
+            health: "index.html",
+            healthDetail: "health.html",
+            healthEditPins: "health.html",
           };
           window.location.href = parentMap[window.__INITIAL_SCREEN__] || "index.html";
         }
@@ -199,6 +206,9 @@ function App() {
           otherReportDetail: "reports",
           reminders: "home",
           calendar: "home",
+          health: "home",
+          healthDetail: "health",
+          healthEditPins: "health",
         };
         const curr = s[s.length - 1]?.screen;
         const fallback = fallbackMap[curr] || "home";
@@ -226,7 +236,7 @@ function App() {
     return screen;
   };
   const activeTab = tabFor(current.screen);
-  const hideTabBar = current.screen === "reminders" || current.screen === "editFavorites" || current.screen === "calendar";
+  const hideTabBar = current.screen === "reminders" || current.screen === "editFavorites" || current.screen === "calendar" || current.screen === "healthEditPins";
 
   const openSheet = (name, data) => { setSheet(name); setSheetData(data || null); };
   const closeSheet = () => { setSheet(null); setSheetData(null); };
@@ -254,6 +264,9 @@ function App() {
     case "editFavorites": body = isDesktop
                             ? <EditFavoritesScreenDesktop navigate={navigate}/>
                             : <EditFavoritesScreen navigate={navigate}/>; break;
+    case "health":        body = <HealthRecordsScreen navigate={navigate} openSheet={openSheet}/>; break;
+    case "healthDetail":  body = <HealthRecordDetailScreen navigate={navigate} openSheet={openSheet} params={current.params}/>; break;
+    case "healthEditPins": body = <HealthEditPinsScreen navigate={navigate}/>; break;
     default:              body = <HomeScreen navigate={navigate} openSheet={openSheet}/>;
   }
 
@@ -263,6 +276,8 @@ function App() {
       {sheet === "a11y"   && <A11ySheet onClose={closeSheet} state={a11y} setState={setA11y}/>}
       {sheet === "visitFilter"  && <VisitFilterSheet  onClose={closeSheet} value={visitFilter}  onApply={setVisitFilter}/>}
       {sheet === "reportFilter" && <ReportFilterSheet onClose={closeSheet} value={reportFilter} onApply={setReportFilter} scope={sheetData && sheetData.scope}/>}
+      {sheet === "addRecord" && <AddRecordSheet onClose={closeSheet} onSave={(m) => { closeSheet(); showToast(m); }} preset={sheetData}/>}
+      {sheet === "healthFilter" && <HealthFilterSheet onClose={closeSheet} value={healthFilter} onApply={setHealthFilter}/>}
     </>
   );
 
@@ -322,7 +337,7 @@ function App() {
                 </svg>
               </button>
             </div>
-            <div className="ptw-version">w4檢驗報告 v3.1</div>
+            <div className="ptw-version">w5 個人紀錄-血壓 v4.0</div>
 
             <div className="ptw-section-label">裝置版型</div>
             <div className="ptw-grid ptw-grid-3">
@@ -365,7 +380,7 @@ function App() {
               <path d="M4 17h4"/><circle cx="11" cy="17" r="2"/><path d="M13 17h7"/>
             </svg>
             <span>原型設定</span>
-            <span className="ptw-fab-version">w4檢驗報告 v3.1</span>
+            <span className="ptw-fab-version">w5 個人紀錄-血壓 v4.0</span>
           </button>
         )}
 
