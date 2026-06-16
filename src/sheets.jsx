@@ -364,3 +364,72 @@ function HealthFilterSheet({ onClose, value, onApply }) {
 }
 
 Object.assign(window, { HealthFilterSheet });
+
+// 健康管理連結 — 操作說明
+function HealthLinkGuideSheet({ onClose, onGoSettings }) {
+  const steps = [
+    { t: "切換至「我的」單元", d: "於健保快易通中切換至「我的」單元。" },
+    { t: "點選健康管理連結，選擇所要連結 App", d: "進入健康管理連結單元內，選擇您所要連結的 App，目前提供蘋果健康 App、Garmin Connect。" },
+    { t: "進入連結服務，並開啟連線設定", d: "進入您所要連結的 App 選項中，開啟連線設定開關，依照指示完成設定。" },
+    { t: "完成連結，將自動更新健康資料", d: "請詳讀蒐集資訊與說明內容，系統將依照所選 App 同步狀態，自動更新個人紀錄中相關量測紀錄。" },
+  ];
+  return (
+    <Sheet title="健康管理連結 — 操作說明" onClose={onClose} footer={
+      <>
+        <button onClick={onClose}>關閉</button>
+        <button className="primary" onClick={onGoSettings || onClose}>前往設定</button>
+      </>
+    }>
+      <div className="hg-intro">
+        透過健康管理連結，可將您現有健康 App 中的量測資料同步至健康存摺，集中管理個人健康數據，省去手動輸入的麻煩。
+      </div>
+
+      <div className="chip-group-label">操作步驟</div>
+      <ol className="hg-steps">
+        {steps.map((s, i) => (
+          <li key={i} className="hg-step">
+            <span className="hg-step-no">{i + 1}</span>
+            <div className="hg-step-main">
+              <div className="hg-step-title">{s.t}</div>
+              <div className="hg-step-desc">{s.d}</div>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <div className="chip-group-label">支援的健康 App</div>
+      <div className="hg-apps">
+        <div className="hg-app-row">
+          <span className="hg-appicon hg-appicon--apple">
+            <svg viewBox="0 0 24 24" width="27" height="27" aria-hidden="true">
+              <defs>
+                <linearGradient id="hgHeartGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stopColor="#FF6E8C" />
+                  <stop offset="1" stopColor="#FF2350" />
+                </linearGradient>
+              </defs>
+              <path d="M12 20.6C5.5 16.4 2.4 12.7 2.4 9.1 2.4 6.5 4.4 4.7 6.8 4.7c1.7 0 3.3 1 5.2 3 1.9-2 3.5-3 5.2-3 2.4 0 4.4 1.8 4.4 4.4 0 3.6-3.1 7.3-9.6 11.5z" fill="url(#hgHeartGrad)" />
+            </svg>
+          </span>
+          <span className="hg-app-name">蘋果健康</span>
+        </div>
+        <div className="hg-app-row">
+          <span className="hg-appicon hg-appicon--garmin">
+            <span className="hg-garmin-word">GARMIN</span>
+            <svg viewBox="0 0 32 32" width="23" height="23" aria-hidden="true">
+              <circle cx="16" cy="16" r="10" fill="none" stroke="#19b4d6" strokeWidth="3.6" strokeLinecap="round" strokeDasharray="50 13" transform="rotate(-28 16 16)" />
+            </svg>
+          </span>
+          <span className="hg-app-name">Garmin Connect</span>
+        </div>
+      </div>
+
+      <div className="hg-note">
+        <Icon name="info" size={14} />
+        <span>同步頻率與可取得的資料項目依各健康 App 提供範圍而定。如需中止連結，可至「健康管理連結」頁面解除授權。</span>
+      </div>
+    </Sheet>
+  );
+}
+
+Object.assign(window, { HealthLinkGuideSheet });

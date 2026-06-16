@@ -12,7 +12,7 @@ function FavoritesScreen({ navigate, openSheet }) {
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"8px 16px 12px" }}>
           <h1 className="page-title" style={{ margin:0 }}>常用功能</h1>
           <button className="more" onClick={() => navigate("editFavorites")} style={{ display:"inline-flex", alignItems:"center", gap:4, background:"none", border:0, color:"var(--text-secondary)", fontSize: 13 }}>
-            <Icon name="edit" size={14}/> 編輯
+            <Icon name="edit" size={14}/> 編輯常用功能
           </button>
         </div>
 

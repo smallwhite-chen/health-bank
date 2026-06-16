@@ -278,6 +278,7 @@ function App() {
       {sheet === "reportFilter" && <ReportFilterSheet onClose={closeSheet} value={reportFilter} onApply={setReportFilter} scope={sheetData && sheetData.scope}/>}
       {sheet === "addRecord" && <AddRecordSheet onClose={closeSheet} onSave={(m) => { closeSheet(); showToast(m); }} preset={sheetData}/>}
       {sheet === "healthFilter" && <HealthFilterSheet onClose={closeSheet} value={healthFilter} onApply={setHealthFilter}/>}
+      {sheet === "healthLinkGuide" && <HealthLinkGuideSheet onClose={closeSheet} onGoSettings={() => { closeSheet(); showToast("前往健康管理連結設定（示意）"); }}/>}
     </>
   );
 
@@ -337,7 +338,7 @@ function App() {
                 </svg>
               </button>
             </div>
-            <div className="ptw-version">w5 個人紀錄-血壓 v4.0</div>
+            <div className="ptw-version">w5 個人紀錄-血壓 v4.1</div>
 
             <div className="ptw-section-label">裝置版型</div>
             <div className="ptw-grid ptw-grid-3">
@@ -380,7 +381,7 @@ function App() {
               <path d="M4 17h4"/><circle cx="11" cy="17" r="2"/><path d="M13 17h7"/>
             </svg>
             <span>原型設定</span>
-            <span className="ptw-fab-version">w5 個人紀錄-血壓 v4.0</span>
+            <span className="ptw-fab-version">w5 個人紀錄-血壓 v4.1</span>
           </button>
         )}
 

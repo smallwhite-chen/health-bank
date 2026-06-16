@@ -202,10 +202,33 @@ function HealthRecordsScreen({ navigate, openSheet }) {
 
   const pinnedMetrics = pins.map((id) => window.Data.healthById[id]).filter(Boolean);
 
+  const [linkBannerHidden, setLinkBannerHidden] = useHState(() => {
+    try { return localStorage.getItem("hb_health_link_banner_hidden") === "1"; } catch (e) { return false; }
+  });
+  const hideLinkBanner = () => {
+    try { localStorage.setItem("hb_health_link_banner_hidden", "1"); } catch (e) {}
+    setLinkBannerHidden(true);
+  };
+
   return (
     <>
       <DetailHeader title="個人量測紀錄" onBack={() => navigate(-1)} />
       <div className="app-scroll hm-scroll">
+        {/* 健康管理連結說明 */}
+        {!linkBannerHidden && (
+        <div className="hm-link-banner">
+          <span className="hm-link-banner-ico"><Icon name="refresh" size={18} /></span>
+          <div className="hm-link-banner-main">
+            <p className="hm-link-banner-text">透過健康管理連結，可透過您現有的健康APP同步資料至健康存摺個人量測紀錄中。</p>
+            <div className="hm-link-banner-actions">
+              <button className="hm-link-banner-dismiss" onClick={hideLinkBanner}>不再顯示此訊息</button>
+              <button className="hm-link-banner-btn" onClick={() => openSheet("healthLinkGuide")}>
+                <Icon name="info" size={14} /> 操作說明
+              </button>
+            </div>
+          </div>
+        </div>
+        )}
         {/* 分類切換列 */}
         <div className="pill-tabs-row hm-tabs-row">
           <div className="pill-tabs pill-tabs-scroll">

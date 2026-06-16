@@ -4,9 +4,15 @@ body {
   font-family: var(--font-sans);
   color: var(--text-primary);
   background: #e5e9ef;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "palt" on;
+}
+/* 僅在高解析度（Retina）螢幕啟用灰階抗鋸齒；標準 1× 螢幕改用瀏覽器預設
+   的次像素抗鋸齒，避免中文字筆畫變細、邊緣出現「毛邊」。 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 button { font-family: inherit; cursor: pointer; }
 
@@ -1956,6 +1962,91 @@ body.desktop-mode .desktop-stage[data-screen-label="services"] .pill-more-panel 
    ============================================================ */
 .hm-tabs-row { padding-top: 10px; }
 .hm-section { padding: 0 16px; }
+
+/* 健康管理連結 — 說明區塊 */
+.hm-link-banner {
+  display: flex; align-items: flex-start; gap: 11px;
+  margin: 12px 16px 2px;
+  padding: 13px 14px;
+  background: var(--brand-50);
+  border: 1px solid var(--brand-100);
+  border-radius: var(--r-md);
+}
+.hm-link-banner-ico {
+  display: inline-grid; place-items: center;
+  width: 30px; height: 30px; border-radius: 999px;
+  background: var(--bg-surface); color: var(--brand-700);
+  flex-shrink: 0;
+}
+.hm-link-banner-main { flex: 1; min-width: 0; }
+.hm-link-banner-text {
+  margin: 1px 0 0; font-size: 13px; line-height: 1.65;
+  color: var(--text-secondary); text-wrap: pretty;
+}
+.hm-link-banner-actions {
+  display: flex; align-items: center; gap: 14px;
+  margin-top: 9px;
+}
+.hm-link-banner-dismiss {
+  font-size: 13px; font-family: inherit; font-weight: 500;
+  color: var(--text-tertiary); cursor: pointer;
+  background: none; border: 0; padding: 4px 0;
+  text-decoration: underline; text-underline-offset: 2px;
+}
+.hm-link-banner-dismiss:active { color: var(--text-secondary); }
+.hm-link-banner-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 7px 14px;
+  font-size: 13px; font-weight: 600; font-family: inherit;
+  color: var(--brand-900); cursor: pointer;
+  background: var(--bg-surface);
+  border: 1px solid var(--brand-100); border-radius: 999px;
+}
+.hm-link-banner-btn:active { background: var(--brand-100); }
+
+/* 操作說明 BottomSheet */
+.hg-intro {
+  font-size: 13px; line-height: 1.7; color: var(--text-secondary);
+  text-wrap: pretty;
+}
+.hg-steps { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.hg-step { display: flex; align-items: flex-start; gap: 12px; }
+.hg-step-no {
+  display: inline-grid; place-items: center;
+  width: 24px; height: 24px; border-radius: 999px;
+  background: var(--brand-700); color: #fff;
+  font-size: 13px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+}
+.hg-step-main { flex: 1; min-width: 0; }
+.hg-step-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.hg-step-desc { font-size: 12.5px; line-height: 1.6; color: var(--text-secondary); margin-top: 2px; text-wrap: pretty; }
+.hg-apps { display: flex; flex-direction: column; gap: 10px; }
+.hg-app-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-soft); border-radius: 14px;
+}
+.hg-app-name { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.hg-appicon {
+  width: 44px; height: 44px; border-radius: 11px;
+  flex-shrink: 0; position: relative; overflow: hidden;
+  display: grid; place-items: center;
+}
+.hg-appicon--apple { background: #ffffff; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08); }
+.hg-appicon--garmin { background: #2c3034; }
+.hg-appicon--garmin svg { margin-top: 6px; }
+.hg-garmin-word {
+  position: absolute; top: 6px; left: 0; right: 0; text-align: center;
+  font-size: 6px; font-weight: 800; letter-spacing: 0.6px; color: #d0d4d6;
+}
+.hg-note {
+  display: flex; align-items: flex-start; gap: 8px;
+  margin-top: 16px; padding: 11px 12px;
+  font-size: 12px; line-height: 1.6; color: var(--text-tertiary);
+  background: var(--bg-soft); border-radius: var(--r-md);
+}
+.hg-note svg { flex-shrink: 0; margin-top: 1px; color: var(--text-tertiary); }
 
 /* 圖示底圓 */
 .hm-ico {
