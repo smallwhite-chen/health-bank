@@ -57,11 +57,6 @@ function MetricRow({ metric, pinned, onOpen, onTogglePin }) {
     <div className="hm-row" onClick={onOpen}>
       <div className="hm-pin-left">
         <div className="hm-pin-top">
-          <button
-            className={`hm-pin-btn hm-row-pin ${pinned ? "is-on" : ""}`}
-            onClick={(e) => { e.stopPropagation(); onTogglePin(); }}
-            aria-label={pinned ? "取消釘選" : "加入常用"}
-          ><Icon name={pinned ? "pin-fill" : "pin"} size={16} /></button>
           <span className="hm-ico"><Icon name={metric.icon} size={16} /></span>
           <span className="hm-pin-name">{metric.id === "bp" ? "血壓 / 心率" : metric.name}</span>
         </div>
@@ -188,6 +183,7 @@ function MenstrualSkeleton() {
 function HealthRecordsScreen({ navigate, openSheet }) {
   const { categories, physio } = window.Data.health;
   const [cat, setCat] = useHState("總覽");
+  const [showAll, setShowAll] = useHState(false);
   const [pins, setPins] = useHState(() => {
     try {
       const s = JSON.parse(localStorage.getItem("hb_health_pins") || "null");
@@ -217,7 +213,6 @@ function HealthRecordsScreen({ navigate, openSheet }) {
         {/* 健康管理連結說明 */}
         {!linkBannerHidden && (
         <div className="hm-link-banner">
-          <span className="hm-link-banner-ico"><Icon name="refresh" size={18} /></span>
           <div className="hm-link-banner-main">
             <p className="hm-link-banner-text">透過健康管理連結，可透過您現有的健康APP同步資料至健康存摺個人量測紀錄中。</p>
             <div className="hm-link-banner-actions">
@@ -236,7 +231,32 @@ function HealthRecordsScreen({ navigate, openSheet }) {
               <button key={c} className={`pill-tab ${cat === c ? "active" : ""}`} onClick={() => setCat(c)}>{c}</button>
             ))}
           </div>
+          <button
+            className={`pill-tab pill-more-btn ${showAll ? "active" : ""}`}
+            onClick={() => setShowAll((s) => !s)}
+            aria-label="顯示全部分類"
+          >
+            更多
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: showAll ? "rotate(180deg)" : "none", transition: "transform 160ms ease" }}>
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
         </div>
+
+        {showAll && (
+          <div className="pill-more-panel">
+            <div className="pill-more-panel-title">全部分類</div>
+            <div className="pill-more-panel-grid">
+              {categories.map((c) => (
+                <button
+                  key={c}
+                  className={`pill-tab ${cat === c ? "active" : ""}`}
+                  onClick={() => { setCat(c); setShowAll(false); }}
+                >{c}</button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {cat === "總覽" && (
           <div className="hm-section">

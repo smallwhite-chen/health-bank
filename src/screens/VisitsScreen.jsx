@@ -14,7 +14,7 @@ function VisitsScreen({ navigate, openSheet, isFav, onToggleFav }) {
       <TopBar onA11y={() => openSheet("a11y")} onReminders={() => navigate("reminders")} onLogo={() => navigate("home")}/>
       <div className="app-scroll">
         <div className="info-banner">
-          提供最近三年的就醫紀錄，可查詢就醫時間、機構、用藥、醫囑等資訊
+          健康存摺提供最近三年的就醫紀錄，可查詢就醫時間、機構、用藥、醫囑等資訊
         </div>
 
         <PageTitle favoriteKey="visits" isFav={isFav} onToggleFav={onToggleFav} right={<button className="filter-btn" onClick={() => openSheet("visitFilter")}><Icon name="sliders" size={14}/> 進階篩選</button>}>

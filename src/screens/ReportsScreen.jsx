@@ -186,7 +186,7 @@ function ReportsScreen({ navigate, openSheet, isFav, onToggleFav }) {
       <TopBar onA11y={() => openSheet("a11y")} onReminders={() => navigate("reminders")} onLogo={() => navigate("home")}/>
       <div className="app-scroll">
         <div className="info-banner">
-          提供最近檢查檢驗報告，包含癌症篩檢、血糖血脂追蹤、影像與病理等各類檢查結果。
+          健康存摺提供最近檢查檢驗報告，包含癌症篩檢、血糖血脂追蹤、影像與病理等各類檢查結果。
         </div>
 
         <PageTitle isFav={isFav} onToggleFav={onToggleFav}>
