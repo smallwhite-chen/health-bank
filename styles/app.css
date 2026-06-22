@@ -534,6 +534,37 @@ body.desktop-mode .desktop-stage[data-screen-label="services"] .pill-more-panel 
 .reading-list li { margin: 0; }
 .reading-list li + li { margin-top: 2px; }
 
+/* 文字行數限制 + 看更多（…詳細內容） */
+.clampbox { position: relative; }
+.kv-row .clampbox { min-width: 0; }
+.clampbox-inner {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--clamp, 3);
+  line-clamp: var(--clamp, 3);
+  overflow: hidden;
+}
+.clampbox.is-expanded .clampbox-inner {
+  display: block;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  overflow: visible;
+}
+.clampbox-more {
+  position: absolute; right: 0; bottom: 0;
+  padding-left: 28px;
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0, var(--bg-surface) 22px);
+  border: 0; cursor: pointer;
+  font-family: inherit; font-size: inherit; line-height: 1.6;
+  color: var(--brand-700); font-weight: 600;
+}
+.clampbox-less {
+  display: inline-block; margin-top: 2px;
+  background: transparent; border: 0; cursor: pointer; padding: 0;
+  font-family: inherit; font-size: inherit;
+  color: var(--brand-700); font-weight: 600;
+}
+
 /* 子分類說明卡（如大腸癌篩檢說明） */
 .screen-note {
   margin: 0 16px 12px;
@@ -572,7 +603,7 @@ body.desktop-mode .desktop-stage[data-screen-label="services"] .pill-more-panel 
 
 /* 時間段選擇 */
 .glu-trend-title {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 10px;
@@ -611,6 +642,33 @@ body.desktop-mode .desktop-stage[data-screen-label="services"] .pill-more-panel 
   font-weight: 600;
   margin-bottom: 12px;
 }
+/* ---- 空狀態占位圖 (Tweaks「空值」) ---- */
+.empty-state {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 44px 24px;
+  gap: 10px;
+}
+.empty-state.is-compact { padding: 28px 20px; }
+.empty-state-ico {
+  width: 72px; height: 72px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--bg-app, #f4f6f5);
+  color: var(--text-muted, #9aa3a0);
+  margin-bottom: 2px;
+}
+.empty-state.is-compact .empty-state-ico { width: 56px; height: 56px; }
+.empty-state-label {
+  font-size: 15px; font-weight: 600;
+  color: var(--text-secondary, #5b6360);
+}
+.empty-state-hint {
+  font-size: 13px;
+  color: var(--text-muted, #9aa3a0);
+  max-width: 240px;
+  line-height: 1.5;
+}
 .glu-caption-edit {
   margin-left: auto;
   border: none;
@@ -647,10 +705,15 @@ body.desktop-mode .desktop-stage[data-screen-label="services"] .pill-more-panel 
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 16px;
   font-size: 12px;
   color: var(--text-secondary);
   margin-top: 6px;
+}
+.glu-legend-item { display: inline-flex; align-items: center; gap: 6px; }
+.glu-legend-ref {
+  width: 16px; height: 0;
+  border-top: 2px dashed #E0A94B;
 }
 .glu-legend-dot {
   width: 16px; height: 4px; border-radius: 2px;
@@ -1447,6 +1510,34 @@ body.desktop-mode .desktop-stage[data-screen-label="services"] .pill-more-panel 
 .public-tweaks-panel .ptw-opt-hint  { font-size: 10px; opacity: 0.7; }
 .public-tweaks-panel .ptw-opt.is-active .ptw-opt-hint { opacity: 0.85; }
 
+.public-tweaks-panel .ptw-switch {
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-soft);
+  background: #fff;
+  cursor: pointer; font-family: inherit;
+  text-align: left;
+}
+.public-tweaks-panel .ptw-switch-text { display: flex; flex-direction: column; gap: 2px; }
+.public-tweaks-panel .ptw-switch-label { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.public-tweaks-panel .ptw-switch-hint { font-size: 10px; color: var(--text-tertiary); }
+.public-tweaks-panel .ptw-switch-track {
+  flex-shrink: 0;
+  width: 40px; height: 24px; border-radius: 999px;
+  background: var(--border-strong, #cfd6d3);
+  position: relative; transition: background 160ms ease;
+}
+.public-tweaks-panel .ptw-switch-knob {
+  position: absolute; top: 2px; left: 2px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  transition: transform 160ms ease;
+}
+.public-tweaks-panel .ptw-switch.is-on .ptw-switch-track { background: var(--brand-700); }
+.public-tweaks-panel .ptw-switch.is-on .ptw-switch-knob { transform: translateX(16px); }
+
 @media (max-width: 520px) {
   .public-tweaks-panel { width: calc(100vw - 24px); right: 12px; bottom: 12px; }
   .public-tweaks-fab { right: 12px; bottom: 12px; }
@@ -1986,7 +2077,7 @@ body.desktop-mode .desktop-stage[data-screen-label="services"] .pill-more-panel 
   display: flex; align-items: flex-start; gap: 11px;
   margin: 12px 16px 2px;
   padding: 13px 14px;
-  background: var(--brand-50);
+  background: var(--bg-surface);
   border: 1px solid var(--brand-100);
   border-radius: var(--r-md);
 }

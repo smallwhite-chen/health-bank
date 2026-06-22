@@ -1,5 +1,6 @@
 // App root — route/stack state + phone frame
 const { useState: useSt, useEffect: useEf } = React;
+const EmptyStateContext = window.EmptyStateContext;
 
 // Multi-page mode: when an HTML page sets window.__INITIAL_SCREEN__ before
 // loading App.jsx, we treat each top-level screen as its own URL and
@@ -35,7 +36,8 @@ function writeLS(key, value) {
 function App() {
   const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
     "mode": "default",
-    "viewport": "auto"
+    "viewport": "auto",
+    "empty": false
   }/*EDITMODE-END*/;
   const [tweaks, setTweaks] = useSt(() => readLS("hb_tweaks", TWEAK_DEFAULTS));
   const [editMode, setEditMode] = useSt(false);
@@ -316,7 +318,7 @@ function App() {
   );
 
   return (
-    <>
+    <EmptyStateContext.Provider value={!!tweaks.empty}>
       {shell}
 
       {publicOpen ? (
@@ -338,7 +340,7 @@ function App() {
                 </svg>
               </button>
             </div>
-            <div className="ptw-version">w5 個人紀錄-血壓 v4.3</div>
+            <div className="ptw-version">w5 個人紀錄-血壓 v4.4</div>
 
             <div className="ptw-section-label">裝置版型</div>
             <div className="ptw-grid ptw-grid-3">
@@ -370,6 +372,19 @@ function App() {
                 </button>
               ))}
             </div>
+
+            <div className="ptw-section-label">資料狀態</div>
+            <button
+              className={"ptw-switch" + (tweaks.empty ? " is-on" : "")}
+              onClick={() => setTweak("empty", !tweaks.empty)}
+              role="switch"
+              aria-checked={tweaks.empty}>
+              <span className="ptw-switch-text">
+                <span className="ptw-switch-label">空值</span>
+                <span className="ptw-switch-hint">顯示各頁空狀態占位圖</span>
+              </span>
+              <span className="ptw-switch-track"><span className="ptw-switch-knob"/></span>
+            </button>
           </div>
         ) : (
           <button
@@ -381,7 +396,7 @@ function App() {
               <path d="M4 17h4"/><circle cx="11" cy="17" r="2"/><path d="M13 17h7"/>
             </svg>
             <span>原型設定</span>
-            <span className="ptw-fab-version">w5 個人紀錄-血壓 v4.3</span>
+            <span className="ptw-fab-version">w5 個人紀錄-血壓 v4.4</span>
           </button>
         )}
 
@@ -470,10 +485,25 @@ function App() {
               </button>
             ))}
           </div>
+
+          <div style={{ fontSize:12, color:"var(--text-secondary)", margin:"14px 0 6px" }}>資料狀態</div>
+          <button
+            onClick={() => setTweak("empty", !tweaks.empty)}
+            style={{
+              width:"100%", display:"flex", alignItems:"center", justifyContent:"space-between",
+              padding:"10px 12px", borderRadius:10,
+              border:"1px solid " + (tweaks.empty ? "var(--brand-700)" : "var(--border-soft)"),
+              background: tweaks.empty ? "var(--brand-900)" : "#fff",
+              color: tweaks.empty ? "#fff" : "var(--text-secondary)",
+              cursor:"pointer", fontFamily:"inherit", fontSize:13
+            }}>
+            <span style={{ fontWeight:600 }}>空值</span>
+            <span style={{ fontSize:11, opacity:0.85 }}>{tweaks.empty ? "開啟" : "關閉"}</span>
+          </button>
         </div>
         )
       )}
-    </>
+    </EmptyStateContext.Provider>
   );
 }
 

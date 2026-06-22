@@ -35,7 +35,7 @@ function ReportSectionHead({ filter, openSheet, hasFilter, isFav, onToggleFav })
       </div>
       {hasFilter && (
         <button className="filter-btn" onClick={() => openSheet("reportFilter", { scope: filter })}>
-          <Icon name="sliders" size={14}/> 進階篩選
+          <Icon name="sliders" size={14}/> 篩選
         </button>
       )}
     </div>
@@ -114,6 +114,16 @@ function LipidSummaryCard({ onClick }) {
 
 function ReportsScreen({ navigate, openSheet, isFav, onToggleFav }) {
   const { reports, reportCategories, reportSubCategories, reportSubCatNotes } = window.Data;
+  const empty = useEmptyState();
+  const [bannerHidden, setBannerHidden] = React.useState(() => {
+    try { return localStorage.getItem("hb_reports_banner_hidden") === "1"; } catch (e) { return false; }
+  });
+  const hideBanner = () => { try { localStorage.setItem("hb_reports_banner_hidden", "1"); } catch (e) {} setBannerHidden(true); };
+  const toggleBanner = () => setBannerHidden((h) => {
+    const next = !h;
+    try { localStorage.setItem("hb_reports_banner_hidden", next ? "1" : "0"); } catch (e) {}
+    return next;
+  });
   const [filter, setFilter] = React.useState("全部");
   const [subFilter, setSubFilter] = React.useState("全部");
   const [showAll, setShowAll] = React.useState(false);
@@ -172,6 +182,7 @@ function ReportsScreen({ navigate, openSheet, isFav, onToggleFav }) {
   };
 
   const rows = (() => {
+    if (empty) return [];
     let r = filter === "全部" ? reports : reports.filter(r => r.type === filter);
     if (subCats) r = r.filter(x => x.subcat === subFilter);
     r = [...r].sort((a, b) => {
@@ -185,12 +196,25 @@ function ReportsScreen({ navigate, openSheet, isFav, onToggleFav }) {
     <>
       <TopBar onA11y={() => openSheet("a11y")} onReminders={() => navigate("reminders")} onLogo={() => navigate("home")}/>
       <div className="app-scroll">
+        {!bannerHidden && (
         <div className="info-banner">
           健康存摺提供最近檢查檢驗報告，包含癌症篩檢、血糖血脂追蹤、影像與病理等各類檢查結果。
+          <div>
+            <button className="dismiss" onClick={hideBanner}>不再顯示此訊息</button>
+          </div>
         </div>
+        )}
 
-        <PageTitle isFav={isFav} onToggleFav={onToggleFav}>
+        <PageTitle favoriteKey="reports" isFav={isFav} onToggleFav={onToggleFav}>
           檢驗報告
+          <button
+            className="info"
+            onClick={toggleBanner}
+            aria-label="單元說明"
+            style={{ background:"none", border:0, padding:4, cursor:"pointer", color: !bannerHidden ? "var(--brand-700)" : "var(--text-tertiary)" }}
+          >
+            <Icon name="info" size={18} />
+          </button>
         </PageTitle>
 
         <div className="pill-tabs-row">
@@ -230,7 +254,7 @@ function ReportsScreen({ navigate, openSheet, isFav, onToggleFav }) {
           </div>
         )}
 
-        <ReportSectionHead filter={filter} openSheet={openSheet} hasFilter={filter !== "血糖檢驗報告" && filter !== "血脂檢驗報告" && filter !== "癌症篩檢結果"} isFav={isFav} onToggleFav={onToggleFav} />
+        <ReportSectionHead filter={filter} openSheet={openSheet} hasFilter={filter !== "血糖檢驗報告" && filter !== "血脂檢驗報告" && filter !== "癌症篩檢結果"} />
 
         {subCats && (
           <div className="pill-tabs-row sub-pill-tabs-row">
@@ -271,7 +295,7 @@ function ReportsScreen({ navigate, openSheet, isFav, onToggleFav }) {
           </div>
         )}
 
-        {filter === "血糖檢驗報告" ? <GlucoseReport/> : filter === "血脂檢驗報告" ? <LipidReport/> : (<>
+        {filter === "血糖檢驗報告" ? (empty ? <EmptyState label="尚無血糖檢驗報告" hint="查無此類別的檢驗資料" /> : <GlucoseReport/>) : filter === "血脂檢驗報告" ? (empty ? <EmptyState label="尚無血脂檢驗報告" hint="查無此類別的檢驗資料" /> : <LipidReport/>) : (<>
         <div className="count-bar">
           <span>共 {rows.length} 筆報告</span>
           <button
@@ -299,6 +323,9 @@ function ReportsScreen({ navigate, openSheet, isFav, onToggleFav }) {
         )}
 
         <div style={{ padding:"0 16px" }}>
+          {rows.length === 0 && empty && (
+            <EmptyState label="尚無檢驗報告" hint="查無符合條件的檢驗資料" />
+          )}
           {rows.map(r => r.type === "血糖檢驗報告" ? (
             <GlucoseSummaryCard key={r.id} onClick={() => pickFilter("血糖檢驗報告")} />
           ) : r.type === "血脂檢驗報告" ? (
@@ -314,11 +341,15 @@ function ReportsScreen({ navigate, openSheet, isFav, onToggleFav }) {
                   <div className="kv-row kv-row-wide"><span className="k">檢驗結果</span><span className="v">{r.result || r.summary}</span></div>
                   <div className="kv-row kv-row-wide"><span className="k">報告判讀</span>
                     {r.readings ? (
-                      <ul className="reading-list">
-                        {r.readings.map((t, i) => <li key={i}>{t}</li>)}
-                      </ul>
+                      <ClampBox lines={3}>
+                        <ul className="reading-list">
+                          {r.readings.map((t, i) => <li key={i}>{t}</li>)}
+                        </ul>
+                      </ClampBox>
                     ) : (
-                      <span className="v" style={{ fontWeight: 400, color: "var(--text-secondary)" }}>{r.summary}</span>
+                      <ClampBox lines={3}>
+                        <span className="v" style={{ fontWeight: 400, color: "var(--text-secondary)" }}>{r.summary}</span>
+                      </ClampBox>
                     )}
                   </div>
                 </div>

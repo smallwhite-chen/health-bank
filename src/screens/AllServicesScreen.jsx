@@ -1,6 +1,15 @@
 // 全部服務 — 所有分類展開於同一頁面，支援捷徑捲動 + 捲動偵測
 function AllServicesScreen({ navigate, openSheet }) {
   const { serviceCategories, services } = window.Data;
+  const [bannerHidden, setBannerHidden] = React.useState(() => {
+    try { return localStorage.getItem("hb_services_banner_hidden") === "1"; } catch (e) { return false; }
+  });
+  const hideBanner = () => { try { localStorage.setItem("hb_services_banner_hidden", "1"); } catch (e) {} setBannerHidden(true); };
+  const toggleBanner = () => setBannerHidden((h) => {
+    const next = !h;
+    try { localStorage.setItem("hb_services_banner_hidden", next ? "1" : "0"); } catch (e) {}
+    return next;
+  });
   const [activeCat, setActiveCat] = React.useState(serviceCategories[0]);
   const [query, setQuery] = React.useState("");
   const [showAll, setShowAll] = React.useState(false);
@@ -98,11 +107,26 @@ function AllServicesScreen({ navigate, openSheet }) {
     <>
       <TopBar onA11y={() => openSheet && openSheet("a11y")} onReminders={() => navigate("reminders")} onLogo={() => navigate("home")}/>
       <div className="app-scroll" ref={scrollRef}>
+        {!bannerHidden && (
         <div className="info-banner">
           您可以瀏覽健康存摺的所有單元，也可透過關鍵字搜尋快速找到所要功能
+          <div>
+            <button className="dismiss" onClick={hideBanner}>不再顯示此訊息</button>
+          </div>
         </div>
+        )}
 
-        <PageTitle>全部服務</PageTitle>
+        <PageTitle>
+          全部服務
+          <button
+            className="info"
+            onClick={toggleBanner}
+            aria-label="單元說明"
+            style={{ background:"none", border:0, padding:4, cursor:"pointer", color: !bannerHidden ? "var(--brand-700)" : "var(--text-tertiary)" }}
+          >
+            <Icon name="info" size={18} />
+          </button>
+        </PageTitle>
 
         {/* Sticky search + tabs */}
         <div className="services-sticky-top">

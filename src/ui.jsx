@@ -1,6 +1,62 @@
 // Shared UI primitives
 const { useState } = React;
 
+// 空值狀態 — 由 App 的 Tweaks「空值」開關透過 Context 提供，
+// 各畫面以 useEmptyState() 取得，切換顯示空狀態占位圖。
+const EmptyStateContext = (window.EmptyStateContext = window.EmptyStateContext || React.createContext(false));
+function useEmptyState() { return React.useContext(EmptyStateContext); }
+window.useEmptyState = useEmptyState;
+
+function EmptyState({ label = "目前尚無資料", hint, compact }) {
+  return (
+    <div className={"empty-state" + (compact ? " is-compact" : "")}>
+      <div className="empty-state-ico" aria-hidden="true">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="4" width="18" height="16" rx="2"/>
+          <path d="M3 9h18"/><path d="M8 14h5"/>
+          <path d="M16.5 14.5 19 17m0-2.5L16.5 17"/>
+        </svg>
+      </div>
+      <div className="empty-state-label">{label}</div>
+      {hint ? <div className="empty-state-hint">{hint}</div> : null}
+    </div>
+  );
+}
+window.EmptyState = EmptyState;
+
+// 文字行數限制 + 看更多 — 超過指定行數時於後方顯示「…詳細內容」可展開
+function ClampBox({ lines = 3, children, moreLabel = "完整內容" }) {
+  const ref = React.useRef(null);
+  const [expanded, setExpanded] = React.useState(false);
+  const [overflowing, setOverflowing] = React.useState(false);
+  React.useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const check = () => setOverflowing(el.scrollHeight - el.clientHeight > 1);
+    check();
+    let ro;
+    if (typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(check);
+      ro.observe(el);
+    }
+    return () => { if (ro) ro.disconnect(); };
+  }, [children, expanded]);
+  return (
+    <div className={"clampbox" + (expanded ? " is-expanded" : "")}>
+      <div ref={ref} className="clampbox-inner" style={{ "--clamp": lines }}>
+        {children}
+      </div>
+      {overflowing && !expanded && (
+        <button type="button" className="clampbox-more" onClick={() => setExpanded(true)}>{moreLabel}</button>
+      )}
+      {expanded && (
+        <button type="button" className="clampbox-less" onClick={() => setExpanded(false)}>收合</button>
+      )}
+    </div>
+  );
+}
+window.ClampBox = ClampBox;
+
 function StatusBar() {
   return (
     <div className="phone-statusbar">

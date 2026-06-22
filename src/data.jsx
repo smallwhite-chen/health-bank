@@ -188,7 +188,7 @@ const Data = {
     { id: "r_breast",date: "114年7月15日", type: "癌症篩檢結果", subcat:"乳癌篩檢", item: "乳房 X 光攝影（乳房攝影）", org: "馬偕醫院", summary: "乳房組織正常", result: "無異常", readings: ["乳房組織未見異常鈣化點", "未發現可疑腫塊，建議每 2 年 1 次定期篩檢。"] },
     { id: "r_breast2",date: "112年6月10日", type: "癌症篩檢結果", subcat:"乳癌篩檢", item: "乳房 X 光攝影（乳房攝影）", org: "馬偕醫院", summary: "乳房組織正常", result: "無異常", readings: ["乳房組織未見異常鈣化點", "未發現可疑腫塊，建議每 2 年 1 次定期篩檢。"] },
     { id: "r_breast3",date: "110年5月18日", type: "癌症篩檢結果", subcat:"乳癌篩檢", item: "乳房 X 光攝影（乳房攝影）", org: "台大醫院", summary: "乳房組織正常", result: "無異常", readings: ["乳房組織未見異常鈣化點", "未發現可疑腫塊，建議每 2 年 1 次定期篩檢。"] },
-    { id: "r_cervix",date: "114年6月05日", type: "癌症篩檢結果", subcat:"子宮頸癌篩檢", item: "子宮頸抹片檢查", org: "亞東醫院", summary: "抹片結果正常", result: "無異常", readings: ["子宮頸細胞未見異常", "抹片結果正常，建議每 3 年 1 次定期篩檢。"] },
+    { id: "r_cervix",date: "114年6月05日", type: "癌症篩檢結果", subcat:"子宮頸癌篩檢", item: "子宮頸抹片檢查", org: "亞東醫院", summary: "抹片結果正常", result: "無異常", readings: ["子宮頸細胞未見異常", "抹片結果正常，建議每 3 年 1 次定期篩檢。", "抹片結果正常，建議每 3 年 1 次定期篩檢。"] },
     { id: "r_cervix2",date: "111年5月20日", type: "癌症篩檢結果", subcat:"子宮頸癌篩檢", item: "子宮頸抹片檢查", org: "亞東醫院", summary: "抹片結果正常", result: "無異常", readings: ["子宮頸細胞未見異常", "抹片結果正常，建議每 3 年 1 次定期篩檢。"] },
     { id: "r_cervix3",date: "108年4月12日", type: "癌症篩檢結果", subcat:"子宮頸癌篩檢", item: "子宮頸抹片檢查", org: "台大醫院", summary: "抹片結果正常", result: "無異常", readings: ["子宮頸細胞未見異常", "抹片結果正常，建議每 3 年 1 次定期篩檢。"] },
     { id: "r_pa",  date: "114年3月12日", type: "影像或病理檢查報告", item: "腹部超音波",         org: "亞東醫院", summary: "肝、膽、胰、脾、腎未見異常" },

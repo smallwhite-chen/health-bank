@@ -374,7 +374,7 @@ function HealthLinkGuideSheet({ onClose, onGoSettings }) {
     { t: "完成連結，將自動更新健康資料", d: "請詳讀蒐集資訊與說明內容，系統將依照所選 App 同步狀態，自動更新個人紀錄中相關量測紀錄。" },
   ];
   return (
-    <Sheet title="健康管理連結 — 操作說明" onClose={onClose} footer={
+    <Sheet title="健康管理連結 — 同步操作說明" onClose={onClose} footer={
       <>
         <button onClick={onClose}>關閉</button>
         <button className="primary" onClick={onGoSettings || onClose}>前往設定</button>

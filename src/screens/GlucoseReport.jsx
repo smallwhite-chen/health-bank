@@ -65,7 +65,7 @@ function GlucoseReport() {
       <div className="glu-cols">
       <div className="glu-col-trend">
       {/* 時間段選擇 */}
-      <div className="glu-trend-title">近年檢驗結果趨勢</div>
+      <div className="glu-trend-title">檢驗結果趨勢(112/06/10 起)</div>
       <div className="glu-range-row">
         {PERIODS.map((p) => (
           <button
@@ -83,10 +83,6 @@ function GlucoseReport() {
         </div>
       )}
 
-      <div className="glu-caption">
-        <Icon name="sliders" size={13} /> {caption}
-      </div>
-
       {/* 圖表卡 */}
       <div className="glu-card">
         <div className="glu-card-title">{glucoseMeta.metric}（{glucoseMeta.unit}）趨勢</div>
@@ -95,7 +91,10 @@ function GlucoseReport() {
         ) : (
           <GluChart points={asc} meta={glucoseMeta} fmt={fmt} pad={pad} />
         )}
-        <div className="glu-legend"><span className="glu-legend-dot" />{glucoseMeta.metric}（{glucoseMeta.unit}）</div>
+        <div className="glu-legend">
+          <span className="glu-legend-item"><span className="glu-legend-dot" />{glucoseMeta.metric}（{glucoseMeta.unit}）</span>
+          <span className="glu-legend-item"><span className="glu-legend-ref" />參考值 {glucoseMeta.refLow.toFixed(1)}-{glucoseMeta.refHigh.toFixed(1)}</span>
+        </div>
       </div>
       </div>
 
@@ -191,7 +190,6 @@ function GluChart({ points, meta, fmt, pad }) {
       {showRef && (
         <g>
           <line x1={mL} y1={y(meta.refHigh)} x2={W - mR} y2={y(meta.refHigh)} stroke="#E0A94B" strokeWidth="1" strokeDasharray="4 4" />
-          <text x={W - mR} y={y(meta.refHigh) - 4} textAnchor="end" fontSize="9" fill="#C8902F">參考上限 {meta.refHigh.toFixed(1)}</text>
         </g>
       )}
 

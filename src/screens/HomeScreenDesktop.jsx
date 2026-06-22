@@ -4,6 +4,7 @@
 
 function HomeScreenDesktop({ navigate, openSheet, currentMember }) {
   const { tips, visits, quickEntries, familyDoctor, carePlans, calendarEvents } = window.Data;
+  const empty = useEmptyState();
   const recentVisits = visits.slice(0, 5);
   const name = currentMember || window.Data.user.name;
   const [tab, setTab] = React.useState("tips");
@@ -43,6 +44,9 @@ function HomeScreenDesktop({ navigate, openSheet, currentMember }) {
 
         {tab === "tips" ? (
           <>
+            {empty ? (
+              <EmptyState label="目前無貼心提醒" compact />
+            ) : (
             <div className="dt-tips-grid">
               {tips.map(t => (
                 <button
@@ -59,6 +63,7 @@ function HomeScreenDesktop({ navigate, openSheet, currentMember }) {
                 </button>
               ))}
             </div>
+            )}
             <button
               className="dt-view-calendar"
               onClick={() => navigate("reminders")}
@@ -69,6 +74,9 @@ function HomeScreenDesktop({ navigate, openSheet, currentMember }) {
           </>
         ) : (
           <>
+            {empty ? (
+              <EmptyState label="目前無行事曆活動" compact />
+            ) : (
             <div className="dt-tips-grid">
               {calendarEvents.map(e => (
                 <button
@@ -85,12 +93,13 @@ function HomeScreenDesktop({ navigate, openSheet, currentMember }) {
                 </button>
               ))}
             </div>
+            )}
             <button
               className="dt-view-calendar"
               onClick={() => navigate("calendar")}
             >
-              <Icon name="calendar" size={16}/>
-              <span>檢視完整行事曆</span>
+              <Icon name={empty ? "plus" : "calendar"} size={16}/>
+              <span>{empty ? "新增行程" : "檢視完整行事曆"}</span>
             </button>
           </>
         )}
@@ -108,7 +117,9 @@ function HomeScreenDesktop({ navigate, openSheet, currentMember }) {
             </button>
           </div>
           <div className="dt-visit-list">
-            {recentVisits.map((v) => (
+            {empty ? (
+              <EmptyState label="目前無就醫紀錄" compact />
+            ) : recentVisits.map((v) => (
               <button
                 key={v.id}
                 className="dt-visit-row"
@@ -162,7 +173,15 @@ function HomeScreenDesktop({ navigate, openSheet, currentMember }) {
               <h2>您目前參與健保署的照護計畫</h2>
             </div>
             <div className="dt-care-list">
-              {carePlans.map(p => (
+              {empty ? (
+                <>
+                  <EmptyState label="目前無參與的照護計畫" compact />
+                  <button className="dt-view-calendar" onClick={() => navigate("services")}>
+                    <Icon name="external" size={16}/>
+                    <span>瞭解更多</span>
+                  </button>
+                </>
+              ) : carePlans.map(p => (
                 <div key={p.id} className={`dt-care-row tone-${p.tone}`}>
                   <div className="dt-care-icon"><Icon name={p.icon} size={18}/></div>
                   <div className="dt-care-body">

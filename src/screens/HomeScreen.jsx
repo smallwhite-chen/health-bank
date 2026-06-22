@@ -1,5 +1,6 @@
 function HomeScreen({ navigate, openSheet, currentMember }) {
   const { tips, recentVisits, quickEntries, familyDoctor, carePlans, calendarEvents } = window.Data;
+  const empty = useEmptyState();
   const name = currentMember || window.Data.user.name;
   const [reminderTab, setReminderTab] = React.useState("tips");
   return (
@@ -34,7 +35,9 @@ function HomeScreen({ navigate, openSheet, currentMember }) {
 
         {reminderTab === "tips" ? (
           <div data-coach="tips" style={{ padding: "0 16px" }}>
-            {tips.map(t => (
+            {empty ? (
+              <EmptyState label="目前無貼心提醒" compact />
+            ) : tips.map(t => (
               <div key={t.id} className="tip-card" onClick={() => t.screen && navigate(t.screen, t.params)} style={{ cursor: t.screen ? "pointer" : "default" }}>
                 <div className="ico-box"><Icon name={t.icon} size={20}/></div>
                 <div className="text">
@@ -51,20 +54,32 @@ function HomeScreen({ navigate, openSheet, currentMember }) {
           </div>
         ) : (
           <div style={{ padding: "0 16px" }}>
-            {calendarEvents.map(e => (
-              <div key={e.id} className="tip-card" onClick={() => navigate("reminders")} style={{ cursor: "pointer" }}>
-                <div className="ico-box"><Icon name={e.icon} size={20}/></div>
-                <div className="text">
-                  <div className="title">{e.title}</div>
-                  <div className="sub">{e.sub}</div>
-                </div>
-                <Icon name="chev-right" size={16} className="chev"/>
-              </div>
-            ))}
-            <button className="view-calendar-btn" onClick={() => navigate("calendar")}>
-              <Icon name="calendar" size={16}/>
-              <span>檢視完整行事曆</span>
-            </button>
+            {empty ? (
+              <>
+                <EmptyState label="目前無行事曆活動" compact />
+                <button className="view-calendar-btn" onClick={() => navigate("calendar")}>
+                  <Icon name="plus" size={16}/>
+                  <span>新增行程</span>
+                </button>
+              </>
+            ) : (
+              <>
+                {calendarEvents.map(e => (
+                  <div key={e.id} className="tip-card" onClick={() => navigate("reminders")} style={{ cursor: "pointer" }}>
+                    <div className="ico-box"><Icon name={e.icon} size={20}/></div>
+                    <div className="text">
+                      <div className="title">{e.title}</div>
+                      <div className="sub">{e.sub}</div>
+                    </div>
+                    <Icon name="chev-right" size={16} className="chev"/>
+                  </div>
+                ))}
+                <button className="view-calendar-btn" onClick={() => navigate("calendar")}>
+                  <Icon name="calendar" size={16}/>
+                  <span>檢視完整行事曆</span>
+                </button>
+              </>
+            )}
           </div>
         )}
 
@@ -85,7 +100,9 @@ function HomeScreen({ navigate, openSheet, currentMember }) {
           <button className="more" onClick={() => navigate("visits")}>看更多 <Icon name="chev-right" size={12}/></button>
         </div>
         <div style={{ padding: "0 16px" }}>
-          {recentVisits.map(v => (
+          {empty ? (
+            <EmptyState label="目前無就醫紀錄" compact />
+          ) : recentVisits.map(v => (
             <VisitRow key={v.id} v={v} onClick={() => navigate("visitDetail", { id: v.id })}/>
           ))}
         </div>
@@ -95,7 +112,15 @@ function HomeScreen({ navigate, openSheet, currentMember }) {
           <h2>您目前參與健保署的照護計畫</h2>
         </div>
         <div className="care-plan-list">
-          {carePlans.map(p => (
+          {empty ? (
+            <>
+              <EmptyState label="目前無參與的照護計畫" compact />
+              <button className="view-calendar-btn" onClick={() => navigate("services")}>
+                <Icon name="external" size={16}/>
+                <span>瞭解更多</span>
+              </button>
+            </>
+          ) : carePlans.map(p => (
             <div key={p.id} className={`care-plan-card tone-${p.tone}`}>
               <div className="cp-head">
                 <div className="cp-icon"><Icon name={p.icon} size={18}/></div>
