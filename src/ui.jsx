@@ -29,13 +29,14 @@ function TopBar({ onA11y, onReminders, onLogo }) {
   );
 }
 
-function DetailHeader({ title, onBack }) {
+function DetailHeader({ title, onBack, action }) {
   return (
     <div className="detail-header">
       <button className="back" onClick={onBack}>
         <Icon name="chev-left" size={18}/> 返回
       </button>
       <div className="title">{title}</div>
+      {action ? <div className="header-action">{action}</div> : null}
     </div>
   );
 }

@@ -205,10 +205,27 @@ function HealthRecordsScreen({ navigate, openSheet }) {
     try { localStorage.setItem("hb_health_link_banner_hidden", "1"); } catch (e) {}
     setLinkBannerHidden(true);
   };
+  const toggleLinkBanner = () => setLinkBannerHidden((h) => {
+    const next = !h;
+    try { localStorage.setItem("hb_health_link_banner_hidden", next ? "1" : "0"); } catch (e) {}
+    return next;
+  });
 
   return (
     <>
-      <DetailHeader title="個人量測紀錄" onBack={() => navigate(-1)} />
+      <DetailHeader
+        title="個人量測紀錄"
+        onBack={() => navigate(-1)}
+        action={
+          <button
+            className={`header-info-btn ${!linkBannerHidden ? "is-on" : ""}`}
+            onClick={toggleLinkBanner}
+            aria-label="單元說明"
+          >
+            <Icon name="info" size={20} />
+          </button>
+        }
+      />
       <div className="app-scroll hm-scroll">
         {/* 健康管理連結說明 */}
         {!linkBannerHidden && (

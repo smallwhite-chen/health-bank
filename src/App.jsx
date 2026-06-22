@@ -338,7 +338,7 @@ function App() {
                 </svg>
               </button>
             </div>
-            <div className="ptw-version">w5 個人紀錄-血壓 v4.2</div>
+            <div className="ptw-version">w5 個人紀錄-血壓 v4.3</div>
 
             <div className="ptw-section-label">裝置版型</div>
             <div className="ptw-grid ptw-grid-3">
@@ -381,7 +381,7 @@ function App() {
               <path d="M4 17h4"/><circle cx="11" cy="17" r="2"/><path d="M13 17h7"/>
             </svg>
             <span>原型設定</span>
-            <span className="ptw-fab-version">w5 個人紀錄-血壓 v4.2</span>
+            <span className="ptw-fab-version">w5 個人紀錄-血壓 v4.3</span>
           </button>
         )}
 
