@@ -35,11 +35,13 @@ function VisitDetailScreen({ navigate, params }) {
   });
   const [savedNote, setSavedNote] = React.useState(note);
   const [saved, setSaved] = React.useState(false);
+  const [editing, setEditing] = React.useState(false);
   const dirty = note !== savedNote;
   const onSave = () => {
     try { localStorage.setItem(noteKey, note); } catch {}
     setSavedNote(note);
     setSaved(true);
+    setEditing(false);
     setTimeout(() => setSaved(false), 1600);
   };
   const onClear = () => setNote("");
@@ -139,10 +141,23 @@ function VisitDetailScreen({ navigate, params }) {
         </div>
 
         <div className="detail-section">
-          <div className="sec-head"><Icon name="edit" size={16} className="ico"/> 就醫備註</div>
+          <div className="sec-head" style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+            <span style={{ display:"inline-flex", alignItems:"center" }}><Icon name="edit" size={16} className="ico"/> 就醫備註</span>
+            {!editing && (
+              <button onClick={() => setEditing(true)}
+                style={{
+                  padding:"6px 14px", borderRadius: 8, fontFamily:"inherit", fontSize: 13, fontWeight: 600,
+                  border:"1px solid var(--border-med)", background:"var(--bg-surface)",
+                  color:"var(--brand-900)", display:"inline-flex", alignItems:"center", gap: 5, cursor:"pointer"
+                }}>
+                <Icon name="edit" size={13}/> 編輯
+              </button>
+            )}
+          </div>
           <textarea
             value={note}
             onChange={e => setNote(e.target.value)}
+            readOnly={!editing}
             placeholder="輸入就醫備註，例如：醫師建議兩週後回診、需追蹤血壓變化…"
             style={{
               width:"100%", minHeight: 140, resize:"vertical",
@@ -152,6 +167,7 @@ function VisitDetailScreen({ navigate, params }) {
               boxSizing:"border-box"
             }}
           />
+          {editing && (
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1.6fr", gap: 10, marginTop: 12 }}>
             <button onClick={onClear} disabled={!note}
               style={{
@@ -175,6 +191,7 @@ function VisitDetailScreen({ navigate, params }) {
               <Icon name="save" size={14}/> {saved ? "已儲存" : "儲存"}
             </button>
           </div>
+          )}
         </div>
 
         <div className="detail-section kpoints">

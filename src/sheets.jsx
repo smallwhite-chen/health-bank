@@ -74,7 +74,10 @@ function A11ySheet({ onClose, state, setState }) {
     <Sheet
       title="無障礙設定"
       onClose={onClose}
-      footer={<button className="a11y-reset" onClick={reset}>重置設定</button>}
+      footer={<>
+        <button className="a11y-reset" onClick={reset}>恢復預設</button>
+        <button className="primary" onClick={onClose}>確認</button>
+      </>}
     >
       <div className="chip-group-label" style={{ marginTop: 4 }}>日夜模式</div>
       <div className="a11y-group a11y-group-2">
@@ -137,7 +140,7 @@ function VisitFilterSheet({ onClose, value, onApply }) {
   return (
     <Sheet title="進階篩選" onClose={onClose} footer={
       <>
-        <button onClick={() => setV({ keyword: "", time: "全部", customStart: "", customEnd: "", cats: [], meds: [] })}>重置條件</button>
+        <button onClick={() => setV({ keyword: "", time: "全部", customStart: "", customEnd: "", cats: [], meds: [] })}>清除條件</button>
         <button className="primary" onClick={() => { onApply(v); onClose(); }}>查看篩選結果(40筆)</button>
       </>
     }>
@@ -204,7 +207,7 @@ function ReportFilterSheet({ onClose, value, onApply, scope }) {
   return (
     <Sheet title="進階篩選" onClose={onClose} footer={
       <>
-        <button onClick={() => setV({ time: "全部", cats: [], examCat: "全部", imageCat: "全部", customStart: "", customEnd: "" })}>重置條件</button>
+        <button onClick={() => setV({ time: "全部", cats: [], examCat: "全部", imageCat: "全部", customStart: "", customEnd: "" })}>清除條件</button>
         <button className="primary" onClick={() => { onApply(v); onClose(); }}>查看篩選結果</button>
       </>
     }>
@@ -354,7 +357,7 @@ function HealthFilterSheet({ onClose, value, onApply }) {
   return (
     <Sheet title="進階篩選" onClose={onClose} footer={
       <>
-        <button onClick={() => setV({ time: "全部", customStart: "", customEnd: "" })}>重置條件</button>
+        <button onClick={() => setV({ time: "全部", customStart: "", customEnd: "" })}>清除條件</button>
         <button className="primary" onClick={() => { onApply(v); onClose(); }}>查看篩選結果</button>
       </>
     }>

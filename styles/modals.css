@@ -200,7 +200,7 @@
 
 /* Reset settings footer button */
 .a11y-reset {
-  width: 100%;
+  flex: 1;
   padding: 14px;
   border-radius: var(--r-md);
   background: var(--bg-soft);
