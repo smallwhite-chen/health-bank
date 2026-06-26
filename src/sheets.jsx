@@ -19,17 +19,31 @@ function Sheet({ title, onClose, children, footer }) {
 }
 
 // Family switch sheet
-function FamilySwitchSheet({ onClose, onPick }) {
+function FamilySwitchSheet({ onClose, onPick, onGoSettings, currentMember, onBackToSelf }) {
   const members = ["陳小黑", "李天白", "王智仙"];
+  const viewingOther = currentMember && currentMember !== "陳小白";
   return (
     <Sheet title="檢視家人健康資訊" onClose={onClose}>
       <div style={{ fontSize:13, color:"var(--text-secondary)", lineHeight:1.7 }}>
         您可以切換檢視家人的健康存摺資料，方便即時關心家人健康狀態！
       </div>
-      <div style={{ marginTop:18, fontSize:14, color:"var(--text-primary)", fontWeight:600, display:"flex", alignItems:"center", gap:6 }}>
-        <Icon name="switch" size={14}/> 前往眷屬設定
-      </div>
-      <div style={{ fontSize:12, color:"var(--text-tertiary)", marginTop:4 }}>
+      {viewingOther && (
+        <button
+          onClick={onBackToSelf}
+          style={{ marginTop:14, width:"100%", display:"flex", alignItems:"center", gap:8, padding:"12px 14px", borderRadius:"var(--r-md)", border:"1px solid var(--brand-700)", background:"var(--brand-700)", color:"#fff", fontFamily:"inherit", fontSize:14, fontWeight:600, cursor:"pointer" }}>
+          <Icon name="refresh" size={16}/>
+          <span style={{ flex:1, textAlign:"left" }}>切換回本人健康資料</span>
+          <Icon name="chev-right" size={16}/>
+        </button>
+      )}
+      <button
+        onClick={onGoSettings}
+        style={{ marginTop:8, width:"100%", display:"flex", alignItems:"center", gap:8, padding:"12px 14px", borderRadius:"var(--r-md)", border:"1px solid var(--brand-100)", background:"var(--brand-50)", color:"var(--brand-900)", fontFamily:"inherit", fontSize:14, fontWeight:600, cursor:"pointer" }}>
+        <Icon name="switch" size={16}/>
+        <span style={{ flex:1, textAlign:"left" }}>前往眷屬管理設定</span>
+        <Icon name="chev-right" size={16}/>
+      </button>
+      <div style={{ fontSize:12, color:"var(--text-tertiary)", marginTop:10 }}>
         請點選您可查看的人員姓名，進行檢視資料切換
       </div>
       <div className="family-list">
@@ -39,10 +53,6 @@ function FamilySwitchSheet({ onClose, onPick }) {
             <span className="go">點選切換 <Icon name="chev-right" size={12}/></span>
           </div>
         ))}
-      </div>
-      <div style={{ fontSize:13, color:"var(--text-secondary)", fontWeight:600, marginTop:18 }}>注意事項：</div>
-      <div className="note-text">
-        感謝您使用衛生福利部中央健康保險署（下稱本署）所提供之健康存摺。為了保障使用者的權益，請務必詳讀本注意事項。日後本署若有修改或變更本注意事項之內容，修改後之內容將公布於健康存摺畫面上（含全民健保行動快易通[健康存摺App及網頁版]）。若您於本注意事項修改後仍繼續使用健康存摺之眷屬授權功能，即視為您已閱讀、瞭解並同意接受本注意事項。如您對本注意事項的內容有任何疑慮或異議時，請停止使用授權服務。
       </div>
     </Sheet>
   );

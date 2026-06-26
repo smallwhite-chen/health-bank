@@ -5,6 +5,53 @@ const Data = {
     initial: "陳",
   },
 
+  // 眷屬管理 — 可分享的健康項目（依健康存摺實務項目）
+  shareItems: [
+    { key: "outpatient", label: "門診資料", sub: "西醫、中醫、牙醫" },
+    { key: "inpatient",  label: "住院資料" },
+    { key: "allergy",    label: "過敏藥物資料" },
+    { key: "will",       label: "器捐、安寧緩和醫療或醫療自主意願" },
+    { key: "meds",       label: "用藥資料" },
+    { key: "vaccine",    label: "預防接種資料" },
+    { key: "lab",        label: "檢驗（查）結果資料" },
+    { key: "image",      label: "醫療影像、影像或病理檢查報告資料" },
+    { key: "adultcare",  label: "成人預防保健" },
+    { key: "cancer",     label: "四癌篩檢結果" },
+  ],
+
+  // 眷屬管理 — 「我可查看」全部健康存摺項目（被授權方檢視範圍）
+  viewAllItems: [
+    "西醫門診資料", "中醫門診資料", "牙醫門診資料", "住院資料",
+    "用藥資料", "檢驗（查）結果", "醫療影像及病理報告", "過敏藥物資料",
+    "預防接種資料", "復健醫療資料", "手術明細資料", "管制藥品用藥紀錄",
+  ],
+
+  // 眷屬管理 — 名單與待確認
+  family: {
+    // 待確認區（頁籤上方共用，A/B 混合列出）
+    // type: "incoming"=對方想開放資料給我（接受流程 A）
+    //       "request" =對方想查看我的資料（驗證+設定範圍+同意流程 B）
+    pending: [
+      { id: "p1", name: "陳大明", relation: "父母", type: "incoming", date: "115/06/20" },
+      { id: "p2", name: "林美惠", relation: "兄弟姐妹", type: "request",  date: "115/06/22",
+        reqExpiry: { mode: "custom", date: "2027-06-22" },
+        reqItems: ["outpatient", "inpatient", "meds", "lab"] },
+    ],
+    // 頁籤一：我可查看（我是被授權方，可檢視對方資料）
+    viewable: [
+      { id: "v1", name: "陳小黑", relation: "子女", since: "114/03/12", expiry: "永久" },
+      { id: "v2", name: "李天白", relation: "配偶", since: "115/01/08", expiry: "115/12/31" },
+      { id: "v3", name: "王智仙", relation: "父母", since: "113/11/20", expiry: "永久" },
+    ],
+    // 頁籤二：同意他人查看（我是授權方，把我的資料分享給對方）
+    sharers: [
+      { id: "s1", name: "陳大明", relation: "父母", since: "114/05/01", expiry: "永久",
+        items: ["outpatient", "inpatient", "meds", "lab", "image"] },
+      { id: "s2", name: "李天白", relation: "配偶", since: "115/02/14", expiry: "116/02/14",
+        items: ["outpatient", "lab", "vaccine", "adultcare", "cancer"] },
+    ],
+  },
+
   tips: [
     {
       id: "t1",

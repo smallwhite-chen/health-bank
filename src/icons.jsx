@@ -113,6 +113,8 @@ const Icon = ({ name, size = 20, strokeWidth = 1.6, ...rest }) => {
       return <svg {...common}><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="8" r="0.8" fill="currentColor"/></svg>;
     case "grip":
       return <svg {...common}><circle cx="9" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="9" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="9" cy="18" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="18" r="1.3" fill="currentColor" stroke="none"/></svg>;
+    case "logout":
+      return <svg {...common}><path d="M14 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M9 12h11"/><path d="m16 8 4 4-4 4"/></svg>;
     default:
       return <svg {...common}><rect x="4" y="4" width="16" height="16" rx="2"/></svg>;
   }

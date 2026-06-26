@@ -15,7 +15,7 @@ function HomeScreenDesktop({ navigate, openSheet, currentMember }) {
       <section className="dt-card dt-user-card">
         <div className="dt-user-left">
           <div className="dt-user-text">
-            <div className="dt-user-hi">HI～{name}</div>
+            <div className="dt-user-hi">{name}</div>
             <button className="dt-user-chip" type="button">
               <span>個人紀錄</span>
               <Icon name="chev-right" size={12}/>
@@ -24,7 +24,7 @@ function HomeScreenDesktop({ navigate, openSheet, currentMember }) {
         </div>
         <button className="dt-switch-btn" onClick={() => openSheet("family")}>
           <Icon name="switch" size={14}/>
-          <span>切換檢視家人健康資訊</span>
+          <span>切換檢視眷屬健康資訊</span>
         </button>
       </section>
 

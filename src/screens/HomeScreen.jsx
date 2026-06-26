@@ -10,13 +10,18 @@ function HomeScreen({ navigate, openSheet, currentMember }) {
         {/* User card */}
         <div className="user-card">
           <div className="info">
-            <div className="hi">HI~{name}</div>
-            <span className="chip" onClick={() => navigate("health")} style={{ cursor: "pointer" }}>個人量測紀錄 <Icon name="chev-right" size={12}/></span>
+            {(currentMember && currentMember !== "陳小白") && (
+              <div className="hi-label">目前檢視眷屬</div>
+            )}
+            <div className="hi">{name}</div>
+            {(!currentMember || currentMember === "陳小白") && (
+              <span className="chip" onClick={() => navigate("health")} style={{ cursor: "pointer" }}>個人量測紀錄 <Icon name="chev-right" size={12}/></span>
+            )}
           </div>
           <button className="switch" onClick={() => openSheet("family")}>
             <span style={{ display:"inline-flex", alignItems:"center", gap:4 }}>
               <Icon name="switch" size={14}/>
-              <span>切換檢視家人<br/>健康資訊</span>
+              <span>切換檢視眷屬<br/>健康資訊</span>
             </span>
           </button>
         </div>

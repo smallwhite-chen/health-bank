@@ -257,7 +257,6 @@ function HealthRecordsScreen({ navigate, openSheet }) {
 
   const empty = useEmptyState();
   const pinnedMetrics = empty ? [] : pins.map((id) => window.Data.healthById[id]).filter(Boolean);
-
   const [linkBannerHidden, setLinkBannerHidden] = useHState(() => {
     try { return localStorage.getItem("hb_health_link_banner_hidden") === "1"; } catch (e) { return false; }
   });
@@ -370,7 +369,6 @@ function HealthRecordsScreen({ navigate, openSheet }) {
             ))}
           </div>
         )}
-
         {cat === "飲食記錄" && <DietSkeleton />}
         {cat === "運動紀錄" && <ExerciseSkeleton />}
         {cat === "生理期紀錄" && <MenstrualSkeleton />}

@@ -70,7 +70,7 @@ function StatusBar() {
   );
 }
 
-function TopBar({ onA11y, onReminders, onLogo }) {
+function TopBar({ onA11y, onReminders, onLogo, onLogout }) {
   return (
     <div className="topbar">
       <div className="topbar-logo" onClick={onLogo} style={{ cursor: "pointer" }}>
@@ -80,6 +80,7 @@ function TopBar({ onA11y, onReminders, onLogo }) {
       <div className="topbar-actions">
         <button className="topbar-btn" onClick={onA11y}><Icon name="accessibility" size={16}/>無障礙設定</button>
         <button className="topbar-btn" onClick={onReminders}><Icon name="bell" size={16}/>提醒<span className="dot"/></button>
+        <button className="topbar-btn" onClick={() => (onLogout ? onLogout() : window.__hbLogout && window.__hbLogout())}><Icon name="logout" size={16}/>登出</button>
       </div>
     </div>
   );
@@ -97,14 +98,15 @@ function DetailHeader({ title, onBack, action }) {
   );
 }
 
-function BottomTabBar({ tab, onChange }) {
+function BottomTabBar({ tab, onChange, currentMember }) {
+  const viewingOther = currentMember && currentMember !== "陳小白";
   const items = [
     { id: "home",      label: "首頁",     icon: "home" },
     { id: "visits",    label: "就醫紀錄", icon: "stetho" },
     { id: "reports",   label: "檢驗報告", icon: "report" },
     { id: "favorites", label: "常用功能", icon: "star" },
     { id: "services",  label: "全部服務", icon: "grid" },
-  ];
+  ].filter(it => !(viewingOther && it.id === "favorites"));
   return (
     <nav className="tabbar" data-coach="tabbar" style={{ padding: '8px', height: '74px' }}>
       {items.map(it => (
@@ -157,6 +159,23 @@ function VisitRow({ v, onClick }) {
 }
 
 Object.assign(window, { StatusBar, TopBar, DetailHeader, BottomTabBar, PageTitle, VisitRow });
+
+// 檢視他人資料提示橫幅 — 切換至家人資料時顯示於單元頁頂部
+function ViewingOtherBanner({ member, onBackToSelf }) {
+  if (!member || member === "陳小白") return null;
+  return (
+    <div className="viewing-other-banner">
+      <span className="vob-ico" aria-hidden="true"><Icon name="user" size={16}/></span>
+      <span className="vob-text">
+        您目前檢視的是 <b>{member}</b> 的健康資料
+      </span>
+      <button className="vob-back" onClick={onBackToSelf}>
+        <Icon name="refresh" size={13}/> 切換回本人
+      </button>
+    </div>
+  );
+}
+Object.assign(window, { ViewingOtherBanner });
 
 // ============================================================
 // Back to Top button

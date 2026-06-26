@@ -112,7 +112,7 @@ function LipidSummaryCard({ onClick }) {
   );
 }
 
-function ReportsScreen({ navigate, openSheet, isFav, onToggleFav }) {
+function ReportsScreen({ navigate, openSheet, isFav, onToggleFav, currentMember, onBackToSelf }) {
   const { reports, reportCategories, reportSubCategories, reportSubCatNotes } = window.Data;
   const empty = useEmptyState();
   const [bannerHidden, setBannerHidden] = React.useState(() => {
@@ -196,6 +196,7 @@ function ReportsScreen({ navigate, openSheet, isFav, onToggleFav }) {
     <>
       <TopBar onA11y={() => openSheet("a11y")} onReminders={() => navigate("reminders")} onLogo={() => navigate("home")}/>
       <div className="app-scroll">
+        <ViewingOtherBanner member={currentMember} onBackToSelf={onBackToSelf}/>
         {!bannerHidden && (
         <div className="info-banner">
           健康存摺提供最近檢查檢驗報告，包含癌症篩檢、血糖血脂追蹤、影像與病理等各類檢查結果。

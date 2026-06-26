@@ -20,6 +20,7 @@ const MP_PAGES = {
   health: "health.html",
   healthDetail: "health-detail.html",
   healthEditPins: "health-edit-pins.html",
+  familySettings: "family.html",
 };
 
 function readLS(key, fallback) {
@@ -153,6 +154,7 @@ function App() {
   }, [a11y]);
 
   const showToast = (m) => { setToast(m); setTimeout(() => setToast(null), 2000); };
+  useEf(() => { window.__hbLogout = () => showToast("已登出（示意）"); }, []);
 
   const current = stack[stack.length - 1];
 
@@ -180,6 +182,7 @@ function App() {
             health: "index.html",
             healthDetail: "health.html",
             healthEditPins: "health.html",
+            familySettings: "index.html",
           };
           window.location.href = parentMap[window.__INITIAL_SCREEN__] || "index.html";
         }
@@ -251,14 +254,14 @@ function App() {
         ? <HomeScreenDesktop navigate={navigate} openSheet={openSheet} currentMember={currentMember}/>
         : <HomeScreen navigate={navigate} openSheet={openSheet} currentMember={currentMember}/>;
       break;
-    case "visits":        body = <VisitsScreen navigate={navigate} openSheet={openSheet} filter={visitFilter} isFav={favScreens.includes("visits")} onToggleFav={() => toggleFavScreen("visits","就醫紀錄")}/>; break;
+    case "visits":        body = <VisitsScreen navigate={navigate} openSheet={openSheet} filter={visitFilter} isFav={favScreens.includes("visits")} onToggleFav={() => toggleFavScreen("visits","就醫紀錄")} currentMember={currentMember} onBackToSelf={() => { setCurrentMember("陳小白"); showToast("已切換回本人健康資料"); }}/>; break;
     case "visitDetail":   body = <VisitDetailScreen navigate={navigate} params={current.params}/>; break;
-    case "reports":       body = <ReportsScreen navigate={navigate} openSheet={openSheet} filter={reportFilter} isFav={favScreens.includes("reports")} onToggleFav={() => toggleFavScreen("reports","檢驗報告")}/>; break;
+    case "reports":       body = <ReportsScreen navigate={navigate} openSheet={openSheet} filter={reportFilter} isFav={favScreens.includes("reports")} onToggleFav={() => toggleFavScreen("reports","檢驗報告")} currentMember={currentMember} onBackToSelf={() => { setCurrentMember("陳小白"); showToast("已切換回本人健康資料"); }}/>; break;
     case "reportDetail":  body = <ReportDetailScreen navigate={navigate} params={current.params}/>; break;
     case "imageReportDetail": body = <ImageReportDetailScreen navigate={navigate} params={current.params}/>; break;
     case "otherReportDetail": body = <OtherReportDetailScreen navigate={navigate} params={current.params}/>; break;
     case "favorites":     body = <FavoritesScreen navigate={navigate} openSheet={openSheet}/>; break;
-    case "services":      body = <AllServicesScreen navigate={navigate} openSheet={openSheet}/>; break;
+    case "services":      body = <AllServicesScreen navigate={navigate} openSheet={openSheet} currentMember={currentMember}/>; break;
     case "reminders":     body = <RemindersScreen navigate={navigate}/>; break;
     case "calendar":      body = isDesktop
                             ? <CalendarScreenDesktop navigate={navigate}/>
@@ -269,12 +272,20 @@ function App() {
     case "health":        body = <HealthRecordsScreen navigate={navigate} openSheet={openSheet}/>; break;
     case "healthDetail":  body = <HealthRecordDetailScreen navigate={navigate} openSheet={openSheet} params={current.params}/>; break;
     case "healthEditPins": body = <HealthEditPinsScreen navigate={navigate}/>; break;
+    case "familySettings": body = <FamilySettingsScreen navigate={navigate} openSheet={openSheet} isFav={favScreens.includes("familySettings")} onToggleFav={() => toggleFavScreen("familySettings","眷屬管理")} onSwitchMember={(name) => { setCurrentMember(name); navigate("home"); showToast(`已切換至 ${name}`); }}/>; break;
     default:              body = <HomeScreen navigate={navigate} openSheet={openSheet}/>;
   }
 
   const sheets = (
     <>
-      {sheet === "family" && <FamilySwitchSheet onClose={closeSheet} onPick={(m) => { setCurrentMember(m); closeSheet(); showToast(`已切換至 ${m}`); }}/>}
+      {sheet === "family" && <FamilySwitchSheet onClose={closeSheet} currentMember={currentMember} onBackToSelf={() => { setCurrentMember("陳小白"); closeSheet(); showToast("已切換回本人健康資料"); }} onGoSettings={() => { writeLS("hb_member", "陳小白"); setCurrentMember("陳小白"); closeSheet(); navigate("familySettings"); }} onPick={(m) => { setCurrentMember(m); closeSheet(); showToast(`已切換至 ${m}`); }}/>}
+      {sheet === "famEditViewable" && <FamEditViewableSheet data={sheetData} onClose={closeSheet} onToast={(m) => { closeSheet(); showToast(m); }}/>}
+      {sheet === "famEditSharer" && <FamEditSharerSheet data={sheetData} onClose={closeSheet} onToast={(m) => { closeSheet(); showToast(m); }}/>}
+      {sheet === "famAccept" && <FamAcceptSheet data={sheetData} onClose={closeSheet} onToast={(m) => { closeSheet(); showToast(m); }}/>}
+      {sheet === "famAgree" && <FamAgreeSheet data={sheetData} onClose={closeSheet} onToast={(m) => { closeSheet(); showToast(m); }}/>}
+      {sheet === "famInviteView" && <FamInviteViewSheet onClose={closeSheet} onToast={(m) => { closeSheet(); showToast(m); }}/>}
+      {sheet === "famInviteSharer" && <FamInviteSharerSheet onClose={closeSheet} onToast={(m) => { closeSheet(); showToast(m); }}/>}
+      {sheet === "famNotice" && <FamNoticeSheet onClose={closeSheet}/>}
       {sheet === "a11y"   && <A11ySheet onClose={closeSheet} state={a11y} setState={setA11y}/>}
       {sheet === "visitFilter"  && <VisitFilterSheet  onClose={closeSheet} value={visitFilter}  onApply={setVisitFilter}/>}
       {sheet === "reportFilter" && <ReportFilterSheet onClose={closeSheet} value={reportFilter} onApply={setReportFilter} scope={sheetData && sheetData.scope}/>}
@@ -305,7 +316,7 @@ function App() {
         <StatusBar/>
         <div className="app-shell">
           {body}
-          {!hideTabBar && <BottomTabBar tab={activeTab} onChange={(t) => navigate(t)}/>}
+          {!hideTabBar && <BottomTabBar tab={activeTab} onChange={(t) => navigate(t)} currentMember={currentMember}/>}
         </div>
 
         {sheets}
@@ -340,7 +351,7 @@ function App() {
                 </svg>
               </button>
             </div>
-            <div className="ptw-version">w5 個人紀錄-血壓 v4.4</div>
+            <div className="ptw-version">w6 眷屬管理 v5.1</div>
 
             <div className="ptw-section-label">裝置版型</div>
             <div className="ptw-grid ptw-grid-3">
@@ -385,6 +396,16 @@ function App() {
               </span>
               <span className="ptw-switch-track"><span className="ptw-switch-knob"/></span>
             </button>
+
+            <div className="ptw-section-label">眷屬管理</div>
+            <button
+              className="ptw-opt"
+              disabled={currentMember === "陳小白"}
+              style={{ width:"100%", padding:"11px 12px", textAlign:"left", opacity: currentMember === "陳小白" ? 0.5 : 1, cursor: currentMember === "陳小白" ? "default" : "pointer" }}
+              onClick={() => { setCurrentMember("陳小白"); showToast("已回復本人資料"); }}>
+              <span className="ptw-opt-label">回復本人資料</span>
+              <span className="ptw-opt-hint">{currentMember === "陳小白" ? "目前為本人" : `目前檢視：${currentMember}`}</span>
+            </button>
           </div>
         ) : (
           <button
@@ -396,7 +417,7 @@ function App() {
               <path d="M4 17h4"/><circle cx="11" cy="17" r="2"/><path d="M13 17h7"/>
             </svg>
             <span>原型設定</span>
-            <span className="ptw-fab-version">w5 個人紀錄-血壓 v4.4</span>
+            <span className="ptw-fab-version">w6 眷屬管理 v5.1</span>
           </button>
         )}
 
@@ -499,6 +520,23 @@ function App() {
             }}>
             <span style={{ fontWeight:600 }}>空值</span>
             <span style={{ fontSize:11, opacity:0.85 }}>{tweaks.empty ? "開啟" : "關閉"}</span>
+          </button>
+
+          <div style={{ fontSize:12, color:"var(--text-secondary)", margin:"14px 0 6px" }}>眷屬管理</div>
+          <button
+            disabled={currentMember === "陳小白"}
+            onClick={() => { setCurrentMember("陳小白"); showToast("已回復本人資料"); }}
+            style={{
+              width:"100%", display:"flex", alignItems:"center", justifyContent:"space-between",
+              padding:"10px 12px", borderRadius:10,
+              border:"1px solid var(--border-soft)", background:"#fff",
+              color:"var(--text-secondary)",
+              opacity: currentMember === "陳小白" ? 0.5 : 1,
+              cursor: currentMember === "陳小白" ? "default" : "pointer",
+              fontFamily:"inherit", fontSize:13
+            }}>
+            <span style={{ fontWeight:600 }}>回復本人資料</span>
+            <span style={{ fontSize:11, opacity:0.85 }}>{currentMember === "陳小白" ? "本人" : currentMember}</span>
           </button>
         </div>
         )

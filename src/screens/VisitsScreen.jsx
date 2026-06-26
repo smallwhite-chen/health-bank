@@ -1,4 +1,4 @@
-function VisitsScreen({ navigate, openSheet, isFav, onToggleFav }) {
+function VisitsScreen({ navigate, openSheet, isFav, onToggleFav, currentMember, onBackToSelf }) {
   const { visits } = window.Data;
   const empty = useEmptyState();
   const [filter, setFilter] = React.useState("全部");
@@ -23,6 +23,7 @@ function VisitsScreen({ navigate, openSheet, isFav, onToggleFav }) {
     <>
       <TopBar onA11y={() => openSheet("a11y")} onReminders={() => navigate("reminders")} onLogo={() => navigate("home")}/>
       <div className="app-scroll">
+        <ViewingOtherBanner member={currentMember} onBackToSelf={onBackToSelf}/>
         {!bannerHidden && (
         <div className="info-banner">
           健康存摺提供最近三年的就醫紀錄，可查詢就醫時間、機構、用藥、醫囑等資訊

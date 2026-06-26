@@ -1,0 +1,356 @@
+/* ============================================================
+   眷屬管理頁 — 待確認區 / 名單卡片 / 分享項目 / 邀請按鈕 / 說明
+   ============================================================ */
+
+/* 檢視他人資料提示橫幅 */
+.viewing-other-banner {
+  display: flex; align-items: center; gap: 8px;
+  margin: 8px 16px 0; padding: 10px 12px;
+  background: var(--brand-50); border: 1px solid var(--brand-100);
+  border-radius: var(--r-md);
+}
+.viewing-other-banner .vob-ico {
+  flex-shrink: 0; width: 28px; height: 28px; border-radius: var(--r-pill);
+  background: var(--brand-700); color: #fff; display: grid; place-items: center;
+}
+.viewing-other-banner .vob-text { flex: 1; min-width: 0; font-size: 13px; color: var(--brand-900); line-height: 1.5; }
+.viewing-other-banner .vob-text b { font-weight: 700; }
+.viewing-other-banner .vob-back {
+  flex-shrink: 0; display: inline-flex; align-items: center; gap: 4px;
+  padding: 7px 10px; border-radius: var(--r-pill);
+  border: 1px solid var(--brand-700); background: var(--bg-surface);
+  color: var(--brand-900); font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer;
+  white-space: nowrap;
+}
+body.desktop-mode .viewing-other-banner { margin-left: 0; margin-right: 0; }
+
+/* 全部服務 — 眷屬未分享項目 */
+.service-item.is-disabled { opacity: 0.6; cursor: default; pointer-events: none; }
+.service-item.is-disabled .name { color: var(--text-tertiary); }
+.svc-unshared {
+  flex-shrink: 0; font-size: 12px; font-weight: 500;
+  color: var(--text-tertiary);
+  background: var(--bg-chip); padding: 4px 10px; border-radius: var(--r-pill);
+  white-space: nowrap;
+}
+
+/* ---------- 待確認區 ---------- */
+.fam-pending {
+  margin: 8px 16px 4px;
+  border: 1px solid var(--brand-100);
+  background: var(--brand-50);
+  border-radius: var(--r-lg);
+  padding: 14px 14px 10px;
+}
+.fam-pending-head {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 14px; font-weight: 700; color: var(--brand-900);
+  margin-bottom: 10px;
+}
+.fam-pending-list { display: flex; flex-direction: column; gap: 8px; }
+.fam-pending-card {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--r-md);
+  padding: 12px 12px;
+  cursor: pointer;
+  text-align: left; width: 100%;
+  font-family: inherit;
+  transition: box-shadow 140ms ease, transform 140ms ease;
+}
+.fam-pending-card:hover { box-shadow: var(--shadow-sm); }
+.fam-pending-card:active { transform: scale(0.995); }
+.fam-pending-avatar {
+  flex-shrink: 0;
+  width: 38px; height: 38px; border-radius: var(--r-pill);
+  background: var(--brand-50); color: var(--brand-900);
+  display: grid; place-items: center;
+  font-size: 16px; font-weight: 700;
+}
+.fam-pending-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.fam-pending-text {
+  font-size: 13.5px; color: var(--text-primary); line-height: 1.5;
+  text-wrap: pretty;
+}
+.fam-pending-text b { font-weight: 700; }
+.fam-pending-meta {
+  font-size: 11.5px; color: var(--text-tertiary); margin-top: 3px;
+}
+.fam-pending-tag {
+  flex-shrink: 0;
+  font-size: 11px; font-weight: 600;
+  padding: 4px 9px; border-radius: var(--r-pill);
+  display: inline-flex; align-items: center; gap: 3px;
+}
+.fam-pending-tag.is-incoming { background: var(--brand-700); color: #fff; }
+.fam-pending-tag.is-request  { background: var(--brand-700); color: #fff; }
+
+/* ---------- 兩段式頁籤 ---------- */
+.fam-tabs {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+  margin: 14px 16px 0;
+  background: var(--bg-chip);
+  padding: 4px; border-radius: var(--r-pill);
+}
+.fam-tab {
+  border: 0; background: transparent;
+  font-family: inherit; font-size: 14px; font-weight: 600;
+  color: var(--text-secondary);
+  padding: 9px 8px; border-radius: var(--r-pill);
+  cursor: pointer;
+  transition: background 140ms ease, color 140ms ease;
+}
+.fam-tab.active { background: var(--bg-surface); color: var(--brand-900); box-shadow: var(--shadow-xs); }
+
+/* ---------- 名單卡片 ---------- */
+.fam-list { display: flex; flex-direction: column; gap: 10px; padding: 14px 16px 0; }
+.fam-card {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--r-md);
+  padding: 14px;
+  box-shadow: var(--shadow-xs);
+}
+.fam-card-avatar {
+  flex-shrink: 0;
+  width: 42px; height: 42px; border-radius: var(--r-pill);
+  background: var(--brand-50); color: var(--brand-900);
+  display: grid; place-items: center;
+  font-size: 17px; font-weight: 700;
+}
+.fam-card-main { flex: 1; min-width: 0; }
+.fam-card-name {
+  font-size: 15.5px; font-weight: 700; color: var(--text-primary);
+  display: flex; align-items: center; gap: 7px;
+}
+.fam-card-rel {
+  font-size: 11px; font-weight: 600; color: var(--brand-900);
+  background: var(--brand-50); padding: 2px 7px; border-radius: var(--r-pill);
+}
+.fam-card-meta {
+  font-size: 12px; color: var(--text-tertiary); margin-top: 5px;
+  display: flex; flex-wrap: wrap; gap: 4px 12px;
+}
+.fam-card-meta .lab { color: var(--text-secondary); }
+.fam-card-items {
+  margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px;
+}
+.fam-mini-chip {
+  font-size: 11px; color: var(--text-secondary);
+  background: var(--bg-chip);
+  padding: 3px 8px; border-radius: var(--r-pill);
+}
+.fam-card-edit {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 38px; padding: 0 13px; border-radius: var(--r-md);
+  border: 1px solid var(--border-soft); background: var(--bg-surface);
+  color: var(--text-secondary);
+  font-family: inherit; font-size: 13.5px; font-weight: 600;
+  cursor: pointer; align-self: flex-start;
+  transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
+}
+.fam-card-edit:hover { background: var(--brand-50); color: var(--brand-900); border-color: var(--brand-100); }
+.fam-card-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; align-self: flex-start; }
+.fam-card-switch {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 38px; padding: 0 14px; border-radius: var(--r-md);
+  border: 0; background: var(--brand-700); color: #fff;
+  font-family: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer;
+  transition: background 140ms ease;
+}
+.fam-card-switch:hover { background: var(--brand-800); }
+
+/* ---------- 發起邀請按鈕 ---------- */
+.fam-invite-btn {
+  margin: 16px 16px 0;
+  width: calc(100% - 32px);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 14px; border-radius: var(--r-md);
+  border: 1.5px dashed var(--brand-700); background: var(--brand-50);
+  color: var(--brand-900); font-family: inherit;
+  font-size: 14.5px; font-weight: 700; cursor: pointer;
+  transition: background 140ms ease;
+}
+.fam-invite-btn:hover { background: var(--brand-100); }
+
+/* ---------- 底部說明 / 注意事項 ---------- */
+.fam-notes { margin: 22px 16px 0; }
+.fam-notes-title {
+  font-size: 13.5px; font-weight: 700; color: var(--text-secondary);
+  display: flex; align-items: center; gap: 6px; margin-bottom: 8px;
+}
+.fam-notes-list {
+  margin: 0; padding-left: 18px;
+  font-size: 12px; color: var(--text-tertiary); line-height: 1.85;
+}
+.fam-notes-list li { margin-bottom: 4px; text-wrap: pretty; }
+
+/* ---------- 編輯 / 流程 Sheet 內元件 ---------- */
+.fam-sheet-person {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px; border-radius: var(--r-md);
+  background: var(--bg-soft); margin-top: 4px;
+}
+.fam-sheet-person .av {
+  width: 44px; height: 44px; border-radius: var(--r-pill);
+  background: var(--brand-700); color: #fff;
+  display: grid; place-items: center; font-size: 18px; font-weight: 700;
+}
+.fam-sheet-person .nm { font-size: 16px; font-weight: 700; color: var(--text-primary); }
+.fam-sheet-person .rl { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+.fam-kv { display: flex; justify-content: space-between; padding: 11px 2px; border-bottom: 1px solid var(--border-soft); font-size: 14px; }
+.fam-kv .k { color: var(--text-secondary); }
+.fam-kv .v { color: var(--text-primary); font-weight: 500; }
+
+/* 期限選擇 */
+.fam-expiry-seg { display: flex; gap: 8px; margin-top: 8px; }
+.fam-expiry-seg .chip-btn { flex: 1; }
+
+/* 分享項目勾選 */
+.fam-share-grid { display: flex; flex-direction: column; gap: 2px; margin-top: 6px; }
+.fam-share-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 4px; border-bottom: 1px solid var(--border-soft);
+  cursor: pointer;
+}
+.fam-share-row:last-child { border-bottom: 0; }
+.fam-share-info { flex: 1; min-width: 0; }
+.fam-share-label { font-size: 14px; color: var(--text-primary); font-weight: 500; }
+.fam-share-sub { font-size: 11.5px; color: var(--text-tertiary); margin-top: 2px; }
+.fam-check {
+  flex-shrink: 0; width: 24px; height: 24px; border-radius: 7px;
+  border: 1.5px solid var(--border-med); background: var(--bg-surface);
+  display: grid; place-items: center; color: #fff;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+.fam-check.on { background: var(--brand-700); border-color: var(--brand-700); }
+
+.fam-share-allrow {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 2px 10px; border-bottom: 1px solid var(--border-soft); margin-bottom: 4px;
+}
+.fam-share-allrow .cnt { font-size: 12px; color: var(--text-tertiary); }
+.fam-share-all-btn {
+  border: 0; background: transparent; color: var(--brand-700);
+  font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+}
+
+/* 流程步驟 (同意他人查看 B) */
+.fam-steps { display: flex; align-items: center; gap: 6px; margin: 2px 0 14px; }
+.fam-step-dot {
+  flex-shrink: 0; width: 24px; height: 24px; border-radius: var(--r-pill);
+  display: grid; place-items: center; font-size: 12px; font-weight: 700;
+  background: var(--bg-chip); color: var(--text-tertiary);
+}
+.fam-step-dot.active { background: var(--brand-700); color: #fff; }
+.fam-step-dot.done { background: var(--brand-100); color: var(--brand-900); }
+.fam-step-line { flex: 1; height: 2px; background: var(--border-soft); border-radius: 2px; }
+.fam-step-line.done { background: var(--brand-700); }
+.fam-step-label { font-size: 13px; color: var(--text-secondary); font-weight: 600; margin-bottom: 10px; }
+
+/* 驗證輸入 */
+.fam-field { margin-top: 12px; }
+.fam-field-label { font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; }
+.fam-input {
+  width: 100%; padding: 12px 14px; box-sizing: border-box;
+  border: 1px solid var(--border-soft); border-radius: var(--r-md);
+  font-size: 15px; font-family: inherit; background: var(--bg-surface); color: var(--text-primary);
+}
+
+/* 下拉選單（與本人關係） */
+.fam-select-wrap { position: relative; }
+.fam-select {
+  -webkit-appearance: none; appearance: none;
+  padding-right: 38px; cursor: pointer;
+}
+.fam-select-caret {
+  position: absolute; right: 13px; top: 50%; transform: translateY(-50%);
+  color: var(--brand-700); pointer-events: none;
+}
+
+/* 同意書 / 意願書 */
+.fam-consent { margin-top: 4px; }
+.fam-consent-h1 { font-size: 17px; font-weight: 800; color: var(--text-primary); }
+.fam-consent-h2 { font-size: 14.5px; font-weight: 700; color: var(--text-primary); margin-top: 12px; }
+.fam-consent-p {
+  font-size: 13.5px; line-height: 1.85; color: var(--text-secondary);
+  margin: 12px 0 0; text-align: justify; text-wrap: pretty;
+}
+.fam-consent-note {
+  font-size: 13px; line-height: 1.8; color: var(--text-tertiary);
+  margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--border-soft);
+  text-wrap: pretty;
+}
+
+/* TBD 占位 */
+.fam-tbd {
+  margin-top: 6px; padding: 22px 16px; border-radius: var(--r-md);
+  border: 1.5px dashed var(--border-med); background: var(--bg-soft);
+  text-align: center;
+}
+.fam-tbd-ico { color: var(--brand-700); margin-bottom: 8px; display: inline-flex; }
+.fam-tbd-title { font-size: 14.5px; font-weight: 700; color: var(--text-primary); }
+.fam-tbd-sub { font-size: 12.5px; color: var(--text-tertiary); margin-top: 6px; line-height: 1.7; text-wrap: pretty; }
+
+/* 危險刪除文字按鈕 */
+.fam-danger-link {
+  border: 0; background: transparent; color: var(--accent-red);
+  font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+
+/* ---------- 查看範圍展開清單 ---------- */
+.fam-scope-toggle {
+  display: inline-flex; align-items: center; gap: 3px;
+  border: 0; background: transparent; color: var(--brand-700);
+  font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+  padding: 2px;
+}
+.fam-scope-list {
+  margin-top: 8px;
+  border: 1px solid var(--border-soft); border-radius: var(--r-md);
+  background: var(--bg-soft); overflow: hidden;
+}
+.fam-scope-item {
+  font-size: 13.5px; color: var(--text-primary);
+  padding: 11px 14px; border-bottom: 1px solid var(--border-soft);
+  display: flex; align-items: center; gap: 9px;
+}
+.fam-scope-item:last-child { border-bottom: 0; }
+.fam-scope-item::before {
+  content: ""; flex-shrink: 0;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--brand-700);
+}
+
+/* ---------- 刪除確認畫面 ---------- */
+.fam-confirm {
+  text-align: center;
+  padding: 18px 12px 6px;
+}
+.fam-confirm-ico {
+  display: inline-grid; place-items: center;
+  width: 56px; height: 56px; border-radius: var(--r-pill);
+  background: #FBEAE7; color: #C0392B; margin-bottom: 14px;
+}
+.fam-confirm-title {
+  font-size: 17px; font-weight: 700; color: var(--text-primary);
+  margin-bottom: 10px; text-wrap: pretty;
+}
+.fam-confirm-sub {
+  font-size: 13.5px; color: var(--text-secondary); line-height: 1.75;
+  text-wrap: pretty;
+}
+
+/* ---------- 桌機版調整 ---------- */
+body.desktop-mode .fam-pending,
+body.desktop-mode .fam-tabs,
+body.desktop-mode .fam-list,
+body.desktop-mode .fam-notes { margin-left: 0; margin-right: 0; }
+body.desktop-mode .fam-invite-btn { margin-left: 0; margin-right: 0; width: 100%; }
+body.desktop-mode .fam-list { padding-left: 0; padding-right: 0; }
+body.desktop-mode .fam-tabs { max-width: 360px; }

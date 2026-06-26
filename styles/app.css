@@ -74,24 +74,26 @@ button { font-family: inherit; cursor: pointer; }
   flex-shrink: 0;
 }
 .topbar-logo {
-  display: flex; align-items: center; gap: 10px;
-  font-size: 18px; font-weight: 600; color: var(--text-primary);
+  display: flex; align-items: center; gap: 8px;
+  font-size: 16px; font-weight: 600; color: var(--text-primary);
+  white-space: nowrap; flex-shrink: 0;
 }
 .topbar-logo .mark {
-  width: 30px; height: 30px; border-radius: 8px;
+  width: 28px; height: 28px; border-radius: 8px;
   background: var(--brand-800); color: #fff;
   display: grid; place-items: center;
-  font-size: 14px; font-weight: 700;
+  font-size: 13px; font-weight: 700;
 }
-.topbar-actions { display: flex; gap: 8px; }
+.topbar { padding: 0 12px; }
+.topbar-actions { display: flex; gap: 5px; }
 .topbar-btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 8px 12px;
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 6px 8px;
   background: var(--bg-surface);
   border: 1px solid var(--border-soft);
   border-radius: var(--r-pill);
-  font-size: 13px; color: var(--text-secondary);
-  position: relative;
+  font-size: 11.5px; color: var(--text-secondary);
+  position: relative; white-space: nowrap;
 }
 .topbar-btn .dot {
   position: absolute; top: 6px; right: 8px;
@@ -156,7 +158,8 @@ button { font-family: inherit; cursor: pointer; }
   background: #ffffff;
   border-top: 1px solid var(--border-soft);
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
   flex-shrink: 0;
   padding-bottom: 4px;
   transition: all 220ms ease;
@@ -1133,6 +1136,12 @@ body.desktop-mode .desktop-stage[data-screen-label="services"] .pill-more-panel 
 }
 .user-card .hi {
   font-size: 15px; font-weight: 600; color: var(--text-primary);
+}
+.user-card .hi-label {
+  font-size: 11.5px; font-weight: 600; color: var(--brand-900);
+  background: var(--brand-50); border: 1px solid var(--brand-100);
+  display: inline-block; padding: 2px 8px; border-radius: var(--r-pill);
+  margin-bottom: 5px;
 }
 .user-card .chip {
   margin-top: 4px;

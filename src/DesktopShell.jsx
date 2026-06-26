@@ -47,6 +47,10 @@ function DesktopShell({
               <Icon name="bell" size={15}/>
               <span>提醒</span>
             </button>
+            <button className="dt-pill" onClick={() => window.__hbLogout && window.__hbLogout()}>
+              <Icon name="logout" size={15}/>
+              <span>登出</span>
+            </button>
           </div>
         </header>
 

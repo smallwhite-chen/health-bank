@@ -1,6 +1,29 @@
 // 全部服務 — 所有分類展開於同一頁面，支援捷徑捲動 + 捲動偵測
-function AllServicesScreen({ navigate, openSheet }) {
-  const { serviceCategories, services } = window.Data;
+function AllServicesScreen({ navigate, openSheet, currentMember }) {
+  const Data = window.Data;
+  const viewingOther = currentMember && currentMember !== "陳小白";
+  // 檢視眷屬資料時，僅列出可被授權檢視的項目
+  const ALLOWED = {
+    "個人紀錄": ["過敏資料", "預防接種資料", "器捐或安寧緩和醫療意願"],
+    "就醫及用藥紀錄": ["就醫總覽", "最近就醫紀錄（西醫／中醫／牙醫）", "用藥紀錄", "住院紀錄"],
+    "檢驗檢查結果": ["成人預防保健結果", "癌症篩檢結果", "血糖檢驗報告", "血脂檢驗報告", "影像或病理檢查報告", "其他檢驗資料"],
+  };
+  const serviceCategories = viewingOther
+    ? Data.serviceCategories.filter(c => ALLOWED[c])
+    : Data.serviceCategories;
+  const services = viewingOther
+    ? Object.fromEntries(serviceCategories.map(c => [c, (Data.services[c] || []).filter(it => ALLOWED[c].includes(it.label))]))
+    : Data.services;
+  // 眷屬未分享的項目（示意）— 顯示「未分享此項目」且無法點擊
+  const NOT_SHARED = {
+    "李天白": ["成人預防保健結果", "影像或病理檢查報告"],
+    "王智仙": ["用藥紀錄"],
+    "陳小黑": [],
+  };
+  const isUnshared = (it) => viewingOther && (NOT_SHARED[currentMember] || []).includes(it.label);
+  const itemTail = (it) => isUnshared(it)
+    ? <span className="svc-unshared">未分享此項目</span>
+    : <Icon name="chev-right" size={16} className="chev"/>;
   const [bannerHidden, setBannerHidden] = React.useState(() => {
     try { return localStorage.getItem("hb_services_banner_hidden") === "1"; } catch (e) { return false; }
   });
@@ -210,13 +233,13 @@ function AllServicesScreen({ navigate, openSheet }) {
                 <div className="cat-group-title" style={{ marginTop:8 }}>搜尋結果 {filtered.length} 項</div>
                 <div className="service-list">
                   {filtered.map((it, i) => (
-                    <div key={i} className="service-item">
+                    <div key={i} className={"service-item" + (isUnshared(it) ? " is-disabled" : "")}>
                       <span className="ico"><Icon name={it.icon} size={20}/></span>
                       <div style={{ flex:1, minWidth:0 }}>
                         <span className="name">{it.label}</span>
                         <div style={{ fontSize:11, color:"var(--text-tertiary)", marginTop:2 }}>{it.category}</div>
                       </div>
-                      <Icon name="chev-right" size={16} className="chev"/>
+                      {itemTail(it)}
                     </div>
                   ))}
                 </div>
@@ -237,10 +260,10 @@ function AllServicesScreen({ navigate, openSheet }) {
                 </div>
                 <div className="service-list">
                   {(services[c] || []).map((it, i) => (
-                    <div key={i} className="service-item">
+                    <div key={i} className={"service-item" + (isUnshared(it) ? " is-disabled" : "")}>
                       <span className="ico"><Icon name={it.icon} size={20}/></span>
                       <span className="name">{it.label}</span>
-                      <Icon name="chev-right" size={16} className="chev"/>
+                      {itemTail(it)}
                     </div>
                   ))}
                 </div>
