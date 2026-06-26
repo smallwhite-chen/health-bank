@@ -142,7 +142,7 @@ function VisitDetailScreen({ navigate, params }) {
 
         <div className="detail-section">
           <div className="sec-head" style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-            <span style={{ display:"inline-flex", alignItems:"center" }}><Icon name="edit" size={16} className="ico"/> 就醫備註</span>
+            <span style={{ display:"inline-flex", alignItems:"center" }}><Icon name="edit" size={16} className="ico"/> 個人就醫筆記</span>
             {!editing && (
               <button onClick={() => setEditing(true)}
                 style={{
