@@ -169,15 +169,15 @@ function VisitDetailScreen({ navigate, params }) {
           />
           {editing && (
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1.6fr", gap: 10, marginTop: 12 }}>
-            <button onClick={onClear} disabled={!note}
+            <button onClick={() => { setNote(savedNote); setEditing(false); }}
               style={{
                 padding:"12px", borderRadius: 10, fontFamily:"inherit", fontSize: 14,
                 border:"1px solid var(--border-soft)", background:"var(--bg-surface)",
-                color: note ? "var(--text-secondary)" : "var(--text-muted)",
+                color:"var(--text-secondary)",
                 display:"inline-flex", alignItems:"center", justifyContent:"center", gap: 6,
-                cursor: note ? "pointer" : "default"
+                cursor:"pointer"
               }}>
-              <Icon name="trash" size={14}/> 清除
+              取消
             </button>
             <button onClick={onSave} disabled={!dirty}
               style={{

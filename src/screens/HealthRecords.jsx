@@ -96,21 +96,23 @@ function PinnedCard({ metric, onOpen, onUnpin }) {
   );
 }
 
-function MetricRow({ metric, pinned, onOpen, onTogglePin }) {
+function MetricRow({ metric, pinned, onOpen, onTogglePin, empty }) {
   const latest = window.HealthUtil.latestOf(metric.id);
   const spark = window.HealthUtil.sparkValues(metric.id);
   const bpPairs = metric.id === "bp" ? window.HealthUtil.genSeries(metric.id, "月") : null;
-  const time = metric.id === "bp" ? "115/6/15 08:12" : "115/6/15 07:30";
+  const isBp = metric.id === "bp";
+  const time = isBp ? "115/6/15 08:12" : "115/6/15 07:30";
+  const valText = empty ? (isBp ? "0/0" : "0") : latest.text;
   return (
     <div className="hm-row" onClick={onOpen}>
       <div className="hm-pin-left">
         <div className="hm-pin-top">
           <span className="hm-ico"><Icon name={metric.icon} size={16} /></span>
-          <span className="hm-pin-name">{metric.id === "bp" ? "血壓 / 心率" : metric.name}</span>
+          <span className="hm-pin-name">{isBp ? "血壓 / 心率" : metric.name}</span>
         </div>
-        <div className="hm-pin-val">{latest.text}<em>{latest.unit}</em></div>
-        {metric.id === "bp" && <div className="hm-pin-sub">心率 71 <em>bpm</em></div>}
-        <div className="hm-pin-time">{time}</div>
+        <div className="hm-pin-val">{valText}<em>{metric.unit}</em></div>
+        {isBp && <div className="hm-pin-sub">心率 {empty ? "0" : "71"} <em>bpm</em></div>}
+        <div className="hm-pin-time">{empty ? "—" : time}</div>
       </div>
       <div className="hm-pin-right">
         <button
@@ -118,9 +120,9 @@ function MetricRow({ metric, pinned, onOpen, onTogglePin }) {
           onClick={(e) => { e.stopPropagation(); onOpen(); }}
           aria-label="進入詳細紀錄"
         ><Icon name="chev-right" size={18} /></button>
-        {metric.id === "bp"
+        {!empty && (isBp
           ? <BpBars pairs={bpPairs} sysRef={metric.normal && metric.normal.sysHigh} diaRef={metric.normal && metric.normal.diaHigh} w={132} h={46} />
-          : <Sparkline values={spark} w={132} h={46} />}
+          : <Sparkline values={spark} w={132} h={46} />)}
       </div>
     </div>
   );
@@ -274,6 +276,18 @@ function HealthRecordsScreen({ navigate, openSheet }) {
     <>
       <TopBar onA11y={() => openSheet("a11y")} onReminders={() => navigate("reminders")} onLogo={() => navigate("home")}/>
       <div className="app-scroll hm-scroll">
+        <PageTitle>
+          個人量測紀錄
+          <button
+            className="info"
+            onClick={toggleLinkBanner}
+            aria-label="單元說明"
+            style={{ background:"none", border:0, padding:4, cursor:"pointer", color: !linkBannerHidden ? "var(--brand-700)" : "var(--text-tertiary)" }}
+          >
+            <Icon name="info" size={18} />
+          </button>
+        </PageTitle>
+
         {/* 健康管理連結說明 */}
         {!linkBannerHidden && (
         <div className="hm-link-banner">
@@ -288,18 +302,6 @@ function HealthRecordsScreen({ navigate, openSheet }) {
           </div>
         </div>
         )}
-
-        <PageTitle>
-          個人量測紀錄
-          <button
-            className="info"
-            onClick={toggleLinkBanner}
-            aria-label="單元說明"
-            style={{ background:"none", border:0, padding:4, cursor:"pointer", color: !linkBannerHidden ? "var(--brand-700)" : "var(--text-tertiary)" }}
-          >
-            <Icon name="info" size={18} />
-          </button>
-        </PageTitle>
 
         {/* 分類切換列 */}
         <div className="pill-tabs-row hm-tabs-row">
@@ -353,15 +355,14 @@ function HealthRecordsScreen({ navigate, openSheet }) {
 
         {cat === "生理量測" && (
           <div className="hm-section">
-            {empty ? (
-              <EmptyState label="尚無生理量測資料" hint="查無此分類的量測紀錄" />
-            ) : [
+            {[
               ...physio.filter((m) => pins.includes(m.id)).sort((a, b) => pins.indexOf(a.id) - pins.indexOf(b.id)),
               ...physio.filter((m) => !pins.includes(m.id)),
             ].map((m) => (
               <MetricRow
                 key={m.id}
                 metric={m}
+                empty={empty}
                 pinned={pins.includes(m.id)}
                 onOpen={() => navigate("healthDetail", { id: m.id })}
                 onTogglePin={() => togglePin(m.id)}

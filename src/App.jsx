@@ -256,7 +256,7 @@ function App() {
       break;
     case "visits":        body = <VisitsScreen navigate={navigate} openSheet={openSheet} filter={visitFilter} isFav={favScreens.includes("visits")} onToggleFav={() => toggleFavScreen("visits","就醫紀錄")} currentMember={currentMember} onBackToSelf={() => { setCurrentMember("陳小白"); showToast("已切換回本人健康資料"); }}/>; break;
     case "visitDetail":   body = <VisitDetailScreen navigate={navigate} params={current.params}/>; break;
-    case "reports":       body = <ReportsScreen navigate={navigate} openSheet={openSheet} filter={reportFilter} isFav={favScreens.includes("reports")} onToggleFav={() => toggleFavScreen("reports","檢驗報告")} currentMember={currentMember} onBackToSelf={() => { setCurrentMember("陳小白"); showToast("已切換回本人健康資料"); }}/>; break;
+    case "reports":       body = <ReportsScreen navigate={navigate} openSheet={openSheet} filter={reportFilter} favScreens={favScreens} onToggleFavScreen={toggleFavScreen} currentMember={currentMember} onBackToSelf={() => { setCurrentMember("陳小白"); showToast("已切換回本人健康資料"); }}/>; break;
     case "reportDetail":  body = <ReportDetailScreen navigate={navigate} params={current.params}/>; break;
     case "imageReportDetail": body = <ImageReportDetailScreen navigate={navigate} params={current.params}/>; break;
     case "otherReportDetail": body = <OtherReportDetailScreen navigate={navigate} params={current.params}/>; break;
@@ -351,7 +351,7 @@ function App() {
                 </svg>
               </button>
             </div>
-            <div className="ptw-version">w6 眷屬管理 v5.3</div>
+            <div className="ptw-version">w6 眷屬管理 v5.4</div>
 
             <div className="ptw-section-label">裝置版型</div>
             <div className="ptw-grid ptw-grid-3">
@@ -417,7 +417,7 @@ function App() {
               <path d="M4 17h4"/><circle cx="11" cy="17" r="2"/><path d="M13 17h7"/>
             </svg>
             <span>原型設定</span>
-            <span className="ptw-fab-version">w6 眷屬管理 v5.3</span>
+            <span className="ptw-fab-version">w6 眷屬管理 v5.4</span>
           </button>
         )}
 

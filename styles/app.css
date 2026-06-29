@@ -1571,6 +1571,8 @@ body.desktop-mode .desktop-stage[data-screen-label="services"] .pill-more-panel 
   cursor: pointer;
 }
 .report-sec-head .filter-btn { flex-shrink: 0; margin-top: 2px; }
+.visits-sec-head { align-items: center; }
+.visits-sec-head .filter-btn { margin-top: 0; }
 .report-sec-title {
   display: flex; align-items: center; gap: 8px;
   margin: 0;

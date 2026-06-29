@@ -285,6 +285,17 @@ body.desktop-mode .viewing-other-banner { margin-left: 0; margin-right: 0; }
   margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--border-soft);
   text-wrap: pretty;
 }
+.fam-consent-steps {
+  margin: 10px 0 0; padding-left: 22px;
+  font-size: 13.5px; line-height: 1.85; color: var(--text-secondary);
+}
+.fam-consent-steps li { margin-top: 4px; text-wrap: pretty; }
+.fam-consent-list {
+  margin: 12px 0 0; padding-left: 20px; list-style: disc;
+  font-size: 13.5px; line-height: 1.85; color: var(--text-secondary);
+  text-align: justify; text-wrap: pretty;
+}
+.fam-consent-list li { margin-top: 8px; }
 
 /* TBD 占位 */
 .fam-tbd {

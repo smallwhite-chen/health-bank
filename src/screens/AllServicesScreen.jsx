@@ -128,18 +128,14 @@ function AllServicesScreen({ navigate, openSheet, currentMember }) {
 
   return (
     <>
-      <TopBar onA11y={() => openSheet && openSheet("a11y")} onReminders={() => navigate("reminders")} onLogo={() => navigate("home")}/>
+      <TopBar showA11y={false} showLogout={false} onReminders={() => navigate("reminders")} onLogo={() => navigate("home")}/>
       <div className="app-scroll" ref={scrollRef}>
-        {!bannerHidden && (
-        <div className="info-banner">
-          您可以瀏覽健康存摺的所有單元，也可透過關鍵字搜尋快速找到所要功能
-          <div>
-            <button className="dismiss" onClick={hideBanner}>不再顯示此訊息</button>
+        <PageTitle right={
+          <div className="svc-title-actions" style={{ display:"flex", gap:6 }}>
+            <button className="topbar-btn" onClick={() => openSheet && openSheet("a11y")}><Icon name="accessibility" size={16}/>無障礙設定</button>
+            <button className="topbar-btn" onClick={() => (window.__hbLogout && window.__hbLogout())}><Icon name="logout" size={16}/>登出</button>
           </div>
-        </div>
-        )}
-
-        <PageTitle>
+        }>
           全部服務
           <button
             className="info"
@@ -150,6 +146,15 @@ function AllServicesScreen({ navigate, openSheet, currentMember }) {
             <Icon name="info" size={18} />
           </button>
         </PageTitle>
+
+        {!bannerHidden && (
+        <div className="info-banner">
+          您可以瀏覽健康存摺的所有單元，也可透過關鍵字搜尋快速找到所要功能
+          <div>
+            <button className="dismiss" onClick={hideBanner}>不再顯示此訊息</button>
+          </div>
+        </div>
+        )}
 
         {/* Sticky search + tabs */}
         <div className="services-sticky-top">

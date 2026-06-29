@@ -134,13 +134,12 @@ function A11ySheet({ onClose, state, setState }) {
 function VisitFilterSheet({ onClose, value, onApply }) {
   const [v, setV] = React.useState({ keyword: "", customStart: "", customEnd: "", ...value });
   const times = ["近 1 個月", "近 3 個月", "近 6 個月", "近 1 年", "全部", "自訂"];
-  const cats  = ["西醫", "中醫", "牙醫"];
   const meds  = ["藥品", "非藥品", "檢驗(查)"];
   const toggle = (arr, x) => arr.includes(x) ? arr.filter(y => y !== x) : [...arr, x];
   return (
     <Sheet title="進階篩選" onClose={onClose} footer={
       <>
-        <button onClick={() => setV({ keyword: "", time: "全部", customStart: "", customEnd: "", cats: [], meds: [] })}>清除條件</button>
+        <button onClick={() => setV({ keyword: "", time: "全部", customStart: "", customEnd: "", meds: [] })}>清除條件</button>
         <button className="primary" onClick={() => { onApply(v); onClose(); }}>查看篩選結果(40筆)</button>
       </>
     }>
@@ -180,10 +179,6 @@ function VisitFilterSheet({ onClose, value, onApply }) {
         </div>
       )}
 
-      <div className="chip-group-label">科別</div>
-      <div className="chip-group">
-        {cats.map(c => <button key={c} className={`chip-btn ${v.cats.includes(c) ? "active" : ""}`} onClick={() => setV({ ...v, cats: toggle(v.cats, c) })}>{c}</button>)}
-      </div>
       <div className="chip-group-label">醫囑資料</div>
       <div className="chip-group" style={{ marginBottom: 10 }}>
         {meds.map(c => <button key={c} className={`chip-btn ${v.meds.includes(c) ? "active" : ""}`} onClick={() => setV({ ...v, meds: toggle(v.meds, c) })}>{c}</button>)}

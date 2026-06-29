@@ -164,7 +164,21 @@
     "月":   { n: 10, lab: (i) => `${i * 3 + 1}日` },
     "6個月": { n: 6,  lab: (i) => `${i + 1}月` },
     "年":   { n: 12, lab: (i) => `${i + 1}月` },
+    "近15天": { n: 8,  lab: (i) => dayLab(15, i, 8) },
+    "近30天": { n: 10, lab: (i) => dayLab(30, i, 10) },
+    "近45天": { n: 10, lab: (i) => dayLab(45, i, 10) },
+    "自訂區間": { n: 10, lab: (i) => dayLab(30, i, 10) },
   };
+
+  // 以 2026/6/15 為基準結束日，生成 MM/DD 標籤
+  function dayLab(daysBack, i, n) {
+    const end = new Date(2026, 5, 15);
+    const frac = n === 1 ? 1 : i / (n - 1);
+    const back = Math.round((1 - frac) * (daysBack - 1));
+    const t = new Date(end);
+    t.setDate(end.getDate() - back);
+    return `${t.getMonth() + 1}/${t.getDate()}`;
+  }
 
   function round(v, d) { const p = Math.pow(10, d); return Math.round(v * p) / p; }
 

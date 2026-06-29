@@ -636,6 +636,10 @@ body.desktop-mode .phone-statusbar,
 body.desktop-mode .notch {
   display: none !important;
 }
+/* 全部服務標題列的無障礙/登出按鈕：桌機由 DesktopShell 頂列提供，故隱藏 */
+body.desktop-mode .svc-title-actions {
+  display: none !important;
+}
 
 /* The dt-main directly contains a screen body (e.g. <VisitsScreen/>),
    which renders <TopBar/> (hidden above) + .app-scroll. We turn the

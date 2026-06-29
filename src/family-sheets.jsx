@@ -417,14 +417,14 @@ function FamInviteViewSheet({ onClose, onToast }) {
         <span className={"fam-step-dot " + (step === 3 ? "active" : "")}>3</span>
       </div>
       <div className="fam-step-label">
-        {step === 1 ? "步驟 1／3　同意事項說明" : step === 2 ? "步驟 2／3　填寫同意對象資料" : "步驟 3／3　設定期望查看範圍"}
+        {step === 1 ? "步驟 1／3　功能說明" : step === 2 ? "步驟 2／3　填寫查看對象資料" : "步驟 3／3　設定期望查看範圍"}
       </div>
     </>
   );
 
   if (step === 1) {
     return (
-      <Sheet title="送出查看他人邀請" onClose={onClose} footer={
+      <Sheet title="查看他人健康資料" onClose={onClose} footer={
         <>
           <button onClick={onClose}>取消</button>
           <button className="primary" onClick={() => setStep(2)}>同意，下一步</button>
@@ -432,14 +432,17 @@ function FamInviteViewSheet({ onClose, onToast }) {
       }>
         {StepBar}
         <div className="fam-consent">
-          <div className="fam-consent-h1">同意書</div>
-          <div className="fam-consent-h2">他人代為查閱／下載本人健康存摺意願書</div>
-          <p className="fam-consent-p">
-            本人了解「健康存摺」存有本人至少三年的就醫及健康資料，包含：門診資料（西醫、中醫、牙醫）、住院資料、過敏藥物資料、器捐、安寧和緩醫療或醫療自主意願、用藥資料、預防接種資料、檢驗（查）結果資料、醫療影像、影像或病理檢驗（查）報告資料、成人預防保健、四癌篩檢結果等資料（資料種類會依實務規劃逐步擴增）。
-          </p>
-          <p className="fam-consent-note">
-            註：當事人同意他人代為查閱／下載健康存摺，得於事後取消同意。
-          </p>
+          <div className="fam-consent-h2" style={{ marginTop: 0 }}>什麼是「查看家人健康資料」？</div>
+          <p className="fam-consent-p">您可以向家人提出邀請，在對方同意後，查看他的健康存摺資料（例如就醫、用藥、檢驗報告等），方便您關心家人的健康狀況。</p>
+          <div className="fam-consent-h2">重要：需要對方同意才能查看</div>
+          <p className="fam-consent-p">送出邀請後，必須由對方本人登入健康存摺、確認同意，您才能看到他的資料。對方也可以自行決定要開放哪些項目給您。</p>
+          <div className="fam-consent-h2">接下來的步驟</div>
+          <ol className="fam-consent-steps">
+            <li>填寫您要查看的家人資料</li>
+            <li>送出邀請給對方</li>
+            <li>等待對方同意後即可查看</li>
+          </ol>
+          <p className="fam-consent-note">註：對方同意後，仍可隨時取消授權。</p>
         </div>
       </Sheet>
     );
@@ -447,28 +450,27 @@ function FamInviteViewSheet({ onClose, onToast }) {
 
   if (step === 2) {
     return (
-      <Sheet title="送出查看他人邀請" onClose={onClose} footer={
+      <Sheet title="查看他人健康資料" onClose={onClose} footer={
         <>
           <button onClick={() => setStep(1)}>上一步</button>
           <button className="primary" disabled={!infoValid} style={!infoValid ? { opacity:0.5 } : null} onClick={() => setStep(3)}>下一步</button>
         </>
       }>
         {StepBar}
-        <div className="chip-group-label" style={{ marginTop: 2 }}>填寫同意對象資料</div>
 
         <div className="fam-field">
-          <div className="fam-field-label">姓名</div>
+          <div className="fam-field-label">對象姓名</div>
           <input className="fam-input" placeholder="同意對象姓名" value={name} onChange={e => setName(e.target.value)}/>
         </div>
 
         <div className="fam-field">
-          <div className="fam-field-label">身分證號碼</div>
+          <div className="fam-field-label">對象身分證號碼</div>
           <input className="fam-input" placeholder="同意對象身分證號碼" maxLength={10} value={pid}
             onChange={e => setPid(e.target.value.toUpperCase())}/>
         </div>
 
         <div className="fam-field">
-          <div className="fam-field-label">出生年月日</div>
+          <div className="fam-field-label">對象出生年月日</div>
           <input type="date" className="fam-input" value={birth} onChange={e => setBirth(e.target.value)}/>
         </div>
 
@@ -486,7 +488,7 @@ function FamInviteViewSheet({ onClose, onToast }) {
   }
 
   return (
-    <Sheet title="送出查看他人邀請" onClose={onClose} footer={
+    <Sheet title="查看他人健康資料" onClose={onClose} footer={
       <>
         <button onClick={() => setStep(2)}>上一步</button>
         <button className="primary" disabled={!sendValid} style={!sendValid ? { opacity:0.5 } : null}
@@ -555,14 +557,14 @@ function FamInviteSharerSheet({ onClose, onToast }) {
         <span className={"fam-step-dot " + (step === 3 ? "active" : "")}>3</span>
       </div>
       <div className="fam-step-label">
-        {step === 1 ? "步驟 1／3　同意事項說明" : step === 2 ? "步驟 2／3　填寫被授權對象資料" : "步驟 3／3　設定開放範圍與期限"}
+        {step === 1 ? "步驟 1／3　功能說明" : step === 2 ? "步驟 2／3　填寫被授權對象資料" : "步驟 3／3　設定開放範圍與期限"}
       </div>
     </>
   );
 
   if (step === 1) {
     return (
-      <Sheet title="發出同意他人查看邀請" onClose={onClose} footer={
+      <Sheet title="同意他人查看健康資料" onClose={onClose} footer={
         <>
           <button onClick={onClose}>取消</button>
           <button className="primary" onClick={() => setStep(2)}>同意，下一步</button>
@@ -572,9 +574,11 @@ function FamInviteSharerSheet({ onClose, onToast }) {
         <div className="fam-consent">
           <div className="fam-consent-h1">同意書</div>
           <div className="fam-consent-h2">開放本人健康存摺予他人查閱／下載意願書</div>
-          <p className="fam-consent-p">
-            本人同意開放本人「健康存摺」之就醫及健康資料，提供下列指定對象代為查閱／下載。本健康存摺存有本人至少三年之就醫及健康資料，包含：門診資料（西醫、中醫、牙醫）、住院資料、過敏藥物資料、器捐、安寧和緩醫療或醫療自主意願、用藥資料、預防接種資料、檢驗（查）結果資料、醫療影像、影像或病理檢驗（查）報告資料、成人預防保健、四癌篩檢結果等資料（資料種類會依實務規劃逐步擴增）。實際開放之項目與期限由本人於下一步自行勾選設定。
-          </p>
+          <ul className="fam-consent-list">
+            <li>本人同意開放本人「健康存摺」之就醫及健康資料，提供下列指定對象代為查閱／下載。</li>
+            <li>本健康存摺存有本人至少三年之就醫及健康資料，包含：門診資料（西醫、中醫、牙醫）、住院資料、過敏藥物資料、器捐、安寧和緩醫療或醫療自主意願、用藥資料、預防接種資料、檢驗（查）結果資料、醫療影像、影像或病理檢驗（查）報告資料、成人預防保健、四癌篩檢結果等資料（資料種類會依實務規劃逐步擴增）。</li>
+            <li>實際開放之項目與期限由本人於下一步自行勾選設定。</li>
+          </ul>
           <p className="fam-consent-note">
             註：本人同意開放健康存摺予他人查閱／下載後，得於事後取消同意。
           </p>
@@ -585,28 +589,27 @@ function FamInviteSharerSheet({ onClose, onToast }) {
 
   if (step === 2) {
     return (
-      <Sheet title="發出同意他人查看邀請" onClose={onClose} footer={
+      <Sheet title="同意他人查看健康資料" onClose={onClose} footer={
         <>
           <button onClick={() => setStep(1)}>上一步</button>
           <button className="primary" disabled={!infoValid} style={!infoValid ? { opacity:0.5 } : null} onClick={() => setStep(3)}>下一步</button>
         </>
       }>
         {StepBar}
-        <div className="chip-group-label" style={{ marginTop: 2 }}>填寫被授權對象資料</div>
 
         <div className="fam-field">
-          <div className="fam-field-label">姓名</div>
+          <div className="fam-field-label">被授權對象姓名</div>
           <input className="fam-input" placeholder="被授權對象姓名" value={name} onChange={e => setName(e.target.value)}/>
         </div>
 
         <div className="fam-field">
-          <div className="fam-field-label">身分證號碼</div>
+          <div className="fam-field-label">被授權對象身分證號碼</div>
           <input className="fam-input" placeholder="被授權對象身分證號碼" maxLength={10} value={pid}
             onChange={e => setPid(e.target.value.toUpperCase())}/>
         </div>
 
         <div className="fam-field">
-          <div className="fam-field-label">出生年月日</div>
+          <div className="fam-field-label">被授權對象出生年月日</div>
           <input type="date" className="fam-input" value={birth} onChange={e => setBirth(e.target.value)}/>
         </div>
 
@@ -624,7 +627,7 @@ function FamInviteSharerSheet({ onClose, onToast }) {
   }
 
   return (
-    <Sheet title="發出同意他人查看邀請" onClose={onClose} footer={
+    <Sheet title="同意他人查看健康資料" onClose={onClose} footer={
       <>
         <button onClick={() => setStep(2)}>上一步</button>
         <button className="primary" disabled={!sendValid} style={!sendValid ? { opacity:0.5 } : null}

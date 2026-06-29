@@ -2,6 +2,7 @@ function VisitsScreen({ navigate, openSheet, isFav, onToggleFav, currentMember, 
   const { visits } = window.Data;
   const empty = useEmptyState();
   const [filter, setFilter] = React.useState("全部");
+  const [sortDesc, setSortDesc] = React.useState(true);
   const [bannerHidden, setBannerHidden] = React.useState(() => {
     try { return localStorage.getItem("hb_visits_banner_hidden") === "1"; } catch (e) { return false; }
   });
@@ -12,28 +13,15 @@ function VisitsScreen({ navigate, openSheet, isFav, onToggleFav, currentMember, 
     return next;
   });
   const tabs = ["全部", "西醫", "中醫", "牙醫"];
-  const rows = empty ? [] : (filter === "全部" ? visits : visits.filter(v => v.category === filter));
-  const PAGE = 4;
-  const [visible, setVisible] = React.useState(PAGE);
-  React.useEffect(() => { setVisible(PAGE); }, [filter]);
-  const shown = rows.slice(0, visible);
-  const remaining = rows.length - shown.length;
+  const baseRows = empty ? [] : (filter === "全部" ? visits : visits.filter(v => v.category === filter));
+  const rows = sortDesc ? baseRows : [...baseRows].reverse();
 
   return (
     <>
       <TopBar onA11y={() => openSheet("a11y")} onReminders={() => navigate("reminders")} onLogo={() => navigate("home")}/>
       <div className="app-scroll">
         <ViewingOtherBanner member={currentMember} onBackToSelf={onBackToSelf}/>
-        {!bannerHidden && (
-        <div className="info-banner">
-          健康存摺提供最近三年的就醫紀錄，可查詢就醫時間、機構、用藥、醫囑等資訊
-          <div>
-            <button className="dismiss" onClick={hideBanner}>不再顯示此訊息</button>
-          </div>
-        </div>
-        )}
-
-        <PageTitle favoriteKey="visits" isFav={isFav} onToggleFav={onToggleFav} right={<button className="filter-btn" onClick={() => openSheet("visitFilter")}><Icon name="sliders" size={14}/> 篩選</button>}>
+        <PageTitle favoriteKey="visits" isFav={isFav} onToggleFav={onToggleFav}>
           就醫紀錄
           <button
             className="info"
@@ -45,6 +33,15 @@ function VisitsScreen({ navigate, openSheet, isFav, onToggleFav, currentMember, 
           </button>
         </PageTitle>
 
+        {!bannerHidden && (
+        <div className="info-banner">
+          健康存摺提供最近三年的就醫紀錄，可查詢就醫時間、機構、用藥、醫囑等資訊
+          <div>
+            <button className="dismiss" onClick={hideBanner}>不再顯示此訊息</button>
+          </div>
+        </div>
+        )}
+
         <div className="pill-tabs">
           {tabs.map(t => (
             <button
@@ -55,8 +52,30 @@ function VisitsScreen({ navigate, openSheet, isFav, onToggleFav, currentMember, 
           ))}
         </div>
 
+        <div className="report-sec-head visits-sec-head">
+          <div className="report-sec-head-main">
+            <h2 className="report-sec-title">
+              <Icon name="stetho" size={16} className="ico" /> {filter === "全部" ? "全部就醫紀錄" : filter + "就醫紀錄"}
+            </h2>
+          </div>
+          <button className="filter-btn" onClick={() => openSheet("visitFilter")}>
+            <Icon name="sliders" size={14}/> 篩選
+          </button>
+        </div>
+
+        <div className="count-bar">
+          <span>共 {rows.length} 筆就醫紀錄</span>
+          <button
+            className="sort-toggle"
+            onClick={() => setSortDesc(d => !d)}
+            aria-label="切換排序方向"
+          >
+            <Icon name="sort" size={12}/> 就醫日期{sortDesc ? "近到遠" : "遠到近"}
+          </button>
+        </div>
+
         <div style={{ padding:"0 16px" }}>
-          {shown.map(v => (
+          {rows.map(v => (
             <VisitRow key={v.id} v={v} onClick={() => navigate("visitDetail", { id: v.id })}/>
           ))}
           {rows.length === 0 && (empty
@@ -66,11 +85,6 @@ function VisitsScreen({ navigate, openSheet, isFav, onToggleFav, currentMember, 
               沒有符合條件的紀錄
             </div>
             )
-          )}
-          {remaining > 0 && (
-            <button className="load-more" onClick={() => setVisible(v => v + PAGE)}>
-              載入更多
-            </button>
           )}
         </div>
 

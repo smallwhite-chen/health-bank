@@ -14,15 +14,6 @@ function FavoritesScreen({ navigate, openSheet }) {
     <>
       <TopBar onA11y={() => openSheet && openSheet("a11y")} onReminders={() => navigate("reminders")} onLogo={() => navigate("home")}/>
       <div className="app-scroll">
-        {!bannerHidden && (
-        <div className="info-banner">
-          自訂您的常用功能捷徑，最多可設定 12 個，方便快速存取健康存摺各項服務
-          <div>
-            <button className="dismiss" onClick={hideBanner}>不再顯示此訊息</button>
-          </div>
-        </div>
-        )}
-
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"8px 16px 12px" }}>
           <h1 className="page-title" style={{ margin:0, display:"inline-flex", alignItems:"center" }}>
             常用功能
@@ -39,6 +30,15 @@ function FavoritesScreen({ navigate, openSheet }) {
             <Icon name="edit" size={14}/> 編輯常用功能
           </button>
         </div>
+
+        {!bannerHidden && (
+        <div className="info-banner">
+          自訂您的常用功能捷徑，最多可設定 12 個，方便快速存取健康存摺各項服務
+          <div>
+            <button className="dismiss" onClick={hideBanner}>不再顯示此訊息</button>
+          </div>
+        </div>
+        )}
 
         <div className="fav-grid">
           {favorites.map((f, i) => (

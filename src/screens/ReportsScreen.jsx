@@ -112,7 +112,7 @@ function LipidSummaryCard({ onClick }) {
   );
 }
 
-function ReportsScreen({ navigate, openSheet, isFav, onToggleFav, currentMember, onBackToSelf }) {
+function ReportsScreen({ navigate, openSheet, favScreens, onToggleFavScreen, currentMember, onBackToSelf }) {
   const { reports, reportCategories, reportSubCategories, reportSubCatNotes } = window.Data;
   const empty = useEmptyState();
   const [bannerHidden, setBannerHidden] = React.useState(() => {
@@ -197,16 +197,7 @@ function ReportsScreen({ navigate, openSheet, isFav, onToggleFav, currentMember,
       <TopBar onA11y={() => openSheet("a11y")} onReminders={() => navigate("reminders")} onLogo={() => navigate("home")}/>
       <div className="app-scroll">
         <ViewingOtherBanner member={currentMember} onBackToSelf={onBackToSelf}/>
-        {!bannerHidden && (
-        <div className="info-banner">
-          健康存摺提供最近檢查檢驗報告，包含癌症篩檢、血糖血脂追蹤、影像與病理等各類檢查結果。
-          <div>
-            <button className="dismiss" onClick={hideBanner}>不再顯示此訊息</button>
-          </div>
-        </div>
-        )}
-
-        <PageTitle favoriteKey="reports" isFav={isFav} onToggleFav={onToggleFav}>
+        <PageTitle>
           檢驗報告
           <button
             className="info"
@@ -217,6 +208,15 @@ function ReportsScreen({ navigate, openSheet, isFav, onToggleFav, currentMember,
             <Icon name="info" size={18} />
           </button>
         </PageTitle>
+
+        {!bannerHidden && (
+        <div className="info-banner">
+          健康存摺提供最近檢查檢驗報告，包含癌症篩檢、血糖血脂追蹤、影像與病理等各類檢查結果。
+          <div>
+            <button className="dismiss" onClick={hideBanner}>不再顯示此訊息</button>
+          </div>
+        </div>
+        )}
 
         <div className="pill-tabs-row">
           <div
@@ -255,7 +255,7 @@ function ReportsScreen({ navigate, openSheet, isFav, onToggleFav, currentMember,
           </div>
         )}
 
-        <ReportSectionHead filter={filter} openSheet={openSheet} hasFilter={filter !== "血糖檢驗報告" && filter !== "血脂檢驗報告" && filter !== "癌症篩檢結果"} />
+        <ReportSectionHead filter={filter} openSheet={openSheet} hasFilter={filter !== "血糖檢驗報告" && filter !== "血脂檢驗報告" && filter !== "癌症篩檢結果"} isFav={favScreens && favScreens.includes("reports:" + filter)} onToggleFav={() => onToggleFavScreen && onToggleFavScreen("reports:" + filter, filter)} />
 
         {subCats && (
           <div className="pill-tabs-row sub-pill-tabs-row">

@@ -70,7 +70,7 @@ function StatusBar() {
   );
 }
 
-function TopBar({ onA11y, onReminders, onLogo, onLogout }) {
+function TopBar({ onA11y, onReminders, onLogo, onLogout, showA11y, showLogout }) {
   return (
     <div className="topbar">
       <div className="topbar-logo" onClick={onLogo} style={{ cursor: "pointer" }}>
@@ -78,9 +78,7 @@ function TopBar({ onA11y, onReminders, onLogo, onLogout }) {
         <span>健康存摺</span>
       </div>
       <div className="topbar-actions">
-        <button className="topbar-btn" onClick={onA11y}><Icon name="accessibility" size={16}/>無障礙設定</button>
         <button className="topbar-btn" onClick={onReminders}><Icon name="bell" size={16}/>提醒<span className="dot"/></button>
-        <button className="topbar-btn" onClick={() => (onLogout ? onLogout() : window.__hbLogout && window.__hbLogout())}><Icon name="logout" size={16}/>登出</button>
       </div>
     </div>
   );

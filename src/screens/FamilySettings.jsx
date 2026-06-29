@@ -25,6 +25,18 @@ function FamilySettingsScreen({ navigate, openSheet, isFav, onToggleFav, onSwitc
       <TopBar onA11y={() => openSheet("a11y")} onReminders={() => navigate("reminders")} onLogo={() => navigate("home")}/>
       <div className="app-scroll fam-scroll">
 
+        {/* 標題 + 加入常用 */}
+        <PageTitle favoriteKey="familySettings" isFav={isFav} onToggleFav={onToggleFav}>
+          眷屬管理
+          <button
+            className="info"
+            onClick={toggleIntro}
+            aria-label="單元說明"
+            style={{ background:"none", border:0, padding:4, cursor:"pointer", color: !introHidden ? "var(--brand-700)" : "var(--text-tertiary)" }}>
+            <Icon name="info" size={18}/>
+          </button>
+        </PageTitle>
+
         {/* 單元說明匡 */}
         {!introHidden && (
           <div className="hm-link-banner">
@@ -39,18 +51,6 @@ function FamilySettingsScreen({ navigate, openSheet, isFav, onToggleFav, onSwitc
             </div>
           </div>
         )}
-
-        {/* 標題 + 加入常用 */}
-        <PageTitle favoriteKey="familySettings" isFav={isFav} onToggleFav={onToggleFav}>
-          眷屬管理
-          <button
-            className="info"
-            onClick={toggleIntro}
-            aria-label="單元說明"
-            style={{ background:"none", border:0, padding:4, cursor:"pointer", color: !introHidden ? "var(--brand-700)" : "var(--text-tertiary)" }}>
-            <Icon name="info" size={18}/>
-          </button>
-        </PageTitle>
 
         {/* 待確認區（僅有待確認項目時出現，A/B 混合） */}
         {pending.length > 0 && (
@@ -119,7 +119,7 @@ function FamilySettingsScreen({ navigate, openSheet, isFav, onToggleFav, onSwitc
             )}
 
             <button className="fam-invite-btn" onClick={() => openSheet("famInviteView")}>
-              <Icon name="plus" size={18}/> 送出邀請查看他人健康資料
+              <Icon name="plus" size={18}/> 查看他人健康資料
             </button>
 
             <div className="fam-notes">
@@ -158,7 +158,7 @@ function FamilySettingsScreen({ navigate, openSheet, isFav, onToggleFav, onSwitc
             )}
 
             <button className="fam-invite-btn" onClick={() => openSheet("famInviteSharer")}>
-              <Icon name="plus" size={18}/> 發出邀請同意他人查看你的健康資料
+              <Icon name="plus" size={18}/> 同意他人查看健康資料
             </button>
 
             <div className="fam-notes">

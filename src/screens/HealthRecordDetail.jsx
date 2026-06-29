@@ -98,8 +98,16 @@ function MetricRangeChart({ points, metric }) {
 
 function HealthRecordDetailScreen({ navigate, openSheet, params }) {
   const metric = window.Data.healthById[(params && params.id) || "bp"];
-  const RANGE_LABELS = ["天", "週", "月", "6個月", "年"];
-  const [range, setRange] = React.useState("週");
+  const RANGE_LABELS = ["近15天", "近30天", "近45天", "自訂區間"];
+  const empty = useEmptyState();
+  const [range, setRange] = React.useState("近30天");
+  const [customStart, setCustomStart] = React.useState("");
+  const [customEnd, setCustomEnd] = React.useState("");
+  const dateInputStyle = {
+    flex: 1, minWidth: 0, padding: "10px 12px", border: "1px solid var(--border-soft)",
+    borderRadius: "var(--r-md)", fontSize: 13, fontFamily: "inherit",
+    background: "var(--bg-surface)", color: "var(--text-primary)",
+  };
   if (!metric) return <DetailHeader title="量測紀錄" onBack={() => navigate(-1)} />;
 
   const points = window.HealthUtil.genSeries(metric.id, range);
@@ -124,20 +132,29 @@ function HealthRecordDetailScreen({ navigate, openSheet, params }) {
     <>
       <DetailHeader title={metric.name} onBack={() => navigate(-1)} />
       <div className="app-scroll hm-scroll">
-        {/* 區間切換 */}
         <div className="hm-detail-pad">
+          {/* 區間切換 */}
           <div className="glu-range-row hm-range-row">
             {RANGE_LABELS.map((r) => (
               <button key={r} className={`glu-range-btn ${range === r ? "active" : ""}`} onClick={() => setRange(r)}>{r}</button>
             ))}
           </div>
 
+          {/* 自訂區間日期設定 */}
+          {range === "自訂區間" && (
+            <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 10 }}>
+              <input type="date" value={customStart} onChange={(e) => setCustomStart(e.target.value)} style={dateInputStyle} aria-label="開始日期" />
+              <span style={{ color: "var(--text-tertiary)", fontSize: 13 }}>至</span>
+              <input type="date" value={customEnd} onChange={(e) => setCustomEnd(e.target.value)} style={dateInputStyle} aria-label="結束日期" />
+            </div>
+          )}
+
           {/* 平均值 */}
           <div className="hm-avg-card">
-            <div className="hm-avg-label">本{range === "6個月" ? "半年" : range === "天" ? "日" : range}平均</div>
+            <div className="hm-avg-label">{range}平均</div>
             <div className="hm-avg-val">
-              {avg.text}{metric.unit && <em>{metric.unit}</em>}
-              {isBp && <span className="hm-avg-hr"><span className="hm-avg-divider" />71<em>bpm</em></span>}
+              {empty ? (isBp ? "0/0" : "0") : avg.text}{metric.unit && <em>{metric.unit}</em>}
+              {isBp && <span className="hm-avg-hr"><span className="hm-avg-divider" />{empty ? "0" : "71"}<em>bpm</em></span>}
             </div>
             <div className="hm-avg-ref">參考範圍：{metric.refText}</div>
           </div>
@@ -145,14 +162,20 @@ function HealthRecordDetailScreen({ navigate, openSheet, params }) {
           {/* 趨勢圖 */}
           <div className="hm-chart-card">
             <div className="hm-chart-title">{isBp ? "血壓/心率" : metric.name}趨勢（{range}）</div>
-            {isBp ? <MetricRangeChart points={points} metric={metric} /> : <MetricLineChart points={points} metric={metric} />}
-            {isBp && (
-              <div className="hm-chart-legend">
-                <span><i className="dot sys" />收縮壓</span>
-                <span><i className="dot dia" />舒張壓</span>
-                <span><i className="dot hr" />心率</span>
-                <span><i className="dot ref" />參考上限</span>
-              </div>
+            {empty ? (
+              <EmptyState compact label="尚無趨勢資料" hint="此區間沒有任何量測紀錄" />
+            ) : (
+              <>
+                {isBp ? <MetricRangeChart points={points} metric={metric} /> : <MetricLineChart points={points} metric={metric} />}
+                {isBp && (
+                  <div className="hm-chart-legend">
+                    <span><i className="dot sys" />收縮壓</span>
+                    <span><i className="dot dia" />舒張壓</span>
+                    <span><i className="dot hr" />心率</span>
+                    <span><i className="dot ref" />參考上限</span>
+                  </div>
+                )}
+              </>
             )}
           </div>
 
@@ -173,7 +196,9 @@ function HealthRecordDetailScreen({ navigate, openSheet, params }) {
             </button>
           </div>
           <div className="hm-rec-list">
-            {records.map((r, i) => (
+            {empty ? (
+              <EmptyState compact label="尚無詳細紀錄" hint="點擊下方「新增紀錄」開始記錄" />
+            ) : records.map((r, i) => (
               <div className="hm-rec-row" key={i}>
                 <div className="hm-rec-val">
                   {r.main}<em>{r.unit}</em>{r.extra && <span className="hm-rec-hr">{r.extra}<em>bpm</em></span>}
