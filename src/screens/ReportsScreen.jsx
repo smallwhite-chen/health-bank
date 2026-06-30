@@ -22,7 +22,7 @@ function ReportSectionHead({ filter, openSheet, hasFilter, isFav, onToggleFav })
               aria-label={isFav ? "從常用功能移除" : "加入常用功能"}
               style={{ color: isFav ? "var(--accent-orange, #f89808)" : "var(--text-tertiary)" }}
             >
-              <Icon name={isFav ? "heart-fill" : "heart"} size={18}/>
+              <Icon name={isFav ? "star-fill" : "star"} size={18}/>
             </button>
           )}
         </h2>
@@ -112,7 +112,7 @@ function LipidSummaryCard({ onClick }) {
   );
 }
 
-function ReportsScreen({ navigate, openSheet, favScreens, onToggleFavScreen, currentMember, onBackToSelf }) {
+function ReportsScreen({ navigate, openSheet, favScreens, onToggleFavScreen, currentMember, onBackToSelf, params }) {
   const { reports, reportCategories, reportSubCategories, reportSubCatNotes } = window.Data;
   const empty = useEmptyState();
   const [bannerHidden, setBannerHidden] = React.useState(() => {
@@ -124,7 +124,7 @@ function ReportsScreen({ navigate, openSheet, favScreens, onToggleFavScreen, cur
     try { localStorage.setItem("hb_reports_banner_hidden", next ? "1" : "0"); } catch (e) {}
     return next;
   });
-  const [filter, setFilter] = React.useState("全部");
+  const [filter, setFilter] = React.useState(params && params.category ? params.category : "全部");
   const [subFilter, setSubFilter] = React.useState("全部");
   const [showAll, setShowAll] = React.useState(false);
   const [subShowAll, setSubShowAll] = React.useState(false);

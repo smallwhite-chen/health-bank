@@ -58,8 +58,8 @@ const Data = {
       icon: "report",
       title: "血糖檢查報告",
       sub: "115年4月15日 於 亞東醫院 的檢驗報告已可檢視",
-      screen: "reportDetail",
-      params: { id: "r_glu" },
+      screen: "reports",
+      params: { category: "血糖檢驗報告" },
     },
     {
       id: "t2",

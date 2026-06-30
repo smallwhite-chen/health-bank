@@ -19,6 +19,8 @@ const Icon = ({ name, size = 20, strokeWidth = 1.6, ...rest }) => {
       return <svg {...common}><path d="M7 3h8l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M15 3v4h4"/><path d="M9 12h7"/><path d="M9 16h5"/></svg>;
     case "star":
       return <svg {...common}><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6L12 17l-5.4 2.8 1-6L3.2 9.5l6.1-.9L12 3z"/></svg>;
+    case "star-fill":
+      return <svg {...common} fill="currentColor" stroke="currentColor" strokeWidth="1.2"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6L12 17l-5.4 2.8 1-6L3.2 9.5l6.1-.9L12 3z"/></svg>;
     case "grid":
       return <svg {...common}><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>;
     case "bell":

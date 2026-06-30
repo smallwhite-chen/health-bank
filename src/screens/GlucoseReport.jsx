@@ -93,7 +93,7 @@ function GlucoseReport() {
         )}
         <div className="glu-legend">
           <span className="glu-legend-item"><span className="glu-legend-dot" />{glucoseMeta.metric}（{glucoseMeta.unit}）</span>
-          <span className="glu-legend-item"><span className="glu-legend-ref" />參考值 {glucoseMeta.refLow.toFixed(1)}-{glucoseMeta.refHigh.toFixed(1)}</span>
+          <span className="glu-legend-item"><span className="glu-legend-zone" />正常範圍 {glucoseMeta.refLow.toFixed(1)}-{glucoseMeta.refHigh.toFixed(1)}</span>
         </div>
       </div>
       </div>

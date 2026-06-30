@@ -133,7 +133,7 @@ function PageTitle({ children, right, favoriteKey, isFav, onToggleFav }) {
             aria-label={isFav ? "從常用功能移除" : "加入常用功能"}
             style={{ background:"none", border:0, padding:4, cursor:"pointer", color: isFav ? "var(--accent-orange, #f89808)" : "var(--text-tertiary)" }}
           >
-            <Icon name={isFav ? "heart-fill" : "heart"} size={18}/>
+            <Icon name={isFav ? "star-fill" : "star"} size={18}/>
           </button>
         )}
       </h1>

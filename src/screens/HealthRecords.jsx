@@ -347,7 +347,7 @@ function HealthRecordsScreen({ navigate, openSheet }) {
                 aria-label={favCats.includes(cat) ? "從常用功能移除" : "加入常用功能"}
                 style={{ color: favCats.includes(cat) ? "var(--accent-orange, #f89808)" : "var(--text-tertiary)" }}
               >
-                <Icon name={favCats.includes(cat) ? "heart-fill" : "heart"} size={18}/>
+                <Icon name={favCats.includes(cat) ? "star-fill" : "star"} size={18}/>
               </button>
             </h2>
           </div>

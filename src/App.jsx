@@ -87,6 +87,7 @@ function App() {
       try {
         const q = new URLSearchParams(window.location.search);
         if (q.get("id")) params.id = q.get("id");
+        if (q.get("category")) params.category = q.get("category");
       } catch (e) {}
       return [{ screen: window.__INITIAL_SCREEN__, params }];
     }
@@ -191,7 +192,10 @@ function App() {
         return;
       }
       if (MP_PAGES[target]) {
-        const q = params && params.id ? "?id=" + encodeURIComponent(params.id) : "";
+        const qs = new URLSearchParams();
+        if (params && params.id) qs.set("id", params.id);
+        if (params && params.category) qs.set("category", params.category);
+        const q = qs.toString() ? "?" + qs.toString() : "";
         window.location.href = MP_PAGES[target] + q;
         return;
       }
@@ -258,7 +262,7 @@ function App() {
       break;
     case "visits":        body = <VisitsScreen navigate={navigate} openSheet={openSheet} filter={visitFilter} isFav={favScreens.includes("visits")} onToggleFav={() => toggleFavScreen("visits","就醫紀錄")} currentMember={currentMember} onBackToSelf={() => { setCurrentMember("陳小白"); showToast("已切換回本人健康資料"); }}/>; break;
     case "visitDetail":   body = <VisitDetailScreen navigate={navigate} params={current.params}/>; break;
-    case "reports":       body = <ReportsScreen navigate={navigate} openSheet={openSheet} filter={reportFilter} favScreens={favScreens} onToggleFavScreen={toggleFavScreen} currentMember={currentMember} onBackToSelf={() => { setCurrentMember("陳小白"); showToast("已切換回本人健康資料"); }}/>; break;
+    case "reports":       body = <ReportsScreen navigate={navigate} params={current.params} openSheet={openSheet} filter={reportFilter} favScreens={favScreens} onToggleFavScreen={toggleFavScreen} currentMember={currentMember} onBackToSelf={() => { setCurrentMember("陳小白"); showToast("已切換回本人健康資料"); }}/>; break;
     case "reportDetail":  body = <ReportDetailScreen navigate={navigate} params={current.params}/>; break;
     case "imageReportDetail": body = <ImageReportDetailScreen navigate={navigate} params={current.params}/>; break;
     case "otherReportDetail": body = <OtherReportDetailScreen navigate={navigate} params={current.params}/>; break;
@@ -353,7 +357,7 @@ function App() {
                 </svg>
               </button>
             </div>
-            <div className="ptw-version">w6 眷屬管理 v5.4.1</div>
+            <div className="ptw-version">w6 眷屬管理 v5.5</div>
 
             <div className="ptw-section-label">裝置版型</div>
             <div className="ptw-grid ptw-grid-3">
@@ -446,7 +450,7 @@ function App() {
               <path d="M4 17h4"/><circle cx="11" cy="17" r="2"/><path d="M13 17h7"/>
             </svg>
             <span>原型設定</span>
-            <span className="ptw-fab-version">w6 眷屬管理 v5.4.1</span>
+            <span className="ptw-fab-version">w6 眷屬管理 v5.5</span>
           </button>
         )}
 
