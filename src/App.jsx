@@ -44,6 +44,8 @@ function App() {
   const [editMode, setEditMode] = useSt(false);
   const [tweaksCollapsed, setTweaksCollapsed] = useSt(false);
   const [publicOpen, setPublicOpen] = useSt(false);
+  const [publicHidden, setPublicHidden] = useSt(() => readLS("hb_public_hidden", false));
+  useEf(() => { writeLS("hb_public_hidden", publicHidden); }, [publicHidden]);
   const [winWidth, setWinWidth] = useSt(typeof window !== "undefined" ? window.innerWidth : 1200);
 
   // Track viewport width for the "auto" RWD mode
@@ -351,7 +353,7 @@ function App() {
                 </svg>
               </button>
             </div>
-            <div className="ptw-version">w6 眷屬管理 v5.4</div>
+            <div className="ptw-version">w6 眷屬管理 v5.4.1</div>
 
             <div className="ptw-section-label">裝置版型</div>
             <div className="ptw-grid ptw-grid-3">
@@ -406,7 +408,34 @@ function App() {
               <span className="ptw-opt-label">回復本人資料</span>
               <span className="ptw-opt-hint">{currentMember === "陳小白" ? "目前為本人" : `目前檢視：${currentMember}`}</span>
             </button>
+
+            <div className="ptw-section-label">瀏覽模式</div>
+            <button
+              className="ptw-opt"
+              style={{ width:"100%", padding:"11px 12px", textAlign:"left" }}
+              onClick={() => { setPublicHidden(true); setPublicOpen(false); }}>
+              <span className="ptw-opt-label">隱藏設定鈕</span>
+              <span className="ptw-opt-hint">瀏覽時不顯示，避免遮擋畫面</span>
+            </button>
           </div>
+        ) : publicHidden ? (
+          <button
+            className="public-tweaks-restore"
+            onClick={() => setPublicHidden(false)}
+            aria-label="顯示原型設定"
+            title="顯示原型設定"
+            style={{
+              position:"fixed", right:16, bottom:16, width:34, height:34, borderRadius:999,
+              background:"rgba(255,255,255,0.8)", border:"1px solid var(--border-soft)",
+              boxShadow:"0 4px 14px rgba(0,0,0,0.10)", display:"grid", placeItems:"center",
+              cursor:"pointer", zIndex:9998, color:"var(--brand-700)", opacity:0.55,
+              WebkitBackdropFilter:"blur(4px)", backdropFilter:"blur(4px)"
+            }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M4 7h10"/><circle cx="17" cy="7" r="2"/>
+              <path d="M4 17h4"/><circle cx="11" cy="17" r="2"/><path d="M13 17h7"/>
+            </svg>
+          </button>
         ) : (
           <button
             className="public-tweaks-fab"
@@ -417,7 +446,7 @@ function App() {
               <path d="M4 17h4"/><circle cx="11" cy="17" r="2"/><path d="M13 17h7"/>
             </svg>
             <span>原型設定</span>
-            <span className="ptw-fab-version">w6 眷屬管理 v5.4</span>
+            <span className="ptw-fab-version">w6 眷屬管理 v5.4.1</span>
           </button>
         )}
 
