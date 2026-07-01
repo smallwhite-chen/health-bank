@@ -188,6 +188,52 @@ body.desktop-mode .viewing-other-banner { margin-left: 0; margin-right: 0; }
 }
 .fam-notes-list li { margin-bottom: 4px; text-wrap: pretty; }
 
+/* ---------- 子女意願表示 ---------- */
+.fam-child { margin: 26px 16px 0; }
+.fam-child-title { font-size: 16px; font-weight: 700; color: var(--text-secondary); }
+.fam-child-sub { font-size: 12.5px; color: var(--text-tertiary); margin-top: 3px; }
+.fam-child-toggle {
+  display: flex; align-items: center; gap: 12px; width: 100%;
+  margin-top: 14px; padding: 15px 16px;
+  background: var(--bg-surface); border: 1px solid var(--border-med);
+  border-radius: var(--r-md); cursor: pointer; font-family: inherit; text-align: left;
+  transition: border-color 140ms ease, background 140ms ease;
+}
+.fam-child-toggle.on { border-color: var(--border-med); background: var(--bg-surface); }
+.fam-child-toggle-label { flex: 1; font-size: 14.5px; color: var(--text-primary); line-height: 1.5; }
+.fam-child-toggle:focus-visible { outline: 2px solid var(--brand-700); outline-offset: 2px; }
+.fam-child-switch-wrap { flex-shrink: 0; display: flex; align-items: center; gap: 10px; }
+.fam-child-toggle-state {
+  font-size: 14px; font-weight: 600; color: var(--text-tertiary);
+  min-width: 2.4em; text-align: right;
+}
+.fam-child-toggle.on .fam-child-toggle-state { color: var(--brand-700); }
+.fam-child-switch {
+  flex-shrink: 0; position: relative;
+  width: 51px; height: 31px; border-radius: 999px;
+  background: #e4e4e6; transition: background 200ms ease;
+}
+.fam-child-switch-knob {
+  position: absolute; top: 2px; left: 2px;
+  width: 27px; height: 27px; border-radius: 50%;
+  background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.18), 0 0 1px rgba(0,0,0,0.25);
+  transition: transform 200ms ease;
+}
+.fam-child-toggle.on .fam-child-switch { background: var(--brand-700); }
+.fam-child-toggle.on .fam-child-switch-knob { transform: translateX(20px); }
+@media (prefers-reduced-motion: reduce) {
+  .fam-child-switch, .fam-child-switch-knob { transition: none; }
+}
+.fam-child-notes {
+  margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-soft);
+}
+.fam-child-notes-h { font-size: 12.5px; color: var(--text-tertiary); margin-bottom: 4px; }
+.fam-child-notes-list {
+  margin: 0; padding-left: 22px; list-style: decimal;
+  font-size: 12px; color: var(--text-tertiary); line-height: 1.85;
+}
+.fam-child-notes-list li { margin-bottom: 6px; text-wrap: pretty; }
+
 /* ---------- 編輯 / 流程 Sheet 內元件 ---------- */
 .fam-sheet-person {
   display: flex; align-items: center; gap: 12px;
@@ -296,6 +342,31 @@ body.desktop-mode .viewing-other-banner { margin-left: 0; margin-right: 0; }
   text-align: justify; text-wrap: pretty;
 }
 .fam-consent-list li { margin-top: 8px; }
+
+/* 內嵌同意事項（捲動框 + 我同意） */
+.fam-terms-box {
+  margin-top: 10px; max-height: 200px; overflow-y: auto;
+  padding: 14px 14px; border: 1px solid var(--border-med); border-radius: var(--r-md);
+  background: var(--bg-soft); -webkit-overflow-scrolling: touch;
+}
+.fam-terms-p {
+  font-size: 12.5px; line-height: 1.8; color: var(--text-secondary);
+  margin: 0 0 8px; text-align: justify; text-wrap: pretty;
+}
+.fam-terms-p:last-child { margin-bottom: 0; }
+.fam-terms-h {
+  font-size: 13px; font-weight: 700; color: var(--text-primary);
+  margin: 14px 0 6px;
+}
+.fam-terms-agree {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  margin-top: 12px; padding: 12px 14px;
+  background: var(--bg-surface); border: 1.5px solid var(--border-med);
+  border-radius: var(--r-md); cursor: pointer; font-family: inherit; text-align: left;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+.fam-terms-agree.on { border-color: var(--brand-700); background: var(--brand-50); }
+.fam-terms-agree-txt { font-size: 14px; font-weight: 600; color: var(--text-primary); }
 
 /* TBD 占位 */
 .fam-tbd {

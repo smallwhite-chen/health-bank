@@ -149,7 +149,7 @@ function AllServicesScreen({ navigate, openSheet, currentMember }) {
 
         {!bannerHidden && (
         <div className="info-banner">
-          您可以瀏覽健康存摺的所有單元，也可透過關鍵字搜尋快速找到所要功能
+          你可以瀏覽健康存摺的所有單元，也可透過關鍵字搜尋快速找到所要功能
           <div>
             <button className="dismiss" onClick={hideBanner}>不再顯示此訊息</button>
           </div>

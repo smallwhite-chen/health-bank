@@ -33,7 +33,7 @@ function FavoritesScreen({ navigate, openSheet }) {
 
         {!bannerHidden && (
         <div className="info-banner">
-          自訂您的常用功能捷徑，最多可設定 12 個，方便快速存取健康存摺各項服務
+          自訂你的常用功能捷徑，最多可設定 12 個，方便快速存取健康存摺各項服務
           <div>
             <button className="dismiss" onClick={hideBanner}>不再顯示此訊息</button>
           </div>

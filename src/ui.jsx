@@ -165,7 +165,7 @@ function ViewingOtherBanner({ member, onBackToSelf }) {
     <div className="viewing-other-banner">
       <span className="vob-ico" aria-hidden="true"><Icon name="user" size={16}/></span>
       <span className="vob-text">
-        您目前檢視的是 <b>{member}</b> 的健康資料
+        你目前檢視的是 <b>{member}</b> 的健康資料
       </span>
       <button className="vob-back" onClick={onBackToSelf}>
         <Icon name="refresh" size={13}/> 切換回本人

@@ -203,8 +203,8 @@ function ImageReportDetailScreen({ navigate, params }) {
           }
         >
           <h3 className="decl-title">民眾下載健康存摺資料之聲明書</h3>
-          <p className="decl-body">健康存摺有您的詳細就醫療資料，下載後請妥善保管，資料如有需要轉交第三人或企業、公司使用，應請自行評估風險及責任。</p>
-          <p className="decl-reminder"><b>提醒您：</b>資料提供給第三人時，請留意是否只提供部分資料、並約定使用期間及日後可要求刪除資料的權利。</p>
+          <p className="decl-body">健康存摺有你的詳細就醫療資料，下載後請妥善保管，資料如有需要轉交第三人或企業、公司使用，應請自行評估風險及責任。</p>
+          <p className="decl-reminder"><b>提醒你：</b>資料提供給第三人時，請留意是否只提供部分資料、並約定使用期間及日後可要求刪除資料的權利。</p>
         </Sheet>,
         document.querySelector(".app-shell") || document.querySelector(".desktop-shell") || document.body
       )}

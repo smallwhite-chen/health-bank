@@ -232,6 +232,43 @@
   align-items: center;
   gap: 2px;
 }
+/* Family switch — empty state */
+.family-empty {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 28px 16px 22px;
+  border: 1px dashed var(--border-soft);
+  border-radius: var(--r-md);
+  background: var(--bg-soft);
+}
+.family-empty-icon {
+  width: 46px; height: 46px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  color: var(--text-tertiary);
+  margin-bottom: 12px;
+}
+.family-empty-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+.family-empty-cta {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 10px 16px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--brand-100);
+  background: var(--brand-50);
+  color: var(--brand-900);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
 .note-text {
   font-size: 12px;
   color: var(--text-tertiary);

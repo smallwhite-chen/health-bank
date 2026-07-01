@@ -170,7 +170,7 @@ function HomeScreenDesktop({ navigate, openSheet, currentMember }) {
 
           <section className="dt-card dt-care-card">
             <div className="dt-card-head">
-              <h2>您目前參與健保署的照護計畫</h2>
+              <h2>你目前參與健保署的照護計畫</h2>
             </div>
             <div className="dt-care-list">
               {empty ? (

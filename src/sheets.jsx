@@ -20,12 +20,13 @@ function Sheet({ title, onClose, children, footer }) {
 
 // Family switch sheet
 function FamilySwitchSheet({ onClose, onPick, onGoSettings, currentMember, onBackToSelf }) {
-  const members = ["陳小黑", "李天白", "王智仙"];
+  const empty = window.useEmptyState ? window.useEmptyState() : false;
+  const members = empty ? [] : ["陳小黑", "李天白", "王智仙"];
   const viewingOther = currentMember && currentMember !== "陳小白";
   return (
-    <Sheet title="檢視家人健康資訊" onClose={onClose}>
+    <Sheet title="健康資訊分享｜眷屬管理" onClose={onClose}>
       <div style={{ fontSize:13, color:"var(--text-secondary)", lineHeight:1.7 }}>
-        您可以切換檢視家人的健康存摺資料，方便即時關心家人健康狀態！
+        你可以切換檢視家人的健康存摺資料，方便即時關心家人健康狀態！
       </div>
       {viewingOther && (
         <button
@@ -43,17 +44,29 @@ function FamilySwitchSheet({ onClose, onPick, onGoSettings, currentMember, onBac
         <span style={{ flex:1, textAlign:"left" }}>前往眷屬管理設定</span>
         <Icon name="chev-right" size={16}/>
       </button>
-      <div style={{ fontSize:12, color:"var(--text-tertiary)", marginTop:10 }}>
-        請點選您可查看的人員姓名，進行檢視資料切換
-      </div>
-      <div className="family-list">
-        {members.map(m => (
-          <div key={m} className="family-row" onClick={() => onPick && onPick(m)} style={{ cursor:"pointer" }}>
-            <span>{m}</span>
-            <span className="go">點選切換 <Icon name="chev-right" size={12}/></span>
+      {members.length > 0 && (
+        <>
+          <div className="chip-group-label">我可查看</div>
+          <div style={{ fontSize:12, color:"var(--text-tertiary)", marginTop:4 }}>
+            請點選你可查看的人員姓名，進行檢視資料切換
           </div>
-        ))}
-      </div>
+        </>
+      )}
+      {members.length > 0 ? (
+        <div className="family-list">
+          {members.map(m => (
+            <div key={m} className="family-row" onClick={() => onPick && onPick(m)} style={{ cursor:"pointer" }}>
+              <span>{m}</span>
+              <span className="go">點選切換 <Icon name="chev-right" size={12}/></span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="family-empty">
+          <span className="family-empty-icon"><Icon name="user" size={22}/></span>
+          <div className="family-empty-text">目前無可查看人員，前往眷屬管理設定</div>
+        </div>
+      )}
     </Sheet>
   );
 }
@@ -375,8 +388,8 @@ Object.assign(window, { HealthFilterSheet });
 function HealthLinkGuideSheet({ onClose, onGoSettings }) {
   const steps = [
     { t: "切換至「我的」單元", d: "於健保快易通中切換至「我的」單元。" },
-    { t: "點選健康管理連結，選擇所要連結 App", d: "進入健康管理連結單元內，選擇您所要連結的 App，目前提供蘋果健康 App、Garmin Connect。" },
-    { t: "進入連結服務，並開啟連線設定", d: "進入您所要連結的 App 選項中，開啟連線設定開關，依照指示完成設定。" },
+    { t: "點選健康管理連結，選擇所要連結 App", d: "進入健康管理連結單元內，選擇你所要連結的 App，目前提供蘋果健康 App、Garmin Connect。" },
+    { t: "進入連結服務，並開啟連線設定", d: "進入你所要連結的 App 選項中，開啟連線設定開關，依照指示完成設定。" },
     { t: "完成連結，將自動更新健康資料", d: "請詳讀蒐集資訊與說明內容，系統將依照所選 App 同步狀態，自動更新個人紀錄中相關量測紀錄。" },
   ];
   return (
@@ -387,7 +400,7 @@ function HealthLinkGuideSheet({ onClose, onGoSettings }) {
       </>
     }>
       <div className="hg-intro">
-        透過健康管理連結，可將您現有健康 App 中的量測資料同步至健康存摺，集中管理個人健康數據，省去手動輸入的麻煩。
+        透過健康管理連結，可將你現有健康 App 中的量測資料同步至健康存摺，集中管理個人健康數據，省去手動輸入的麻煩。
       </div>
 
       <div className="chip-group-label">操作步驟</div>
